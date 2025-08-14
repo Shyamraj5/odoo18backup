@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="customer_meals_wizard_view" model="ir.ui.view">
+        <field name="name">meal.sticker.menu.view</field>
+        <field name="model">meal.sticker.menu</field>
+        <field name="arch" type="xml">
+            <form string="Customer Meals Print Wizard">
+                <group>
+                    <group>
+                        <field name="date"/>
+                        <field name="meal_id" domain="[('is_meal','=',True)]"/>
+                    </group>
+                    <group>
+                        <field name="meal_category_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="pdf_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary"
+                        special="cancel"/>
+                </footer>
+                
+            </form>
+        </field>
+    </record>
+    <record id="action_customer_meals_wizard" model="ir.actions.act_window">
+        <field name="name">Customer Meals</field>
+        <field name="res_model">meal.sticker.menu</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

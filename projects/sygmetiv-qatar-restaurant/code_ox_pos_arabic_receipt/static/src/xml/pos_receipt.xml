@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="code_ox_pos_arabic_receipt.ReceiptHeader" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="after">
+            <div class="pos-receipt-center-align">
+                <div t-if="props.data.partner">Customer : <t t-out="props.data.partner.name" /></div>
+            </div>
+        </xpath>
+    </t>
+</templates>

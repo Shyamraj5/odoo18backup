@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_payment_voucher">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div style="text-align: center;font-size:30px;border-top:30px;">
+                            <b>PAYMENT VOUCHER</b>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <img style="width;90px;height:60px;text-align: center;"
+                                        t-att-src="'/web/image?model=res.company&amp;id=%s&amp;field=logo' % env.company.id"/>
+                                <div style="text-align: start;font-size:16px;">
+                                    <b>
+                                        <span t-field="env.company.name"/>
+                                    </b>
+                                </div>
+                                <div style="text-align: start;font-size:12px">
+                                    <span t-field="env.company.street"/>
+                                    <span t-field="env.company.street2"/>
+                                    <br></br>
+                                    <span t-field="env.company.city"/>
+                                    <span t-field="env.company.state_id"/>
+                                    <span t-field="env.company.zip"/>
+                                    <span t-field="env.company.country_id"/>
+                                </div>
+                                <br></br> 
+                                <span t-field="env.company.email"/>
+                            </div>
+                            <div class="col-6" style="margin-top:15px;">
+                                <table class="table table-sm o_main_table table-borderless">
+                                    <tr>
+                                        <td style="font-size:12px;font-weight:bold;">Party</td>
+                                        <td style="font-size:12px;padding-left:5px">:
+                                            <span t-field="o.partner_id"/>
+                                        </td>
+                                    </tr>
+                                    <tr height="20px">
+                                        <td style="font-size:12px;font-weight:bold">Voucher No</td>
+                                        <td style="font-size:12px;padding-left:5px">:
+                                            <span t-field="o.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr height="20px">
+                                        <td style="font-size:12px;font-weight:bold">Date</td>
+                                        <td style="font-size:12px;padding-left:5px">:
+                                            <span t-field="o.date"/>
+                                        </td>
+                                    </tr>
+                                    <tr height="20px">
+                                        <td style="font-size:12px;font-weight:bold">Pay Mode</td>
+                                        <td style="font-size:12px;padding-left:5px">:
+                                            <span t-field="o.bank_journal_id"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <table class="table table-sm o_main_table table-borderless"
+                                style="border-collapse: collapse;margin-top:20px;">
+                            <tr style="border-bottom:1px solid black;margin-top:10px;">
+                                <th style="text-align: start;width:138px;">Transaction Type:</th>
+                                <th style="text-align: start;font-size:14px;">
+                                    <span t-field="o.bank_journal_id"/>
+                                </th>
+                                <th style="text-align: end;">Dated:</th>
+                                <th style="text-align: start;font-size:14px;">
+                                    <span t-field="o.check_date"/>
+                                </th>
+                                <th style="text-align: end;">Drawn On:</th>
+                                <th style="text-align: start;">
+                                    <span style="margin-left: 5px;font-size:14px;" t-field="docs.bank_journal_id.default_account_id"/>
+                                </th>
+                            </tr>
+                            <tr style="border-bottom:1px solid black;background-color: #E7E7E7;margin-top:10px;">
+                                <th style="text-align: start;">Amount :</th>
+                                <th style="text-align: start;font-size:14px;">
+                                    <span t-field="o.check_amount"/>
+                                </th>
+                                <th style="text-align: start;">Amount In Words:</th>
+                                <th colspan="3" style="text-align: start;font-size:14px;">
+                                    <span t-esc="docs.currency_id.amount_to_text(o.check_amount)"/>
+                                </th>
+                            </tr>
+                        </table>
+                        <table class="table table-sm o_main_table table-bordered">
+                            <thead>
+                                <tr width="100%" class="text" style="background-color: #E7E7E7;">
+                                    <th width="10%" style="font-size:14px;">Date Issued</th>
+                                    <th width="18%" style="font-size:14px;">Description</th>
+                                    <th width="10%" style="font-size:14px;">Bill Reference</th>
+                                    <th width="10%" style="font-size:14px;">Orig. Amount</th>
+                                    <th width="10%" style="font-size:14px;">Deduction</th>
+                                    <th width="11%" style="font-size:14px;">Applied Amount</th>
+                                    <th width="10%" style="font-size:14px;">Due Date</th>
+                                    <th width="10%" style="font-size:14px;">Balance</th>
+                                    <th width="11%" style="font-size:14px;">Amount to be Paid</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Iterate over Payment Lines -->
+                                <t t-foreach="o.payment_line_ids.filtered(lambda l:l.amountpaid != 0.0)" t-as="line">
+                                    <tr class="table-row">
+                                        <!-- Date Issued -->
+                                        <td class="text-center" style="font-size:12px;">
+                                            <span t-field="line.invoice_date"/>
+                                        </td>
+                                        <!-- Description -->
+                                        <td class="text-center" style="font-size:12px;">
+                                            <span t-field="line.invoice_no"/>
+                                        </td>
+                                        <!-- Bill Reference -->
+                                        <td class="text-center" style="font-size:12px;">
+                                            <span t-field="line.move_ref"/>
+                                        </td>
+                                        <!-- Orig. Amount -->
+                                        <td class="text-center" style="font-size:12px;">
+                                            <span t-field="line.amount"/>
+                                        </td>
+                                        <!-- Deduction (Refund Amount) -->
+                                        <td class="text-center" style="font-size:12px;">
+                                            <span t-field="line.deduction_amount"/>
+                                        </td>
+                                        <!-- Applied Amount -->
+                                        <td class="text-end" style="font-size:12px;">
+                                            <span t-esc="line.invoice_id.amount_total - line.deduction_amount"/>
+                                            <span t-field="o.currency_id"/>
+                                        </td>
+                                        <!-- Due Date -->
+                                        <td class="text-center" style="font-size:12px;">
+                                            <span t-field="line.invoice_duedate"/>
+                                        </td>
+                                        <!-- Balance -->
+                                        <td class="text-center" style="font-size:12px;">
+                                            <span t-field="line.balance"/>
+                                        </td>
+                                        <!-- Amount to be Paid -->
+                                        <td class="text-center" style="font-size:12px;">
+                                            <span t-field="line.amountpaid"/>
+                                        </td>
+
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="8" class="text-end" style="font-size:12px;">Total</td>
+                                    <td colspan="1" class="text-end" style="font-size:12px;">
+                                        <t t-set="total_amount"
+                                           t-value="'{0:,.2f}'.format(sum(line.amountpaid for line in o.payment_line_ids.filtered(lambda l:l.amountpaid != 0.0)))"/>
+                                        <span t-esc="total_amount"/>
+                                        <span t-field="o.currency_id.symbol"/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div style="text-align: center;">Make all checks payable to
+                            <span t-field="env.company.name"/>
+                        </div>
+                        <div style="text-align: center;">THANK YOU FOR YOUR BUSINESS!</div>
+                        <div style="width;10px;height:10px;text-align: center;">
+                            <img src="bi_pdc/static/mohdn.jpg"/>
+                        </div>
+                        <div style="text-align: start;margin-top:30px;">Remarks: 
+                        <span t-esc="o.memo"/></div>
+                        <div class="row">
+                            <!-- <div class="col-6" style="text-align: start;margin-top:25px;">Prepared By:
+                                <span t-esc="o.approval_route_ids[0].role_id.name" style="margin-left: 5px;"/><br/><br/>
+                                <span style="text-align: start;">Authorised By:</span>
+                                <span t-esc="o.approval_route_ids[1].role_id.name" style="margin-left: 5px;"/><br/><br/>
+                                <span style="text-align: start;">Approved By:</span>
+                                <span t-esc="o.approval_route_ids[2].role_id.name" style="margin-left: 5px;"/><br/><br/>
+                                <span >Verified By:</span>
+                            </div> -->
+
+                            <div class="col-6" style="text-align: start; margin-top:25px;">Received By:<br/><br/>
+                                <span style="text-align: start;">Name:</span><br/>
+                                <span style="text-align: start;">Designation:</span><br/>
+                                <span style="text-align: start;">Signature:</span><br/>
+                                <span style="text-align: start;">Date:</span><br/>
+                                <span style="text-align: start;">Mobile Number:</span><br/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

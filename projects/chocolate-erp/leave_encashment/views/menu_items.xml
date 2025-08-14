@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+     <menuitem id="menu_leave_encashment_root"
+          name="Leave Encashment"
+          parent="hr_holidays.menu_hr_holidays_root" 
+          sequence="4"
+          action="action_leave_encashment"
+         />
+</odoo>

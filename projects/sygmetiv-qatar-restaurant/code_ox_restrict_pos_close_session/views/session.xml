@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_pos_session_form_inherit_review" model="ir.ui.view">
+        <field name="name">pos.session.form.inherit.review</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="opening_control,opened,closing_control,to_review,closed" no_label="1"/>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="before">
+                
+                <button name="action_approve_review"
+                        string="Approve Review"
+                        type="object"
+                        class="btn-primary"
+                        groups="point_of_sale.group_pos_manager"
+                        invisible="state != 'to_review'"
+                        />
+            </xpath>
+        </field>
+    </record>
+    
+
+</odoo>

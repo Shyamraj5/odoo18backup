@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="product_transaction_history.product_history_widget" owl="1">
+        <div>
+            <a
+                tabindex="0"
+                t-on-click="viewProductHistory"
+                class="fa fa-history"
+                title="Product History"
+            ><span style="cursor: default !important;"> History </span></a>
+        </div>
+    </t>
+</templates>

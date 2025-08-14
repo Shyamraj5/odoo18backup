@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_leave_allocation_leave_encashment_view_form_manager" model="ir.ui.view">
+        <field name="name">hr.leave.allocation.view.form.inherit.leave.encashment</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form_manager"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet" position="inside">
+                <notebook>
+                    <page name="leave_encashment" string="Leave Encashment">
+                        <field name="leave_encashment_history_ids" force_save="1" readonly="1"> 
+                            <list>
+                                <field name="leave_allocation_id"/>
+                                <field name="leave_encashment_id"/>
+                                <field name="days_encashed" width="200"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

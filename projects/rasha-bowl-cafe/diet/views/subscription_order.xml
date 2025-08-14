@@ -1,0 +1,421 @@
+<odoo>
+    <data>
+        <record id="customer_sale_order_line_view_tree" model="ir.ui.view">
+            <field name="name">diet.subscription.order.view.list</field>
+            <field name="model">diet.subscription.order</field>
+            <field name="arch" type="xml">
+                <list decoration-danger="payment_status in ('not_paid','partial')"
+                    default_order="create_date desc"> 
+                    <header>
+                        <button name="action_freeze_all"
+                            string="Freeze All"
+                            type="object"
+                        />
+                    </header>
+                    <field name="customer_id"/>
+                    <field name="order_number"/>
+                    <field class="w100" name="create_date" string="Date, Time" optional="show"/>
+                    <field name="date" column_invisible="1"/>
+                    <field name="partner_id"/>
+                    <field name="phone"/>
+                    <field name="start_date" column_invisible="True"/>
+                    <field name="actual_start_date" string="Start Date"/>
+                    <field name="end_date"/>
+                    <field name="created_by" string="Created By"/>
+                    <field name="plan_id"/>
+                    <field name="package_days" string="Days"/>
+                    <field name="state"/>
+                    <field name="payment_status" optional="show"/>
+                    <field name="plan_base_price"/>
+                    <field name="promo_code"/>
+                    <field name="coupon_discount"/>
+                    <field name="total"/>
+                    <field name="grand_total" optional="show"/>
+                    <field name="sales_person_id" optional="hide"/>
+                    <field name="paid_amount" optional="hide"/>
+                    <field name="balance_amount" optional="hide"/>
+                    <field name="is_freezed" column_invisible="1"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="customer_sale_order_line_search_view" model="ir.ui.view">
+            <field name="name">diet.subscription.order.search</field>
+            <field name="model">diet.subscription.order</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="order_number"/>
+                    <field name="partner_id"/>
+                    <field name="phone"/>
+                    <field name="plan_id"/>
+                    <field name="state"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Paid" name="paid" domain="[('state', '=', 'paid')]"/>
+                    <filter string="Upcoming" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Upgraded" name="upgraded" domain="[('state', '=', 'upgraded')]"/>
+                    <filter string="Hold" name="hold" domain="[('state', '=', 'hold')]"/>
+                    <filter string="Expired" name="closed" domain="[('state', '=', 'closed')]"/>
+                    <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                    <filter string="Active" name="active" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="Freezed" name="freezed" domain="[('is_freezed', '=', True)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" name="state"  context="{'group_by':'state'}"/>
+                        <filter string="Start Date" name="actual_start_date" context="{'group_by': 'actual_start_date'}"/>
+                        <filter string="End Date" name="end_date" context="{'group_by': 'end_date'}"/>
+                        <filter string="Customer" name="partner_id" context="{'group_by': 'partner_id'}"/>
+                        <filter name="group_create_date" string="Created Date" context="{'group_by': 'create_date:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="customer_sale_order_line_view_form" model="ir.ui.view">
+            <field name="name">diet.subscription.order.view.form</field>
+            <field name="model">diet.subscription.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button
+                            name="confirm"
+                            string="Confirm"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state not in 'draft'"
+                        />
+                        <button
+                            name="change_start_date"
+                            string="Change Start Date"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state not in ['paid','in_progress']"
+                        />
+                        <button
+                            name="generate_meal_calendar"
+                            string="Generate Meal Calendar"
+                            type="object"
+                            class="btn-primary"
+                            invisible=" state in ['in_progress','active','draft']"
+                        />
+                        <button
+                            name="action_hold"
+                            string="Freeze"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state not in 'in_progress'"
+                        />
+                        <button
+                            name="add_additional_meals"
+                            string="Add Additional Meal"
+                            type="object"
+                            class="btn-primary"
+                        />
+                        <button
+                            name="action_unhold"
+                            string="Un-Freeze"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state not in 'in_progress'"
+                        />
+                        <button
+                            name="action_upgrade"
+                            string="Upgrade"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state not in 'in_progress'"
+                        />
+                        <button
+                            name="activate_subscription"
+                            string="Activate"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state not in 'paid' or not meal_calendar_ids"
+                        />
+                        <button
+                            name="extend_subscription"
+                            string="Extend"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state not in ['paid','in_progress']"
+                            groups="diet.group_subscription_extension"
+                        />
+                        <button
+                            name="create_invoice"
+                            string="Create Invoice"
+                            type="object"
+                            class="btn-primary"
+                            invisible="amount_due == 0 or state not in ['paid','in_progress'] or payment_type == 'free'"
+                        />
+                        <button
+                            name="action_close"
+                            string="Close"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state not in ['draft','paid','in_progress']"
+                        />
+                        <button string="Apply Default Meals" name="apply_default_meals" type="object" class="oe_highlight" invisible="not meal_calendar_ids"/>
+                        <button string="Un-Process Ramdan" name="reverse_subscription_ramdan" invisible="not ramdan_plan_applied and state == 'in_progress'" groups="diet.group_ramdan_unprocess_user" type="object" class="oe_highlight"/>
+                        <button string="Minus Days" name="minus_days" type="object" class="oe_highlight" invisible="not additional_days"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,paid,in_progress,closed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="view_meal_calendar" type="object" class="oe_stat_button" icon="fa-calendar" invisible="not meal_calendar_ids">
+                                <span class="statinfo">Open Calendar</span>
+                            </button>
+                            <field name="sale_order_ids" invisible="1"/>
+                            <button name="view_sub_sale_order" type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                                    invisible="not sale_order_ids" groups="base.group_no_one">
+                                <span class="statinfo">Sale Order</span>
+                            </button>
+                            <field name="invoice_ids" invisible="1"/>
+                            <button name="view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                                    invisible="not invoice_ids">
+                                <span class="statinfo">Invoice</span>
+                            </button>
+                        </div>
+                        <field name="payment_status" invisible="1"/>
+                        <widget name="web_ribbon" title="Paid"
+                                invisible="state == 'draft' or payment_status != 'paid'"/>
+                        <widget name="web_ribbon" title="Not Paid"
+                                invisible="state == 'draft' or payment_status != 'not_paid'"/>
+                        <widget name="web_ribbon" title="Partially Paid"
+                                invisible="state == 'draft' or payment_status != 'partial'"/>
+                        <widget name="web_ribbon" title="Free"
+                                invisible="state == 'draft' or payment_type != 'free' or payment_status != 'paid'"/>
+                        <widget name="web_ribbon" title="Expired" bg_color="bg-danger"
+                                invisible="state != 'closed'"/>
+                            <group>
+                                <group name="plan_details" string="Plan">
+                                    <field name="customer_id" />
+                                    <field name="partner_id" readonly="state not in 'draft'" force_save="1"
+                                    context="{'form_view_ref': 'diet.diet_customer_form'}" placeholder="Customer Name"/>
+                                    <field name="address_ids" widget="many2many_tags" invisible="1" readonly="state != 'draft'"/>
+                                    <field name="address_id" domain="[('id','in',address_ids)]" readonly="state != 'draft'" invisible="1"/>
+                                    <field name="plan_category_id" readonly="state != 'draft'" invisible="1"/>
+                                    <field name="plan_id" readonly="state != 'draft'" placeholder="Choose a Plan"/>
+                                    <field name="choice_config_id" readonly="state != 'draft'" placeholder="Choose a Choice Configuration"/>
+                                    <field name="available_plan_choice_ids" widget="many2many_tags" invisible="1"/>
+                                    <field name="plan_choice_id" domain="[('id','in',available_plan_choice_ids)]" readonly="state != 'draft'" placeholder="Choose a Choice for your Plan"/>
+                                    <field name="package_days"/>
+                                    <field name="total_days"/>
+                                    <field name="customer_address_id" domain="[('parent_id', '=', partner_id)]"/>
+                                    <field name="meal_calendar_ids" invisible="1"/>
+                                </group>
+                                <group string="">
+                                    <field name="start_date" invisible="1"/>
+                                    <field name="actual_start_date" string="Start Date" force_save="1" readonly="state not in ['draft'] or not plan_choice_id" required="True" placeholder="Enter a Date to start your plan"/>
+                                    <field name="end_date" invisible="not actual_start_date" required="True" readonly="state not in ['draft']"/>
+                                    <field name="additional_days" readonly="1" force_save="1"/>
+                                    <field name="existing_subscription_available_days" invisible="not existing_subscription_available_days"/>
+                                    <field name="meal_not_set" invisible="1"/>
+                                    <field name="sub_end_in"/>
+                                    <field name="is_subscription_moved" invisible="1" force_save="1"/>
+                                    <field name="previous_start_date" invisible="1" force_save="1"/>
+                                    <field name="is_ramdan_plan" invisible="1"/>
+                                    <field name="no_of_people" readonly="state != 'draft'"/>
+                                    <field name="veg_or_non_veg" readonly="state != 'draft'"/>
+                                    <field name="tiffin_box" readonly="state != 'draft'"/>
+                                    <field name="boiled_egg" readonly="state != 'draft'"/>
+                                    <field name="no_of_veg" readonly="state != 'draft'"/>
+                                    <button string="Edit Subscription" name="edit_subscription" type="object" class="oe_highlight" invisible="state not in ['paid','in_progress']"/>
+                                    <button string="Edit Ramdan Subscription" name="edit_ramdan_subscription" type="object" class="oe_highlight" invisible="not is_ramdan_plan or state not in ['paid','in_progress']"/>
+                                </group>
+                            </group>
+                            <field name="ramdan_plan_applied" invisible="1" force_save="1"/>
+                            <group name="ramdan_plan_details" string="Alternate Plan Details">
+                                <group>
+                                    <field name="ramdan_plan_id" string="Plan" readonly="1" force_save="1" options="{'no_create': 1, 'no_create_edit': 1}"/>
+                                </group>
+                                <group>
+                                    <field name="ramdan_plan_choice_id" domain="[('plan_config_day_id', '=', ramdan_plan_id),('plan_config_day_id', '!=', False)]" string="Choice" readonly="1" force_save="1" options="{'no_create': 1, 'no_create_edit': 1}"/>
+                                </group>
+                            </group>
+                            <group name='available_days' string='Available Days'>
+                                <div class="o_row">
+                                    <label for="sunday" string="Sunday"/>
+                                    <field name="sunday" readonly="state not in['draft']"/>
+                                    <label for="monday" string="Monday"/>
+                                    <field name="monday" class="oe_inline" readonly="state not in['draft']"/>
+                                    <label for="tuesday" string="Tuesday"/>
+                                    <field name="tuesday" class="oe_inline" readonly="state not in['draft']"/>
+                                    <label for="wednesday" string="Wednesday"/>
+                                    <field name="wednesday" class="oe_inline" readonly="state not in['draft']"/>
+                                    <label for="thursday" string="Thursday"/>
+                                    <field name="thursday" class="oe_inline" readonly="state not in['draft']"/>
+                                    <label for="friday" string="Friday"/>
+                                    <field name="friday" class="oe_inline" readonly="state not in['draft']"/>
+                                    <label for="saturday" string="Saturday"/>
+                                    <field name="saturday" class="oe_inline" readonly="state not in['draft']"/>
+                                </div>
+                            </group>
+                            <group string="">
+                                <group>
+                                    <field name="protein" readonly="state not in['draft']"/>
+                                    <field name="calories" readonly="state not in['draft']" />
+                                    <field name="carbs" readonly="state not in['draft']"/>
+                                    <field name="pc_combination" invisible="1" force_save="1"/>
+                                    <field name="fat" invisible="1"/>
+                                    <field name="payment_type" readonly="state not in['draft']" />
+                                    <field name="pay_later" readonly="state not in['draft']" invisible="payment_type not in ['on_line']"/>
+                                    <field name="plan_base_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="addons_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="manual_price" readonly="state not in['draft']" force_save="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="applied_points" string="Rewards Points Applied" readonly="1" force_save="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="tax_ids" widget="many2many_tags" invisible="0" force_save="1" options="{'no_create': True, 'no_create_edit': True}" domain="[('type_tax_use', '=', 'sale')]" />
+                                    <field name="untaxed_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="grand_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="per_day_price" invisible="1" />
+                                    <field name="invoiced_amount" invisible="1"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="amount_due" invisible="0" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <group>
+                                    <field name="prev_subs_balance" readonly="state != 'draft'" invisible="1"/>
+                                    <field name="active" invisible="1"/>
+                                    <field name="coupon_discount" readonly="state not in ['draft', 'paid']" force_save="1"/>
+                                    <field name="referral_code" readonly="state in ['in_progress']"/>
+                                    <field name="is_coupon_code_applied" invisible="1" force_save="1" />
+                                    <label for="promo_code" string="Promo Code"/>
+                                    <div class="o_row">
+                                        <field name="promo_code" readonly="is_coupon_code_applied or state in ['in_progress']" force_save="1"/>
+                                        <button name="verify_promo_code" icon="fa-check" type="object" class="oe_highlight oe_inline" invisible="is_coupon_code_applied or state in ['in_progress']">
+                                            <span>Verify</span>
+                                        </button>
+                                        <button name="clear_promo_code" icon="fa-trash" type="object" class="oe_inline" invisible="not is_coupon_code_applied">
+                                            <span>Clear</span>
+                                        </button>
+                                    </div>
+                                    <field name="promo_code_discount" readonly="1" force_save="1"/>
+                                    <label for="available_points" string="Available Reward Points"/>
+                                    <div class="o_row">
+                                        <field name="available_points"/>
+                                        <button name="apply_reward_points" title="Apply" icon="fa-check" type="object" class="oe_inline" invisible="applied_points or state not in ['draft']"/>
+                                        <button name="clear_reward_points" title="Clear" icon="fa-trash" type="object" class="oe_inline" invisible="not applied_points or state not in ['draft']"/>
+                                    </div>
+                                    <field name="paid_by" readonly="state in ['in_progress']"/>
+                                </group>
+                            </group>
+                            <separator string="Meal Configuration"/>
+                            <field name="meal_count_ids" readonly="state not in['draft']">
+                                <list editable="bottom" create="0" delete="0">
+                                    <field name="meal_category_id" readonly="True" force_save="1"/>
+                                    <field name="base_meal_count" column_invisible="True"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                    <field name="additional_price" string="Price/Day" widget="monetary" options="{'currency_field': 'currency_id'}" 
+                                        readonly="True" column_invisible="True" force_save="1"/>
+                                    <field name="additional_count" force_save="1"/>
+                                    <field name="calorie_multiply_factor"/>
+                                    <field name="meal_subscription_id" column_invisible="True"/>
+                                    <field name="is_ramdan" column_invisible="1" force_save="1"/>
+                                </list>
+                            </field>
+                            <separator string="Additional Meals"/>
+                            <field name="addtional_meals_config_ids" readonly="state not in['draft']">
+                                <list editable="bottom" create="0">
+                                    <field name="meal_category_id" readonly="True" force_save="1"/>
+                                    <field name="meal_id" readonly="True" force_save="1"/>
+                                    <field name="count" readonly="True" force_save="1"/>
+                                    <field name="price" force_save="True" readonly="1"/>
+                                    <field name="subscription_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                            <separator string="Alternate Meal Configuration" invisible="1"/>
+                            <field name="ramdan_meal_count_ids" readonly="state not in['draft']" force_save="1" invisible="1">
+                                <list editable="bottom" create="0" delete="0">
+                                    <field name="meal_category_id" readonly="True" force_save="1"/>
+                                    <field name="base_meal_count" column_invisible="True" force_save="1"/>
+                                    <field name="currency_id" column_invisible="True" force_save="1"/>
+                                    <field name="additional_price" widget="monetary" options="{'currency_field': 'currency_id'}" 
+                                        readonly="True" column_invisible="True" force_save="1"/>
+                                    <field name="additional_count" force_save="1"/>
+                                    <field name="meal_subscription_id" column_invisible="True" force_save="1"/>
+                                    <field name="is_ramdan" column_invisible="1" force_save="1"/>
+                                </list>
+                            </field>
+                            <separator string="Meal Selection"/>
+                            <field name="meal_selection_ids" nolabel="1" context="{'group_by':'date'}">
+                                <list editable="bottom" create="0" delete="0">
+                                    <field name="date" readonly="1"/>
+                                    <field name="meal_category_id" readonly="1"/>
+                                    <field name="meal_ids" column_invisible="True"/>
+                                    <field name="meal_id" domain="[('id','in',meal_ids)]" readonly="state in ['freezed','closed','off_day']"/>
+                                    <field name="meal_selection_by" readonly="1" force_save="1"/>
+                                    <field name="state" readonly="1" force_save="1"/>
+                                    <field name="delivery_status" readonly="1" force_save="1"/>
+                                </list>
+                            </field>
+                            <separator string="Freezed Days"/>
+                            <field name="freezed_meal_calendar_ids" nolabel="1" context="{'group_by':'date'}">
+                                <list edit="0" create="0" delete="0">
+                                    <field name="date" readonly="1"/>
+                                    <field name="meal_category_id" readonly="1"/>
+                                    <field name="meal_ids" column_invisible="True"/>
+                                    <field name="meal_id" domain="[('id','in',meal_ids)]" readonly="state in ['freezed','closed','off_day']"/>
+                                    <field name="meal_selection_by" readonly="1" force_save="1"/>
+                                    <field name="state" readonly="1" force_save="1"/>
+                                </list>
+                            </field>
+                            <notebook>
+                            <page name="meals_details" string="Meals" invisible="True">
+                                <field name="meal_line_ids">
+                                    <list editable="bottom">
+                                        <field name="cus_sale_order_line_id" column_invisible="True"/>
+                                        <field name="meal_category_id"/>
+                                        <field name="portion_count"/>
+                                        <field name="carbs" force_save="1"/>
+                                        <field name="protein" force_save="1"/>
+                                        <field name="count" column_invisible="True"/>
+                                        <button name="add_meal" type="object" string="Add" icon="fa-plus" invisible="1"/>
+                                        <button name="remove_meal" type="object" string="Remove" icon="fa-minus" invisible="1"/>
+                                    </list>
+                                </field>    
+                                <group>
+                                    <group class="oe_subtotal_footer oe_right" colspan="2">
+                                        <!-- <field name="plan_base_price" readonly="1"/>
+                                        <field name="addons_price" readonly="1"/> -->
+                                        <field name="total" readonly="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                        <!-- <footer>
+                            <div>
+                                <button
+                                    name="confirm"
+                                    string="Confirm"
+                                    type="object"
+                                    class="btn-primary"
+                                />
+                                <button
+                                    string="Cancel"
+                                    class="btn btn-default"
+                                    special="cancel"
+                                />
+                            </div>
+                        </footer> -->
+                    </sheet>
+                    <chatter reload_on_follower="True"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="customer_sale_order_line_action" model="ir.actions.act_window">
+            <field name="name">Subscriptions</field>
+            <field name="res_model">diet.subscription.order</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="diet.customer_sale_order_line_search_view"/>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="customer_sale_order_free_line_action" model="ir.actions.act_window">
+            <field name="name">Subscriptions</field>
+            <field name="res_model">diet.subscription.order</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="diet.customer_sale_order_line_search_view"/>
+            <field name="domain">[('payment_type', '=', 'free')]</field>
+            <field name="context">{}</field>
+        </record>
+    </data>
+</odoo>

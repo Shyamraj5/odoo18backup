@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="coupon_program_view_form" model="ir.ui.view">
+        <field name="name">coupon.program.view.form</field>
+        <field name="model">coupon.program</field>
+        <field name="arch" type="xml">
+            <form string="Coupon Program">
+                <header>
+                    <button string="Confirm" name="confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button string="Expired" name="expire" type="object" class="oe_highlight" invisible="state !='active'"/>
+                    <button string="Reset to Draft" name="draft" type="object" class="oe_highlight" invisible="state not in ['active','expired']"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="view_coupons" type="object" class="oe_stat_button" icon="fa-file"
+                            invisible="generated_coupon_count == 0 or program_type == 'promocode'">
+                            <field name="generated_coupon_count" string="Coupon(s)" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="program_code" string="Program Internal Ref." readonly="1" force_save="1"/>
+                            <field name="program_type" invisible="1" readonly="state != 'draft'"/>
+                            <field name="program_name" string="Promo Code" required="program_type == 'promocode'" invisible="program_type == 'coupon'" readonly="state != 'draft'"/>
+                            <field name="program_name" string="Program Name" required="program_type == 'coupon'" invisible="program_type == 'promocode'" readonly="state != 'draft'"/>
+                            <field name="no_partner_limit" string="No Customer Limit" readonly="state != 'draft'"/>
+                            <field name="discount_type" required="1" invisible="not is_universal_code" readonly="state != 'draft'"/>
+                            <field name="program_discount" required="1" string="Discount" invisible="not is_universal_code" readonly="state != 'draft'"/>
+                            <field name="coupon_count" string="Coupon Count" required="program_type == 'coupon'" invisible="program_type == 'promocode'" readonly="state != 'draft'"/>
+                            <field name="coupon_count" string="Usage Limit" required="program_type == 'promocode'" readonly="state != 'draft'"/>
+                            <field name="promocode_used" string="Used" invisible="program_type == 'coupon'" readonly="state != 'draft'"/>
+                            <field name="program_expiry" readonly="state != 'draft'"/>
+                            <field name="program_availability" widget="radio" options="{'horizontal': True}" readonly="state != 'draft'"/>
+                            <field name="is_universal_code" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <separator string="Available Days" invisible="program_availability not in 'custom'"/>
+                    <div class="o_row">
+                        <field name="sunday" class="oe_inline" readonly="state not in ['draft']" invisible="program_availability not in 'custom'"/>
+                        <label for="sunday" string="Sunday" class="oe_inline" invisible="program_availability not in 'custom'"/>
+                        <field name="monday" class="oe_inline" readonly="state not in ['draft']" invisible="program_availability not in 'custom'"/>
+                        <label for="monday" string="Monday" class="oe_inline" invisible="program_availability not in 'custom'"/>
+                        <field name="tuesday" class="oe_inline" readonly="state not in ['draft']" invisible="program_availability not in 'custom'"/>
+                        <label for="tuesday" string="Tuesday" class="oe_inline" invisible="program_availability not in 'custom'"/>
+                        <field name="wednesday" class="oe_inline" readonly="state not in ['draft']" invisible="program_availability not in 'custom'"/>
+                        <label for="wednesday" string="Wednesday" class="oe_inline" invisible="program_availability not in 'custom'"/>
+                        <field name="thursday" class="oe_inline" readonly="state not in ['draft']" invisible="program_availability not in 'custom'"/>
+                        <label for="thursday" string="Thursday" class="oe_inline" invisible="program_availability not in 'custom'"/>
+                        <field name="friday" class="oe_inline" readonly="state not in ['draft']" invisible="program_availability not in 'custom'"/>
+                        <label for="friday" string="Friday" class="oe_inline" invisible="program_availability not in 'custom'"/>
+                        <field name="saturday" class="oe_inline" readonly="state not in ['draft']" invisible="program_availability not in 'custom'"/>
+                        <label for="saturday" string="Saturday" class="oe_inline" invisible="program_availability not in 'custom'"/>
+                    </div>
+                    <notebook>
+                        <page name="participations" string="Participations">
+                            <field name="participation_ids" readonly="0" force_save="1">
+                                <list create="0" edit="0" delete="0">
+                                    <field name="customer_id" />
+                                    <field name="applied_code" />
+                                    <field name="applied_date" />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Applicable plans" invisible="is_universal_code">
+                            <field name="plan_applicable_ids">
+                                <list editable="bottom">
+                                    <field name="appl_plans_id" />
+                                    <field name="available_plan_choice_ids" column_invisible="1"/>
+                                    <field name="appl_choice_ids" widget="many2many_tags" domain="[('id','in',available_plan_choice_ids)]"/>
+                                    <field name="discount_type" required="1"/>
+                                    <field name="program_discount" required="1" string="Discount"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="coupon_program_view_tree" model="ir.ui.view">
+        <field name="name">coupon.program.view.list</field>
+        <field name="model">coupon.program</field>
+        <field name="arch" type="xml">
+            <list string="Coupon Program">
+                <field name="program_code" />
+                <field name="program_type" column_invisible="1"/>
+                <field name="program_name" />
+                <field name="program_discount" />
+                <field name="program_expiry" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+    <record id="coupon_program_action" model="ir.actions.act_window">
+        <field name="name">Coupon Program</field>
+        <field name="res_model">coupon.program</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="coupon_program_code_view_tree" model="ir.ui.view">
+        <field name="name">coupon.program.code.view.list</field>
+        <field name="model">coupon.program.code</field>
+        <field name="arch" type="xml">
+            <list string="Coupon Code" create="0" edit="0">
+                <field name="coupon_code" readonly="1"/>
+                <field name="state" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

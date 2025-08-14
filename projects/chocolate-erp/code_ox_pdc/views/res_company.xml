@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="res_company_pdc_account_setting" model="ir.ui.view">
+            <field name="name">res.company.pdc.account.setting</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page string="PDC Cofiguration">
+                        <group string="Accounts">
+                            <field name="pdc_account_receivable_id"/>
+                            <field name="pdc_account_payable_id"/>
+                            <field name="pdc_discount_account_id"/>
+                        </group>
+                        <group string="journals">
+                            <field name="issued_journal_id"/>
+                            <field name="received_journal_id"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

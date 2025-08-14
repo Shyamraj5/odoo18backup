@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.module.category" id="security_location_groups">
+        <field name="name">Customer Location Rights</field>
+      </record>
+    
+      <record model="res.groups" id="group_location_picker">
+        <field name="name">Location Picker</field>
+        <field name="category_id" ref="generic_inventory.security_location_groups" />
+      </record>
+    
+      <record model="res.groups" id="group_location_supervisor">
+        <field name="category_id" ref="generic_inventory.security_location_groups" />
+        <field name="implied_ids" eval="[(4, ref('generic_inventory.group_location_picker'))]" />
+        <field name="name">Location Supervisor</field>
+      </record>
+
+      <record id="base.group_system" model="res.groups">
+          <field name="implied_ids" eval="[(4, ref('generic_inventory.group_location_supervisor'))]"/>
+      </record>
+
+</odoo>

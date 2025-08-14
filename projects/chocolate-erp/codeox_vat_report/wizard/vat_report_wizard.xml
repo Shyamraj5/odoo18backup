@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="vat_report_wizard_view_form" model="ir.ui.view">
+        <field name="name">vat.report.wizard.view.form</field>
+        <field name="model">vat.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="VAT Report">
+                <sheet>
+                    <group>
+                        <field name="months"/>
+                        <field name="years"/>
+                    </group>
+                    <footer>
+                        <button name="action_vat_report" string="Submit" class="oe_highlight" type="object" />
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </sheet>                    
+            </form>
+        </field>
+    </record>
+
+    <record id="vat_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">VAT Report Wizard</field>
+        <field name="res_model">vat.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="vat_report_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
+
+
+     
+    
+
+    
+

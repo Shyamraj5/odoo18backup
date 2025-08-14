@@ -1,0 +1,22 @@
+{
+    "name": "Sale Return",
+    "summary": """Module for managing the returning of goods delivered from sales order.""",
+    "author": " ",
+    "license": "LGPL-3",
+    "category": "Sales",
+    "version": "18.0.0.0",
+    "depends": ["sale", "stock", "mail", "sales_team", "account"],
+    "data": [
+        "security/ir.model.access.csv",
+        "security/security.xml",
+        "data/ir_sequence.xml",
+        "views/sale_return.xml",
+        "views/sale_order.xml",
+        "views/stock_move_views.xml",
+        "views/product_category.xml",
+        "views/product_template.xml",
+        "views/account_journal.xml",
+        'views/account_move.xml',
+        'wizard/sale_return_roundoff_wizard.xml',
+    ],
+}

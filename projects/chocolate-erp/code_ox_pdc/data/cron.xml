@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- <record id="customer_vendor_pdc_notification" model="ir.cron">
+        <field name="name">Customer Vendor PDC Notification</field>
+        <field name="model_id" ref="code_ox_pdc.model_post_dated_check"/>
+        <field name="state">code</field>
+        <field name="code">model.action_customer_and_vendor_pdc_notification()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="active" eval="True"/>
+    </record> -->
+
+</odoo>

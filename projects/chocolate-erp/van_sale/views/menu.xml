@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <menuitem id="van_sale_van_root" name="Van" sequence="100" parent="sale.sale_menu_root" groups="sales_team.group_sale_manager"/>
+        <menuitem id="menu_sales_person_manage" name="Sales Person Trip" parent="van_sale.van_sale_van_root" action="action_sales_person" sequence="100"/>
+        <menuitem id="sales_route_assignment_menu" name="Sale Person Routes" sequence="10" action="sales_route_assignment_action" parent="van_sale.van_sale_van_root"/>
+        <menuitem id="route_menu" name="Routes" sequence="10" action="route_route_action" parent="van_sale.van_sale_van_root" />
+        <menuitem id="menu_van_detail" name="Van" parent="van_sale.van_sale_van_root" action="action_van_detail" sequence="15" />
+        <menuitem id="menu_van_allocation" name="Van Allocation Request" parent="van_sale.van_sale_van_root" action="action_van_allocation" sequence="101" />
+
+
+</odoo>

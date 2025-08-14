@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sales_target_wizard_form" model="ir.ui.view">
+        <field name="name">sales.target.wizard.form</field>
+        <field name="model">sales.target.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Incentive Report">
+                <group>
+                    <field name="date_from" />
+                    <field name="date_to" />
+                </group>
+                <footer>
+                    <button string="Generate Report" type="object" name="generate_excel_report" class="btn-primary" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sales_targrt_wizard" model="ir.actions.act_window">
+        <field name="name">Incentive Report</field>
+        <field name="res_model">sales.target.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_sales_targrt_wizard"
+          name="Incentive Report"
+          parent="sale.menu_sale_report"
+          action="action_sales_targrt_wizard"
+          sequence="50"/>
+
+</odoo>

@@ -1,0 +1,31 @@
+<odoo>
+    <record id="view_weekly_sales_excel_wizard_form" model="ir.ui.view">
+        <field name="name">new.customer.wizard.form</field>
+        <field name="model">new.customer.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate Weekly Sales Report">
+                <group>
+                    <field name="start_date" />
+                    <field name="end_date" />
+                </group>
+                <footer>
+                    <button string="Generate Report" type="object" name="generate_excel_report" class="btn-primary" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_new_customer_excel_wizard" model="ir.actions.act_window">
+        <field name="name">New Customer Report</field>
+        <field name="res_model">new.customer.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_reporting_new_customer_report"
+              name="New Customer Report"
+              parent="sale.menu_sale_report"
+              action="action_new_customer_excel_wizard"
+              sequence="55"/>
+</odoo>

@@ -1,0 +1,59 @@
+<odoo>
+    <record id="wallet_wallet_form_view" model="ir.ui.view">
+        <field name="name">wallet.wallet.form</field>
+        <field name="model">wallet.wallet</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="customer_id"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="total_received"/>
+                        <field name="total_paid"/>
+                        <field name="balance_amount"/>
+                    </group>
+                    <notebook>
+                        <page name="received" string="Received">
+                            <field name="received_ids">
+                                <list editable="bottom">
+                                    <field name="amount"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="spent" string="Spent">
+                            <field name="spend_ids">
+                                <list editable="bottom">
+                                    <field name="amount"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="wallet_wallet_list_view" model="ir.ui.view">
+        <field name="name">wallet.wallet.list</field>
+        <field name="model">wallet.wallet</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="customer_id"/>
+                <field name="total_received"/>
+                <field name="total_paid"/>
+                <field name="balance_amount"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_wallet" model="ir.actions.act_window">
+        <field name="name">Wallets</field>
+        <field name="res_model">wallet.wallet</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_wallet_root" name="Wallet"/>
+    <menuitem id="menu_wallet_main" name="Wallets" parent="menu_wallet_root" action="action_wallet"/>
+</odoo>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_leave_encashment_form" model="ir.ui.view">
+        <field name="name">leave.encashment.form</field>
+        <field name="model">leave.encashment</field>
+        <field name="arch" type="xml">
+            <form string="Leave Encashment">
+                <header>
+                    <button name="action_submit" type="object" string="Submit"
+                              class="btn-success" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                              class="btn-primary" groups="hr.group_hr_user" invisible="state != 'submit'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                              class="btn-secondary"/>
+                    <field name="state" widget="statusbar"/>
+               </header>
+                <sheet>
+                    <div name="title" class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" nolabel="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" required="1" options="{'no_create': True, 'no_open': True, 'no_edit': True}" readonly="state != 'draft'"/>
+                            <field name="department_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+                            <field name="job_position" />
+                            <field name="date" required="1" force_save="1" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="leave_type_id" required="1" options="{'no_create': True, 'no_open': True, 'no_edit': True}" readonly="state != 'draft'" domain="[('allow_leave_encashment', '=', True)]"/>
+                            <field name="leave_pending" readonly="1" />
+                            <field name="leave_encash" required="1" readonly="state not in ['draft', 'submit']"/>
+                            <field name="amount" required="state == 'submit'" invisible="state != 'submit'" groups="hr_holidays.group_hr_holidays_manager"/>   
+                            <field name="amount" force_save="1" readonly="1" invisible="state == 'submit'"/>   
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_leave_encashment_list" model="ir.ui.view">
+        <field name="name">leave.encashment.list</field>
+        <field name="model">leave.encashment</field>
+        <field name="arch" type="xml">
+            <list string="Leave Encashments">
+                <field name="employee_id" />
+                <field name="date" />
+                <field name="leave_encash" />
+                <field name="leave_pending" readonly="1" />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_leave_encashment" model="ir.actions.act_window">
+        <field name="name">Leave Encashment</field>
+        <field name="res_model">leave.encashment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

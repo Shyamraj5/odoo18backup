@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="individual_customer_report_wizard_view" model="ir.ui.view">
+        <field name="name">individual.customer.daily.report.wizard.view</field>
+        <field name="model">individual.customer.daily.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Customer Despatch Card">
+                <group>
+                    <group>
+                        <field name="date"/>
+                        <field name="partner_id" domain="[('parent_id','=',False),('user_ids','=',False),('ref_company_ids','=',False)]"/>
+                    </group>
+                    <group>
+                        <field name="shift_id"/>
+                        <field name="plan_category_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_pdf" string="Export PDF" type="object" class="btn-primary"/>
+                    <button name="print_excel" string="Export Excel" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_individual_customer_daily_report_wizard" model="ir.actions.act_window">
+        <field name="name">Customer Despatch Card</field>
+        <field name="res_model">individual.customer.daily.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

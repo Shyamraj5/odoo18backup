@@ -1,0 +1,1 @@
+from . import weekly_sales_report

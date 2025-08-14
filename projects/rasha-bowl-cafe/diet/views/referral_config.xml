@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.view.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='invite_users']" position="after">
+                <div id="invite_users">
+                        <block title ="Referral Config" name="referral_settings_group">
+                            <setting id="refer_bonus_setting">
+                                <field name="refer_bonus" string="Refer Bonus"/>
+                            </setting>
+                            <setting id="referer_bonus_settings">
+                                <field name="referer_bonus" string="Referer Bonus"/>
+                            </setting>
+                            <setting id="referral_message_settings">
+                                <field name="referral_message" string="Referral Message"/>
+                            </setting>
+                        </block>
+                    </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

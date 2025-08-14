@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ramdan_subscription_edit_view_form" model="ir.ui.view">
+        <field name="name">ramdan.subscription.edit.view.form</field>
+        <field name="model">ramdan.subscription.edit.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="o_row">
+                        <field name="sunday" class="oe_inline"/>
+                        <label for="sunday" string="Sunday" class="oe_inline"/>
+                        <field name="monday" class="oe_inline"/>
+                        <label for="monday" string="Monday" class="oe_inline"/>
+                        <field name="tuesday" class="oe_inline"/>
+                        <label for="tuesday" string="Tuesday" class="oe_inline"/>
+                        <field name="wednesday" class="oe_inline"/>
+                        <label for="wednesday" string="Wednesday" class="oe_inline"/>
+                        <field name="thursday" class="oe_inline"/>
+                        <label for="thursday" string="Thursday" class="oe_inline"/>
+                        <field name="friday" class="oe_inline"/>
+                        <label for="friday" string="Friday" class="oe_inline"/>
+                        <field name="saturday" class="oe_inline"/>
+                        <label for="saturday" string="Saturday" class="oe_inline"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="additional_amount" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="end_date" readonly="1" force_save="1"/>
+                            <field name="currency_id" force_save="1" invisible="1"/>
+                            <field name="subscription_id" force_save="1" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="protein"/>
+                        </group>
+                        <group>
+                            <field name="carbohydrates"/>
+                        </group>
+                    </group>
+                    <field name="ramdan_subscription_edit_line_ids" widget="one2many_list">
+                        <list string="Ramdan Subscription Lines" editable="bottom" create="0" delete="0">
+                            <field name="meal_category_id" domain="[('is_ramdan', '=', True)]" readonly="1" force_save="1"/>
+                            <field name="meal_count"/>
+                            <field name="subscription_config_line_id" force_save="1" column_invisible="1"/>
+                        </list>
+                    </field>
+                    <separator string="Additional Meals"/>
+                    <field name="ramdan_subscription_edit_additional_line_ids" widget="one2many_list">
+                        <list string="Ramdan Subscription Additional Lines" editable="bottom" create="1" delete="0">
+                            <field name="meal_category_ids" column_invisible="1"/>
+                            <field 
+                                name="meal_category_id" domain="[('is_ramdan', '=', True), ('id', 'not in', meal_category_ids)]" 
+                                options="{'no_create': True, 'no_create_edit': True}" required="1"
+                            />
+                            <field name="meal_count"/>
+                        </list>
+                    </field>
+                </sheet>
+                <footer>
+                    <button name="action_submit" string="Submit" type="object" class="btn-primary" context="{'skip_base_price_calculation': True}"/>
+                    <button name="action_cancel" string="Cancel" type="object" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

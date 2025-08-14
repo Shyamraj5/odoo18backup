@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_leave_encashment,leave.encashment,model_leave_encashment,base.group_user,1,1,1,1
+access_hr_leave_encashment_history,hr.leave.encashment.history,model_hr_leave_encashment_history,base.group_user,1,1,1,1

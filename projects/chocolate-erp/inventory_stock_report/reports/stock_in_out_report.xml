@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_in_out_report" model="ir.actions.report">
+        <field name="name">Stock In Out Report</field>
+        <field name="model">stock.in.out.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">inventory_stock_report.stock_in_out_report_xlsx</field>
+        <field name="report_file">inventory_stock_report.stock_in_out_report_xlsx</field>
+        <field name="binding_model_id" ref="model_stock_in_out_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+    
+
+</odoo>

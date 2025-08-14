@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+    
+        <record id="offer_wheel_reward_type" model="wallet.amount.type">
+            <field name="name">Offer Wheel</field>
+        </record>
+        <record id="eshop_reward_spend_type" model="wallet.amount.type">
+            <field name="name">Eshop Spend</field>
+        </record>
+        <record id="subscription_reward_spend_type" model="wallet.amount.type">
+            <field name="name">Subscription Purchase</field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

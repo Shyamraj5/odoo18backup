@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="meals_tag_form" model="ir.ui.view">
+        <field name="name">meals.tag.form</field>
+        <field name="model">meals.tag</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="color" widget="color_picker"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="meals_tag_tree" model="ir.ui.view">
+        <field name="name">meals.tag.list</field>
+        <field name="model">meals.tag</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_meals_tag" model="ir.actions.act_window">
+        <field name="name">Meal Tags</field>
+        <field name="res_model">meals.tag</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Enter the Meal Types
+            </p>
+        </field>
+    </record>
+    
+</odoo>

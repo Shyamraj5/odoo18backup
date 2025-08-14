@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="order_report_wizard_view_form" model="ir.ui.view">
+        <field name="name">order.report.wizard.view.form</field>
+        <field name="model">order.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Order Report">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date" />
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <!-- <button name="view_report" string="View" type="object" class="btn-primary" /> -->
+                    <button name="export_report" string="Export" type="object" class="btn-primary" />
+                    <button name="cancel" string="Cancel" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="order_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">Order Report</field>
+        <field name="res_model">order.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

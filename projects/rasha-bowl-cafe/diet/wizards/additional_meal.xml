@@ -1,0 +1,40 @@
+<odoo>
+    <record id="additional_meal_wizard_view_form" model="ir.ui.view">
+        <field name="name">additional.meal.wizard.view.form</field>
+        <field name="model">additional.meal.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="subscription_order_id" force_save="1" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page>
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="meal_id" />
+                                    <field name="count"/>
+                                    <field name="meal_category_id"/>
+                                    <field name="price"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="add" string="Add" type="object" class="oe_highlight"/>
+                    <button name="cancel" special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="customer_address_addition_wizard_action" model="ir.actions.act_window">
+        <field name="name">Address</field>
+        <field name="res_model">customer.address.addition.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+</odoo>

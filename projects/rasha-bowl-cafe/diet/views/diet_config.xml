@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="diet_res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">diet.res.config.settings.view.form.inherit.diet</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="90"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="Diet" string="Diet" name="diet" logo="diet/static/description/iconold.png" groups="base.group_no_one">
+                        <block title="Diet" name="diet_feed_setting_container">
+                            <setting id="order_capacity" string="Order Capacity">
+                                <field name="order_capacity"/>
+                            </setting>
+                            <setting id="universal_pause_time" string="Universal Pause Time">
+                                <group>
+                                    <field name="universal_pause_time" widget="float_time"/>
+                                </group>
+                            </setting>
+                            <!-- <setting id="max_weekly_spins" string="Max Weekly Spins">
+                                <group>
+                                    <field name="max_weekly_spins"/>
+                                </group>
+                            </setting> -->
+                            <!-- <setting id="ramdan" string="Ramdan Settings">
+                                <group>
+                                    <field name="ramdan_start_date" string="Start Date"/>
+                                    <field name="ramdan_end_date" string="End Date"/>
+                                    <button string="Process Ramdan Plans" name="process_ramdan_plans" type="object" class="oe_highlight"/>
+                                </group>
+                            </setting> -->
+                            
+                        </block>
+                        <block title="Work Flow Buffer Days" name="buffer_time_settings">
+                            <setting id="workflow_buffer_time" string="Work Flow Buffer Days">
+                                <group>
+                                    <field name="subscription_create_buffer"/>
+                                    <field name="subscription_freeze_buffer"/>
+                                    <field name="start_date_edit_buffer"/>
+                                </group>
+                            </setting>
+
+                        </block>
+                        <block title ="Referral Config" name="referral_settings_group">
+                            <setting id="refer_bonus_setting">
+                                <field name="refer_bonus" string="Refer Bonus"/>
+                            </setting>
+                            <setting id="referer_bonus_settings">
+                                <field name="referer_bonus" string="Referer Bonus"/>
+                            </setting>
+                            <setting id="referral_message_settings">
+                                <field name="referral_message" string="Referral Message"/>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>   
+            </field>
+        </record>
+    </data>
+
+    <record id="diet_config_action" model="ir.actions.act_window">
+        <field name="name">Diet settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'diet', 'bin_size': False}</field>
+    </record>
+</odoo>

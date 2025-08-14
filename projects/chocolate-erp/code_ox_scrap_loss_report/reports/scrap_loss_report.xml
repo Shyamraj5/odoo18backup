@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_scrap_loss_report" model="ir.actions.report">
+        <field name="name">Scrap Loss Report</field>
+        <field name="model">scrap.loss.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">code_ox_scrap_loss_report.scrap_loss_report</field>
+        <field name="report_file">code_ox_scrap_loss_report.scrap_loss_report</field>
+        <field name="binding_model_id" ref="model_scrap_loss_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

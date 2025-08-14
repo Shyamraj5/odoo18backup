@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="view_pdc_wizard_view" model="ir.ui.view">
+        <field name="name">bi.pdc.wizard.form</field>
+        <field name="model">post.dated.wizard</field>
+        <field name="arch" type="xml">
+             <form string="Choose Pdc">
+                <group>
+                    <group>
+                    <field name="date" required="1"/>
+                        <field name ="pdc_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_deposit" string="Deposit" type="object"
+                    class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_view_pdc_order" model="ir.actions.act_window">
+        <field name="name">Choose Pdc</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">post.dated.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

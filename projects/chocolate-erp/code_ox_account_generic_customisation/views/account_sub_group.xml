@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree/List View -->
+    <record id="view_account_sub_group_tree" model="ir.ui.view">
+        <field name="name">account.sub.group.tree</field>
+        <field name="model">account.sub.group</field>
+        <field name="arch" type="xml">
+            <list string="Account Sub Groups">
+                <field name="name"/>
+                <field name="parent_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_account_sub_group_form" model="ir.ui.view">
+        <field name="name">account.sub.group.form</field>
+        <field name="model">account.sub.group</field>
+        <field name="arch" type="xml">
+            <form string="Account Sub Group">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="parent_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_account_sub_group" model="ir.actions.act_window">
+        <field name="name">Account Sub Groups</field>
+        <field name="res_model">account.sub.group</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_account_sub_group"
+        name="Account Sub Groups"
+        parent="account.menu_finance_configuration"
+        action="action_account_sub_group"
+        sequence="5"/>
+</odoo>

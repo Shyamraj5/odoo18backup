@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="point_of_sale.ControlButtons" t-inherit-mode="extension">
+        <xpath expr="//button[@class='more-btn btn btn-light btn-lg flex-shrink-0']" position="before">
+            <button class="more-btn btn btn-light btn-lg flex-shrink-0"
+                    t-if="!props.showRemainingButtons and !ui.isSmall"
+                    t-on-click="openDialog">
+                <div t-if="state.customerType" t-esc="state.customerType.name" class="text-truncate text-action" />
+                <t t-else="">Customer Type</t>
+            </button>
+        </xpath>
+
+        <xpath expr="//t[@t-if='props.showRemainingButtons']/div/OrderlineNoteButton" position="after">
+            <button t-att-class="buttonClass" t-on-click="openOrderTypeDialog">
+                <i class="fa fa-link me-1" role="img" aria-label="Set Sale Order" title="Set Sale Order" /> Order Type
+            </button>
+        </xpath>
+    </t>
+</templates>

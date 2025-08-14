@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_other_allowance,access.employee.other.allowance,model_employee_other_allowance,base.group_user,1,1,1,1
+access_other_allowance_type,access.other.allowance.type,model_other_allowance_type,base.group_user,1,1,1,1

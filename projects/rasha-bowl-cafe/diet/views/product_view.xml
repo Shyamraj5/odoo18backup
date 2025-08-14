@@ -1,0 +1,655 @@
+<odoo>
+    <data>
+        <record id="view_inherit_product_form" model="ir.ui.view">
+            <field name="name">inherit.product.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_title')]" position="after">
+                    <group>
+                        <group>
+                            <field name="meal_description"/>
+                            <field name="meal_category_id" widget="many2many_tags" options="{'color_field': 'color'}" invisible="is_ingredient" />
+                            <field name="kitchen_type"/>
+                            <field name="start_date" />
+                            <field name="end_date" />
+                        </group>
+                        <group>
+                            <field name="ingredient_category_id" invisible="not is_ingredient"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//notebook/page[@name='general_information']//field[@name='type']" position="after">
+                    <field name="is_ingredient" invisible="1"/>
+                    <field name="is_meal" invisible="1"/>
+                    <field name="is_semi_cooked"  invisible="is_meal" />
+                    <field name="is_plan" invisible="1" force_save="1"/>
+                    <field name="brand_id" options="{'no_create':1,'no_create_edit':1}" invisible="not is_ingredient"/>
+                </xpath>
+                <page name="general_information" position="after">
+                    <page name="calorie_details" string="Nutritional Values">
+                        <group string="Nutritional Values">
+                            <group>
+                                <group>
+                                    <field name="protein"/>
+                                    <field name="carbohydrates"/>
+                                    <field name="calories" force_save="1"/>
+                                </group>
+                            </group>
+                        </group>
+                    </page>
+                </page>
+                <xpath expr="//field[@name='type']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='invoice_policy']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='taxes_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_tag_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='categ_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_tag_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='purchase']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='sales']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_hide_kitchen_type_form" model="ir.ui.view">
+            <field name="name">inherit.product.hide.kitchen.type.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='kitchen_type']" position="attributes">
+                    <attribute name="invisible">is_ingredient</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <!-- HIDE field product_tooltip -->
+        <record id="product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.form.view.inherit.sale</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="product_tooltip" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <!-- <div class="fst-italic text-muted" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </div> -->
+                <xpath expr="//notebook/page[@name='general_information']//field[@name='product_tooltip']" position="after">
+                    <field name="tag" invisible="1"/>
+                    <field name="app_right_tag" invisible="1"/>
+                    <field name="label_title" invisible="1"/>
+                    <field name="label_sub_title" invisible="1"/>
+                    <field name="kitchen_report" invisible="1"/>
+                    <field name="can_change_plan" invisible="1"/>
+                    <field name="is_from_menu" invisible="1"/>
+                </xpath>
+                <xpath expr="//notebook/page[@name='general_information']//group[1]" position="after">
+                    <group>
+                            <field name="tag_information_ids" invisible="1">
+                                    <list editable="top" string="Lines">
+                                        <field name="tag"/>
+                                        <field name="type"/>
+                                        <field name="start_date"/>
+                                        <field name="end_date"/>
+                                    </list>
+                            </field>
+                    </group>
+                </xpath>
+                <xpath expr="//notebook/page[@name='general_information']" position="after">
+                    <page string='Ingredients' name="ingredients">
+                        <field name="ingredients_line_ids">
+                            <list string="Meal Informations" editable="bottom">
+                                <field name="ingredient_id" options="{'no_create': True, 'no_create_edit':True}"/> 
+                                <field name="quantity"/>
+                                <field name="product_uom"/>
+                                <field name="is_main_ingredient" width="40%" />
+                                <field name="dislikable" width="30%"/>
+                                <field name="price" sum="Total"/>
+                            </list>
+                        </field>
+                    </page>
+                    
+                </xpath>
+                <xpath expr="//notebook/page[@name='invoicing']" position="after">
+                    <page string='App Settings' name="app_settings"  invisible="is_ingredient" >
+                        <group>
+                            <group>
+                                <field name="is_ingredient" invisible="1"/>
+                                <field name="is_invisible_in_app"/>
+                                <field name="offer_name" />
+                                <field name="sequence_in_app" />
+                                <field name="app_dislike_attributes" />
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        
+        <record id="view_inherit_products_form" model="ir.ui.view">
+            <field name="name">inherit.products.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//field[@name='invoice_policy']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='taxes_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='categ_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_tag_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='purchase']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="ingredient_product_template_action_product" model="ir.actions.act_window">
+            <field name="name">Ingredients</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'default_is_ingredient': True}</field>
+        </record>
+
+        <record id="stock.product_template_action_product" model="ir.actions.act_window">
+            <field name="name">Ingredients</field>
+            <field name="domain">[]</field>
+            <field name="context">{'default_is_ingredient': True}</field>
+        </record>
+
+        <!-- <record model="ir.ui.menu" id="stock.menu_stock_inventory_control">
+            <field name="name">Items</field>
+        </record> -->
+
+        <record model="ir.ui.menu" id="stock.menu_stock_inventory_control">
+            <field name="name">Products</field>
+        </record>
+
+        <!-- <record model="ir.ui.menu" id="stock.menu_product_variant_config_stock">
+            <field name="name">Meals</field>
+        </record> -->
+        <record model="ir.ui.menu" id="stock.menu_product_variant_config_stock">
+            <field name="name">Products</field>
+        </record>
+        
+        <!-- <menuitem id="submenu_ingredients" name="Ingredients"
+            parent="stock.menu_stock_inventory_control"
+            action="ingredient_product_template_action_product" sequence="5"/> -->
+        <!-- <menuitem id="submenu_meals" name="Meals"
+            parent="stock.menu_stock_config_settings"
+            sequence="5"/> -->
+
+        <record id="meal_ingredient_category_view_form" model="ir.ui.view">
+            <field name="name">meal.ingredient.category.view.form</field>
+            <field name="model">meal.ingredient.category</field>
+            <field name="arch" type="xml">
+                <form string="Ingredient Category">
+                    <sheet>
+                        <div>
+                            <h1>
+                                <field name="code"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="meal_ingredient_category_view_tree" model="ir.ui.view">
+            <field name="name">meal.ingredient.category.view.list</field>
+            <field name="model">meal.ingredient.category</field>
+            <field name="arch" type="xml">
+                <list string="Ingredient Category">
+                    <field name="code"/>
+                    <field name="name" />
+                </list>
+            </field>
+        </record>
+        <record id="meal_ingredient_category_action" model="ir.actions.act_window">
+            <field name="name">Ingredient Category</field>
+            <field name="res_model">meal.ingredient.category</field>
+            <field name="view_mode">list,form</field>
+        </record>
+        <record id="product_template_ingredient_page" model="ir.ui.view">
+            <field name="name">product.template.ingredient.page</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='ingredients']" position="attributes">
+                    <attribute name="invisible">not is_semi_cooked,not is_meal</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- meals views -->
+
+        <record id="meals_kanban_view" model="ir.ui.view">
+            <field name="name">meals.kanban.view</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_image me-1">
+                                    <img t-att-src="kanban_image('product.template', 'image_128', record.id.raw_value)" alt="Product" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top mb-0">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <t t-if="record.default_code.value">[<field name="default_code"/>]</t>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="meals_view_tree" model="ir.ui.view">
+            <field name="name">meals.view.list</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <list string="Meals">
+                    <field name="default_code" />
+                    <field name="name" />
+                    <field name="rating" widget="priority"/>
+                    <field name="available_days" />
+                    <field name="plan_ids" widget="many2many_tags"/>
+                    <field name="meal_category_id" widget="many2many_tags"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="meals_view_form" model="ir.ui.view">
+            <field name="name">meals.view.form</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <form string="Meals">
+                    <header>
+                        <button string="Export PDF" name="recipe_print_pdf" type="object" class="oe_highlight"/>
+                        <button string="Export Excel" name="recipe_print_excel" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+                        <div class="oe_title">
+                            <label for="name" string="Meal Name"/>
+                            <h1>
+                                <field name="name" placeholder="Meal Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <div>
+                                <label  for="meal_description" string="Meal Description"/>
+                                <field name="meal_description"/>
+                                <div class="o_td_label" >
+                                    <div name="weight" class="d-flex" >
+                                        <label  for="weight" string="Weight"/>
+                                        <field name="weight"/>
+                                        <span class="oe_inline o_form_label mx-3"> </span>
+                                        <field name="uom_id"/>
+                                        <field name="uom_po_id" invisible="1"/>
+                                    </div>
+                                </div>
+                            </div> 
+                            <group>
+                                <field name="default_code" readonly="1" string="Meal Code"/>
+                                <field name="active" string="Active"/>
+                                <field name="meal_category_id" widget="many2many_tags" options="{'no_create': True, 'no_create_edit': True}"/>
+                                <field name="plan_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit': True}"/>
+                                <field name="meal_tag_id" options="{'no_create': True, 'no_create_edit': True}" widget="many2many_tags"/>
+                                <field name="rating" widget="priority"/>
+                                <field name="rating_count"/>
+                                <field name="has_rating" invisible="1"/>
+                                <field name="restrict_double_selection"/>
+                                <field name="show_in_app_menu"/>
+                                <field name="list_price"/>
+                            </group> 
+                        </group>
+                        <notebook>
+                            <page name="calorie_details" string="Macros">
+                                <group string="Macros">
+                                    <group>
+                                        <field name="protein"/>
+                                        <field name="carbohydrates"/>
+                                        <field name="fat" />
+                                        <field name="calories" force_save="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="ingredients" string="Ingredients">
+                                <field name="ingredients_line_ids">
+                                    <list string="Ingredients" editable="bottom">
+                                        <field name="ingredient_id"  options="{'no_create': True, 'no_create_edit':True}" tracking="1"/> 
+                                        <field name="quantity"/>
+                                        <field name="product_uom"/>
+                                        <field name="is_main_ingredient" column_invisible="1" />
+                                        <field name="dislikable" />
+                                        <field name="price" sum="Total" column_invisible="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page name="availabledays" string="Available Days" invisible="not is_meal">
+                                <field name="is_meal" invisible="1"/>
+                                <div class="o_row">
+                                    <field name="all_days" class="oe_inline"/>
+                                    <label for="all_days" class="oe_inline"/>
+                                    <field name="sunday" class="oe_inline"/>
+                                    <label for="sunday" class="oe_inline"/>
+                                    <field name="monday" class="oe_inline"/>
+                                    <label for="monday" class="oe_inline"/>
+                                    <field name="tuesday" class="oe_inline"/>
+                                    <label for="tuesday" class="oe_inline"/>
+                                    <field name="wednesday" class="oe_inline"/>
+                                    <label for="wednesday" class="oe_inline"/>
+                                    <field name="thursday" class="oe_inline"/>
+                                    <label for="thursday" class="oe_inline"/>
+                                    <field name="friday" class="oe_inline"/>
+                                    <label for="friday" class="oe_inline"/>
+                                    <field name="saturday" class="oe_inline"/>
+                                    <label for="saturday" class="oe_inline"/>
+                                </div>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter reload_on_follower="True"/>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_inherit_product_recipe_form" model="ir.ui.view">
+            <field name="name">inherit.product.recipe.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="diet.meals_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='ingredients']" position="after">
+                    <page string='Recipe' name="recipe" invisible='1'>
+                        <field name="recipe"/>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='meal_category_id']" position="after">
+                    <field name="kitchen_type"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="meals_search_view_search" model="ir.ui.view">
+            <field name="name">meals.search.view.search</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" string="Meal Name"/>
+                    <field name="default_code" string="Meal Code"/>
+                    <field name="meal_category_id" string="Meal Category"/>
+                    <field name="brand_id"/>
+                    <field name="uom_id"/>
+                    <filter name="all_days" string="All Days" domain="[('all_days', '=', True)]"/>
+                    <filter name="sunday" string="Sunday" domain="[('sunday', '=', True)]"/>
+                    <filter name="monday" string="Monday" domain="[('monday', '=', True)]"/>
+                    <filter name="tuesday" string="Tuesday" domain="[('tuesday', '=', True)]"/>
+                    <filter name="wednesday" string="Wednesday" domain="[('wednesday', '=', True)]"/>
+                    <filter name="thursday" string="Thursday" domain="[('thursday', '=', True)]"/>
+                    <filter name="friday" string="Friday" domain="[('friday', '=', True)]"/>
+                    <filter name="saturday" string="Saturday" domain="[('saturday', '=', True)]"/>
+                    <filter name="meal_category_group" string="Meal Category" context="{'group_by': 'meal_category_id'}" />
+                    <filter name="brand_group" string="Brand" context="{'group_by': 'brand_id'}" />
+                    <filter name="show_in_app_menu" string="Meals in App Menu" domain="[('show_in_app_menu', '=', True)]"/>
+                    <filter name="not_show_in_app_menu" string="Meals not in App Menu" domain="[('show_in_app_menu', '=', False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Meals in App Menu" name="group_by_meals_in_app" context="{'group_by': 'show_in_app_menu'}"/>
+                    </group>
+                    <separator/>
+                    <filter name="archived" string="Archived" domain="[('active', '=', False)]" />
+                </search>
+            </field>
+        </record>
+
+        <record id="ingredient_search_view_search" model="ir.ui.view">
+            <field name="name">ingredient.search.view.search</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" string="Name"/>
+                    <field name="default_code" string="Code"/>
+                    <field name="ingredient_category_id" string="Ingredient Category"/>
+                    <filter name="ingredient_category_group" string="Category" context="{'group_by': 'ingredient_category_id'}" />
+                </search>
+            </field>
+        </record>
+
+        <record id="meals_action" model="ir.actions.act_window">
+            <field name="name">Meals</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_meal','=',True)]</field>
+            <field name="context">{'default_is_meal': True}</field>
+            <field name="search_view_id" ref="diet.meals_search_view_search"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="meals_action_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="meals_view_tree"/>
+            <field name="act_window_id" ref="meals_action"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="meals_action_kanban">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="meals_kanban_view"/>
+            <field name="act_window_id" ref="meals_action"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="meals_action_form">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="meals_view_form"/>
+            <field name="act_window_id" ref="meals_action"/>
+        </record>
+
+        <record id="recompute_calorie" model="ir.actions.server">
+            <field name="name">Recompute Calorie</field>
+            <field name="model_id" ref="model_product_template"/>
+            <field name="binding_model_id" ref="model_product_template"/>
+            <field name="state">code</field>
+            <field name="code">action = records._compute_calorie()</field>
+        </record>
+
+        <!-- ingredient views -->
+
+        <record id="ingredient_kanban_view" model="ir.ui.view">
+            <field name="name">ingredient.kanban.view</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_image me-1">
+                                    <img t-att-src="kanban_image('product.template', 'image_128', record.id.raw_value)" alt="Product" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top mb-0">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <t t-if="record.default_code.value">[<field name="default_code"/>]</t>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="ingredient_view_tree" model="ir.ui.view">
+            <field name="name">ingredient.view.list</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <list string="Ingredients">
+                    <field name="default_code" />
+                    <field name="name" />
+                    <field name="ingredient_category_id"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="ingredient_view_form" model="ir.ui.view">
+            <field name="name">ingredient.view.form</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <form string="Ingredient">
+                    <sheet>
+                        <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+                        <div class="oe_title">
+                            <label for="name" string="Ingredient Name"/>
+                            <h1>
+                                <field name="name" placeholder="Ingredient Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="meal_description" string="Description"/>
+                                <field name="uom_id" required="1" options="{'no_create': True, 'no_create_edit': True}"/>
+                                <field name="uom_po_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="default_code" readonly="1" string="Ingredient Code"/>
+                                <field name="ingredient_category_id" /><field name="is_ingredient" invisible="1"/>
+                                <field name="is_ingredient" invisible="1"/>
+                                <field name="is_meal" invisible="1"/>
+                                <field name="is_semi_cooked"  invisible="is_meal"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="ingredients" string="Ingredients"  invisible="not is_semi_cooked , not is_meal">
+                                <field name="ingredients_line_ids">
+                                    <list string="Ingredients" editable="bottom">
+                                        <field name="ingredient_id" options="{'no_create': True, 'no_create_edit':True}"/> 
+                                        <field name="quantity"/>
+                                        <field name="product_uom"/>
+                                        <field name="is_main_ingredient" column_invisible="1" />
+                                        <field name="dislikable" column_invisible="1"/>
+                                        <field name="price" sum="Total"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter reload_on_follower="True"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_label_change_description" model="ir.ui.view">
+            <field name="name">inherit.product.change.label.change</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='meal_description']" position="attributes">
+                    <attribute name="string">Description</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="string">Name</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="ingredient_action" model="ir.actions.act_window">
+            <field name="name">Ingredients</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_ingredient','=',True)]</field>
+            <field name="context">{'default_is_ingredient': True}</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="ingredient_action_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="ingredient_view_tree"/>
+            <field name="act_window_id" ref="ingredient_action"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="ingredient_action_kanban">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="ingredient_kanban_view"/>
+            <field name="act_window_id" ref="ingredient_action"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="ingredient_action_form">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="ingredient_view_form"/>
+            <field name="act_window_id" ref="ingredient_action"/>
+        </record>
+
+
+        <!-- meal customer rating view -->
+        <record id="meal_customer_rating_view_tree" model="ir.ui.view">
+            <field name="name">meal.customer.rating.view.list</field>
+            <field name="model">meal.customer.rating</field>
+            <field name="arch" type="xml">
+                <list create="false" edit="false">
+                    <field name="create_date" readonly="1" string="Date" widget="date" options="{'format': 'dd/MM/yyyy'}"/>
+                    <field name="rating" readonly="1" widget="priority"/>
+                    <field name="partner_id" readonly="1" string="Customer"/>
+                    <field name="contact_no" widget="phone"/>
+                    <field name="meal_id" readonly="1" domain="[('is_meal','=',True)]"/>
+                    <field name="comments" readonly="1"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="meal_customer_rating_action" model="ir.actions.act_window">
+            <field name="name">Customer Rating (Meals)</field>
+            <field name="res_model">meal.customer.rating</field>
+            <field name="view_mode">list</field>
+        </record>
+
+        <record id="product.product_template_action_all" model="ir.actions.act_window">
+            <field name="domain">[('is_meal', '=', False)]</field>
+        </record>
+
+	</data>
+</odoo>

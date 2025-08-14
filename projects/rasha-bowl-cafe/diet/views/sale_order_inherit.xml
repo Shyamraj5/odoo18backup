@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="subscription_smart_button" model="ir.ui.view">
+            <field name="name">subscriptions.view.buttons</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <!-- <div name="button_box" position="inside">
+                    <button class="oe_stat_button" type="object" name="button_subscription"
+                        icon="fa-usd" invisible="not subscription_count" >
+                        <field name="subscription_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_delivered"
+                    icon="fa-truck">
+                        <field string="Delivered" name="delivered" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_calender"
+                        icon="fa-calendar" >
+                        <field string="Calender" name="calender" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_meals"
+                        icon="fa-cutlery" >
+                        <field string="Meals" name="meals" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_sms"
+                        icon="fa-envelope-o" >
+                        <field string="Sms" name="calender" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="sms" name="action_notification"
+                        icon="fa-mobile" >
+                        <field string="Notification" name="calender" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="notification" name="action_re_subscribe"
+                        icon="fa-repeat" >
+                        <field string="Re-Subscribe" name="re_subscribe" widget="statinfo"/>
+                    </button>
+                </div> -->
+                <!-- <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="ref" />
+                </xpath>  -->
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="context">{'form_view_ref': 'diet.diet_customer_form'}</attribute>
+                </xpath>
+                    <!-- <field name="zone_id"/>
+                    <field name="mobile"/>
+                    <field name="est_delivery_time" widget='float_time'/> -->
+                    <!-- <field name="plan_status_id"/> -->
+                    <!-- <field name="wallet_amount"/>
+                    <field name="super_menus"/>
+                    <field name="e_sale_order" invisible = "1"/> -->
+                <!-- </xpath> -->
+                <!-- <xpath expr="//field[@name='validity_date']" position="before">
+                    <field name="date"/>
+                    <field name="order_date"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="is_expired_order" invisible="1"/>
+                    <field name="is_not_started" invisible="1"/>
+                    <field name="extra_days"/>
+                    <field name="remaining_days"/>
+                    <field name="generated_days"/>
+                    <field name="tags"/>
+                    <field name="source"/>
+                </xpath>    -->
+                <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_order_tree" model="ir.ui.view">
+            <field name="name">sale.order.list.inherit.sale</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="plan_id"/>
+                </xpath>
+                <xpath expr="//field[@name='amount_total']" position="before">
+                    <field name="total_amount"/>
+                    <field name="refund"/>
+                </xpath>
+                <!-- <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="plan_status_id"/>   
+                </xpath> -->
+                <xpath expr="//field[@name='invoice_status']" position="after">
+                    <field name="paid"/>
+                    <field name="balance_amount"/>   
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_quotation_tree" model="ir.ui.view">
+            <field name="name">sale.order.list.inherit.sale</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="plan_id"/>
+                </xpath>
+                <xpath expr="//field[@name='amount_total']" position="before">
+                    <field name="total_amount"/>
+                    <field name="refund"/>
+                </xpath>
+                <!-- <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="plan_status_id"/>   
+                </xpath> -->
+                <xpath expr="//field[@name='invoice_status']" position="after">
+                    <field name="paid"/>
+                    <field name="balance_amount"/>   
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_view_search_inherit_quotation" model="ir.ui.view">
+            <field name="name">sale_filter.sale_order_view_search_inherit_quotation</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='sales']" position="after">
+                    <separator/>
+                        <filter string="Expired Order" name="is_expired_order" domain="[('is_expired_order','=',True)]"/>
+                        <filter string="Not Started Order" name="is_not_started" domain="[('is_not_started','=',True)]"/>
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
+        <record id="sale_order_search_view" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='order_date']" position="after">
+                    <separator/>
+                        <filter string="Paid Invoices"  name ="Paid Invoices" domain="[('invoice_ids.payment_state','=',('paid','in_payment'))]"/>
+                        <filter string="Unpaid Invoices"  name ="Unpaid Invoices" domain="[('invoice_ids.payment_state','=',('not_paid','partial'))]"/>
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
+        
+       <!-- Product menu shows only Ingredients from sale, purchase and accounting module -->
+
+        <menuitem id="account.product_product_menu_sellable" name="Products" action="diet.ingredient_action" parent="account.menu_finance_receivables" sequence="100"/>
+        <menuitem id="account.product_product_menu_purchasable" name="Products" action="diet.ingredient_action" parent="account.menu_finance_payables" sequence="100"/>
+        <menuitem id="purchase.menu_procurement_partner_contact_form" name="Products" action="diet.ingredient_action" parent="purchase.menu_purchase_products" sequence="100"/>
+        <menuitem id="sale.menu_product_template_action" name="Products" action="diet.ingredient_action" parent="sale.product_menu_catalog" sequence="0"/>
+        <menuitem id="stock.menu_product_variant_config_stock" name="Products" action="diet.ingredient_product_template_action_product" parent="stock.menu_stock_inventory_control" sequence="1"/>
+        
+        <!-- show only diet customers from customers menu in all modules -->
+        <menuitem id="sale.res_partner_menu" name="Customers" parent="sale.sale_order_menu" action="diet.customised_diet_customers_action" groups="sales_team.group_sale_salesman" sequence="40"/>
+        <menuitem id="account.menu_account_customer" name="Customers" parent="account.menu_finance_receivables" action="diet.customised_diet_customers_action" sequence="110"/>
+    
+        <!-- show only vendors from vendors menu in all modules -->
+        <menuitem id="purchase.menu_procurement_management_supplier_name" name="Vendors"
+            parent="purchase.menu_procurement_management"
+            action="diet.customised_vendor_action" sequence="15"/>
+
+        <menuitem id="account.menu_account_supplier" name="Vendors" action="diet.customised_vendor_action" parent="account.menu_finance_payables" sequence="200"/>
+        <!-- action for contacts -->
+        <record id="action_diet_contacts" model="ir.actions.act_window">
+            <field name="name">Contacts</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="domain">[('is_supplier','=',False)]</field>
+        </record>
+        <!-- give two submenus (contacts and vendors) under contacts  -->
+        <menuitem id="contacts.res_partner_menu_contacts" name="Contacts" parent="contacts.menu_contacts" sequence="2"/>
+        <menuitem id="contacts.res_partner_submenu_contacts" name="Contacts" action="diet.action_diet_contacts" parent="contacts.res_partner_menu_contacts" sequence="1"/>
+        <menuitem id="contacts.res_partner_submenu_vendors" name="Vendors" action="diet.customised_vendor_action" parent="contacts.res_partner_menu_contacts" sequence="2"/>
+
+        <record id="account_move_sale_view_form" model="ir.ui.view">
+            <field name="name">account.move.sale.view.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="sale.account_invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_source_sale_orders']" position="attributes">
+                    <attribute name="groups">base.group_no_one</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

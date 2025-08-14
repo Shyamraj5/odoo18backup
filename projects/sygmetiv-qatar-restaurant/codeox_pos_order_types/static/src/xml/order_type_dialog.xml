@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="codeox_pos_order_types.OrderTypeDialog">
+        <Dialog size="'md'" title="props.title" modalRef="modalRef">
+            <div class="p-4">
+                <div class="mb-3">
+                    <div class="d-flex flex-column gap-2">
+                        <div t-foreach="state.options" t-as="option" t-key="option.id">
+                            <div 
+                                class="d-flex align-items-center justify-content-between p-3 border rounded cursor-pointer"
+                                t-att-class="state.selectedOption === option.id ? 'border-primary bg-light' : 'border-secondary'"
+                                t-on-click="() => updateSelection(option.id)">
+                                <strong t-esc="option.name"/>
+                                <i class="fa fa-check text-primary" t-if="state.selectedOption === option.id"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <!-- <button class="btn btn-secondary me-2" t-on-click="cancel">Cancel</button>
+                <button class="btn btn-primary" t-on-click="confirm">Confirm</button> -->
+            </t>
+        </Dialog>
+    </t>
+</templates>

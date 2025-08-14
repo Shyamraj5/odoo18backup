@@ -1,0 +1,62 @@
+<odoo>
+    
+    <template id="individual_driver_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="diet.individual_driver_report_header">
+                    <div class="page" style="font-size:16px;margin-left:15px;margin-right:15px;">
+                        <div class="row" style="background-color:#8bc388; padding:5px;">
+                            <div class="col-12" style="padding:5px;text-align:center;">
+                                <span style="font-size:20px;color:white;"><b>
+                                    DRIVER
+                                    </b>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row" style="border:2px solid #8bc388;padding:10px;margin-top:20px;">
+                            <div class="col-6" style="text-align:left;vertical-align:middle;">
+                                <t t-if="o.image">
+                                    <img t-att-src="image_data_uri(o.image)" style="max-height:320px;padding:5px;"/>
+                                </t>
+                            </div>
+                            <div class="col-6" style="text-align:right;vertical-align:middle;margin-top:20px;">
+                                <span style="font-weight:bold;padding:25px;">Name: </span><t t-esc="o.name.upper()"/><br/><br/>
+                                <span style="font-weight:bold;padding:25px;">Code: </span><t t-esc="o.code"/><br/><br/>
+                                <t t-if="o.phone">
+                                    <span style="font-weight:bold;padding:25px;">Phone: </span><t t-esc="o.phone"/>
+                                </t>
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="row" style="margin-top:20px;background-color:#8bc388;">
+                            <div class="col-12" style="padding:5px;text-align:left;vertical-align:middle;">
+                                <span style="color:white; font-weight:bold;text-align:left;vertical-align:middle;font-size:20px;">SERVICE DETAILS</span>
+                            </div>
+                        </div>
+                        <div class="row" style="text-align:left;margin-top:20px;">
+                            <div class="col-6">
+                                <span style="padding:5px;"><b>Areas: </b></span><br/>
+                            </div>
+                            <div class="col-6">
+                                <span style="padding:5px;"><b>Total: <t t-esc="len(o.service_area_ids)"/></b></span><br/>
+                            </div>
+                            <br/>
+                        </div>
+                        <div class="row" style="text-align:left">
+                            <div style="margin-left:20px;">
+                                <ol>
+                                    <t t-foreach="o.service_area_ids" t-as="area">
+                                        <li><span style="padding:5px;"><t t-esc="area.name"/></span><br/></li>
+                                    </t>
+                                </ol>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

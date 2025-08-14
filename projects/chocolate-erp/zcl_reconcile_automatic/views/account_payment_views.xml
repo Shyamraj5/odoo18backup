@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<odoo>
+   <record id="view_account_payment_form_inherited" model="ir.ui.view">
+        <field name="name">account.payment.form.inherited</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                 <notebook>
+                    <page name="inbound" invisible="payment_type != 'inbound'" string="Receive">
+                        <field name="payment_line_ids"  readonly="state != 'draft'">
+                            <list string="inbound" editable="top" sample="1">
+                                <field name="account_payment_id" column_invisible="1" no_label="1" force_save="1"/>
+                                <field name="move_id" readonly="1" force_save="1" />
+                                <field name="amount_total" readonly="1" force_save="1" sum="Total"/>
+                                <field name="amount" required="1" sum="Total" readonly="status in 'paid'"/>
+                                <field name="paid_amount"  readonly="status in 'paid'"/>
+                                <field name="status" readonly="1" force_save="1"/>
+                                <field name="state" readonly="1" force_save="1"/>
+                            </list>
+                        </field>
+                    </page>
+                        <page name="outbound" invisible="payment_type != 'outbound'" string="Send">
+                            <field name="payment_line_ids" readonly="state != 'draft'">
+                                <list string="outbound" editable="top" sample="1">
+                                    <field name="account_payment_id" column_invisible="1" no_label="1" force_save="1"/>
+                                    <field name="move_id" readonly="1" force_save="1"/>
+                                    <field name="amount_total" readonly="1" force_save="1" sum="Total"/>
+                                    <field name="amount" required="1" sum="Total" readonly="status in 'paid'"/>
+                                    <field name="paid_amount"  readonly="status in 'paid'"/>
+                                    <field name="status" readonly="1" force_save="1"/>
+                                    <field name="state" readonly="1" force_save="1"/>
+                                </list>
+                            </field>
+                        </page>
+                 </notebook>
+            </xpath>
+        </field>
+   </record>
+
+</odoo>

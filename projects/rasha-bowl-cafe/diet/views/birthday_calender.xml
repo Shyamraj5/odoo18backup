@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_birthday_calendar" model="ir.ui.view">
+        <field name="name">res.partner.birthday.calendar</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <calendar string="Partner Birthdays" date_start="next_birthdays" color="id" mode="month">
+                <field name="name" string="Happy Birth Day"/>
+            </calendar>
+        </field>
+    </record>
+    
+    <record id="action_partner_birthday_calendar" model="ir.actions.act_window">
+        <field name="name">Partner Birthdays</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="view_id" ref="view_partner_birthday_calendar"/>
+    </record>
+    
+    
+    <menuitem id="menu_partner_birthday_calendar"
+        name="Partner Birthdays"
+        parent="diet.diet_operations_menu"
+        action="action_partner_birthday_calendar"/>
+
+
+</odoo>

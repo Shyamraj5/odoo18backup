@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_inventory_stock_report" model="ir.actions.report">
+        <field name="name">Inventory Stock Report</field>
+        <field name="model">inventory.stock.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">inventory_stock_report.stock_report</field>
+        <field name="report_file">inventory_stock_report.stock_report</field>
+        <field name="binding_model_id" ref="model_inventory_stock_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

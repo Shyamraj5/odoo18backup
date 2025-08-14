@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="customer_plan_choice" model="ir.ui.view">
+        <field name="name">plan.choice.form</field>
+        <field name="model">plan.choice</field>
+        <field name="arch" type="xml">
+            <form edit="True">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="button_recipes" type="object"
+                            class="oe_stat_button" icon="fa-file-text-o">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="recipe_count" />
+                                </span>
+                                <span class="o_stat_text">
+                                    Recipes
+                                </span>
+                            </div>
+                        </button>
+                        <button name="button_sub_count" class="oe_stat_button"
+                            icon="fa-book" type="object">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="subscription_count" />
+                                </span>
+                                <span class="o_stat_text">
+                                    Subscriptions
+                                </span>
+                            </div>
+                        </button>
+                    </div>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="plan_id" invisible = "1"/>
+                            <field name="duration_type" required ="1"/>
+                            <field name="choices" invisible="'day' in duration_type"/>
+                            <field name="no_of_week" invisible="'week' != duration_type"/>
+                        </group>
+                        <group>
+                            <field name="no_of_day" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="strike_through_price" invisible="1" force_save="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="is_strike_through" invisible="1" force_save="1"/>
+                            <field name="plan_price" invisible="1" force_save="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="active" invisible="1"/>
+                            <field name="tax_ids" widget="many2many_tags" invisible="1" force_save="1" options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="plan_tax_amount" invisible="1" force_save="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                        
+                        <group name='available_days' string='Available Days'>
+                            <div class="o_row">
+                                <field name="days" invisible="1"/>
+                                <label for="sunday" string="Sunday"/>
+                                <field name="sunday"/>
+                                <label for="monday" string="Monday"/>
+                                <field name="monday" class="oe_inline"/>
+                                <label for="tuesday" string="Tuesday"/>
+                                <field name="tuesday" class="oe_inline"/>
+                                <label for="wednesday" string="Wednesday"/>
+                                <field name="wednesday" class="oe_inline"/>
+                                <label for="thursday" string="Thursday"/>
+                                <field name="thursday" class="oe_inline"/>
+                                <label for="friday" string="Friday"/>
+                                <field name="friday" class="oe_inline"/>
+                                <label for="saturday" string="Saturday"/>
+                                <field name="saturday" class="oe_inline"/>
+                            </div>
+                        </group>
+                    </group>
+
+                    <field name="meal_config_ids" readonly="0">
+                        <list editable="top">
+                            <field name="meal_category_id"/>
+                            <field name="additional_price" string="Price/ Day" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </list>
+                    </field> 
+                            
+                           
+                    <field name="addtional_meal_ids">
+                        <list editable="bottom">
+                            <field name="meal_category_id"/>
+                            <field name="meal_id"/>
+                            <field name="default_count" string="Count"/>
+                            <field name="price"/>
+                        </list>
+                    </field>
+   
+                    <!-- <field name="choice_config_ids">
+                        <list editable="bottom">
+                            <field name="plan_choice_id" column_invisible="True"/>
+                            <field name="meal_category_id"/>
+                            <field name="meal_count"/>
+                            <button string="Configure" name="weekly_meal_configuration" type="object" class="oe_highlight"/>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="additional_price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </list>
+                    </field> -->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    
+    <record id="customer_plan_choice_tree" model="ir.ui.view">
+        <field name="name">plan.choice.list</field>
+        <field name="model">plan.choice</field>
+        <field name="arch" type="xml">
+            <list string="Plan Choices">
+                <field name="display_name" string="Name"/>
+                <field name="plan_id"/>
+                <field name="choices"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="customer_plan_choice_view_search" model="ir.ui.view">
+        <field name="name">plan.choice..view.search</field>
+        <field name="model">plan.choice</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Archived" name="active" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+            
+
+    <record id="action_plan_choice" model="ir.actions.act_window">
+        <field name="name">Plan Choice</field>
+        <field name="res_model">plan.choice</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Plan Choice
+            </p>
+        </field>
+    </record>
+    
+</odoo>

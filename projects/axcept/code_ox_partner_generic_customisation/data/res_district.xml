@@ -1,0 +1,88 @@
+<odoo>
+    <data noupdate="1">
+        <record id="res_district_1" model="res.district">
+            <field name="name">Thiruvananthapuram</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">1</field>
+        </record>
+        <record id="res_district_2" model="res.district">
+            <field name="name">Kollam</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">2</field>
+        </record>
+        <record id="res_district_3" model="res.district">
+            <field name="name">Pathanamthitta</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">3</field>
+        </record>
+        <record id="res_district_4" model="res.district">
+            <field name="name">Alappuzha</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">4</field>
+        </record>
+        <record id="res_district_5" model="res.district">
+            <field name="name">Kottayam</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">5</field>
+        </record>
+        <record id="res_district_6" model="res.district">
+            <field name="name">Idukki</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">6</field>
+        </record>
+        <record id="res_district_7" model="res.district">
+            <field name="name">Ernakulam</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">7</field>
+        </record>
+        <record id="res_district_8" model="res.district">
+            <field name="name">Thrissur</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">8</field>
+        </record>
+        <record id="res_district_9" model="res.district">
+            <field name="name">Palakkad</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">9</field>
+        </record>
+        <record id="res_district_10" model="res.district">
+            <field name="name">Malappuram</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">10</field>
+        </record>
+        <record id="res_district_11" model="res.district">
+            <field name="name">Kozhikode</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">11</field>
+        </record>
+        <record id="res_district_12" model="res.district">
+            <field name="name">Wayanad</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">12</field>
+        </record>
+        <record id="res_district_13" model="res.district">
+            <field name="name">Kannur</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">13</field>
+        </record>
+        <record id="res_district_14" model="res.district">
+            <field name="name">Kasaragod</field>
+            <field name="country_id">104</field>
+            <field name="state_id">594</field>
+            <field name="id">14</field>
+        </record>
+    </data>
+</odoo>

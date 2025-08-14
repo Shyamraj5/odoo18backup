@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="meal_sticker_paperformat" model="report.paperformat">
+        <field name="name">Meal Sticker</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">47</field>
+        <field name="page_width">50</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">1</field>
+        <field name="margin_bottom">1</field>
+        <field name="margin_left">1</field>
+        <field name="margin_right">1</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">1</field>
+        <field name="dpi">100</field>
+    </record>
+
+    
+    <template id="meal_sticker_template_sub">
+        <t t-call="web.html_container">
+            <div class="page" style="margin-top: 5px;">
+                <table style="page-break-after:always; border:2px solid black; height:172px; width:100%; margin-left:-1px; margin-right:-1px;">
+                    <tr style="border: 0px !important; font-weight:bold;">
+                        <td style="border: 0px !important; text-align:center; padding-left: 6px; font-size:12px; height:32px;">
+                            <span><t t-esc="meal_cal['name']"/></span>
+                            <br/>
+                            <t t-if="meal_cal['dislikes']">(No <t t-esc="meal_cal['dislikes']"/>)</t>
+                        </td>
+                    </tr>
+                    <tr style="border: 0px !important;">
+                        <td style="border: 0px !important; text-align:center; font-weight: bold; font-size:12px; height:32px;">
+                            <span><t t-esc="meal_cal['order_number']"/>&#160;&#160;&#160;</span>
+                            <span>P<t t-esc="'{0:,.0f}'.format(meal_cal['protein'])"/>/</span>
+                            <span>C<t t-esc="'{0:,.0f}'.format(meal_cal['carbohydrates'])"/></span>
+                        </td>
+                    </tr>
+                    <tr style="border: 0px !important;">
+                        <td style="border: 0px !important; text-align:center; font-weight: bold; font-size:12px; height:32px;">
+                            <i class="fa fa-cutlery" aria-hidden="true"></i>&#160;&#160;&#160;<t t-esc="meal_cal['mealcategory']"/>
+                        </td>
+                    </tr>
+                    <tr style="border: 0px !important;">
+                        <td style="border: 0px !important; text-align:center; font-weight: bold; font-size:12px; height:32px;">
+                            <t t-set="prd" t-value="meal_cal['date'] - datetime.timedelta(days=1)"/>
+                            <t t-set="exp" t-value="meal_cal['date'] + datetime.timedelta(days=1)"/>
+                            <span>PRD <t t-esc="prd.strftime('%b %d %Y')"/></span><br/>
+                            <span>EXP <t t-esc="exp.strftime('%b %d %Y')"/></span>
+                        </td>
+                    </tr>
+                    <tr style="border: 0px !important;">
+                        <td style="border: 0px !important; text-align:right;">
+                            <img src="file:///odoo/diet_done/miscellaneous/diet/static/src/img/logo.jpg" style="width:10%;"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="meal_sticker_template">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="meal_records" t-as="meal_cal">
+                    <t t-call="diet.meal_sticker_template_sub"/>
+                </t>
+            </div>
+        </t>
+    </template>
+    
+
+    <record id="action_meal_sticker" model="ir.actions.report">
+        <field name="name">Meals Sticker</field>
+        <field name="model">meal.sticker.menu</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">diet.meal_sticker_template</field>
+        <field name="report_file">diet.meal_sticker_template</field>
+        <field name="paperformat_id" ref="diet.meal_sticker_paperformat"/>
+    </record>
+
+
+</odoo>

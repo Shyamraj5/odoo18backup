@@ -1,0 +1,63 @@
+<odoo>
+
+    <record id="purchase_order_teams_list_view" model="ir.ui.view">
+        <field name="name">purchase.order.teams.list.views</field>
+        <field name="model">purchase.order.teams</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="team_lead_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="purchase_order_teams_form_view" model="ir.ui.view">
+        <field name="name">purchase.order.teams.form.views</field>
+        <field name="model">purchase.order.teams</field>
+        <field name="arch" type="xml">
+            <form string="Account">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="team_lead_id" options="{'no_create_edit': True, 'no_create': True}"/>
+                        </group>
+                        <group/>
+                    </group>
+                    <notebook>
+                        <page string="Team Members">
+                            <field name="team_member" mode="list">
+                                <list editable="bottom">
+                                    <field name="purchase_team_id" column_invisible="True" options="{'invisible': True}"/>
+                                    <field name="partner_id" options="{'no_create_edit': True, 'no_create': True}" domain="[('user_ids', '!=', False)]" required="1"/>
+                                    <field name="role"/>
+                                    <field name="min_amount"/>
+                                    <field name="max_amount"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="purchase_order_teams_action" model="ir.actions.act_window">
+        <field name="name">Purchase Order Teams</field>
+        <field name="res_model">purchase.order.teams</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem 
+        id="menu_purchase_order_teams" 
+        parent="purchase.menu_purchase_config" 
+        name="Purchase Order Teams" 
+        action="purchase_order_teams_action" 
+        groups="purchase.group_purchase_manager"/>
+
+</odoo>

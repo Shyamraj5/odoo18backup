@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_move_inherit_branch_transfer" model="ir.ui.view">
+        <field name="name">account.move.view.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='delivery_date']" position="after">
+                <field name="inter_company"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/list/field[@name='price_total']" position="after">
+                <field name="is_margin" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']" position="attributes">
+                <attribute name="domain">[('display_type', 'in', ('product', 'line_section', 'line_note')), ('is_margin', '!=', True)]</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

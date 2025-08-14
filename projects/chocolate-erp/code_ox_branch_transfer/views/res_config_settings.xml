@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.branch.transfer</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <app name="sale_management" position="inside">
+                <block title="Branch Transfer">
+                    <setting help="Branch Transfer Profit Margin Account ."
+                                string="Branch Transfer Profit Margin Account">
+                        <field name="margin_account_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+                    </setting>
+                </block>
+            </app>
+        </field>
+    </record>
+
+</odoo>

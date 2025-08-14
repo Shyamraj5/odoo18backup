@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sale_order_template_id']" position="after">
+                <field name="sale_type"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']" position="before">
+                <field name="expiration_date" string="Lot Expiry"/>
+                <field name="offer_id" domain="[
+                       ('product_id', '=', product_id),
+                       ('start_date', '&lt;=', parent.date_order),
+                       ('end_date', '&gt;=', parent.date_order),    
+                       ('active', '=', True)
+                   ]"  options="{'no_create_edit': True,'no_create': True, 'no_quick_create': True}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']" position="attributes">
+                <attribute name="sum"> Total Quantity</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="attributes">
+                <attribute name="sum">Total Unit Price</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='qty_delivered']" position="attributes">
+                <attribute name="sum">Total Delivered Quantity</attribute>
+            </xpath>
+
+             <xpath expr="//field[@name='order_line']/list/field[@name='qty_invoiced']" position="attributes">
+                <attribute name="sum">Total Billed Quantity</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_template_id']" position="after">
+                <field name="internal_reference" string="Product Code"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='discount']" position="after">
+                <field name="discount_amount" sum="Total"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_total']" position="attributes">
+                <attribute name="column_invisible">0</attribute>
+                <attribute name="string">Total Amount</attribute>
+                <attribute name="sum">Total</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal'][2]" position="attributes">
+                <attribute name="string">Gross Total</attribute>
+                <attribute name="sum">Total</attribute>
+            </xpath>
+            
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_total']" position="before">
+                <field name="price_tax" string="VAT" sum="Total"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='purchase_price']" position="attributes">
+                <attribute name="force_save">1</attribute>
+                <attribute name="readonly">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_form_alert" model="ir.ui.view">
+        <field name="name">sale.order.form.alert</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-warning" invisible="not has_price_alert">
+                    <p>
+                        <strong>Warning:</strong> One or more products have a unit price lower than the cost price!
+                    </p>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sale_order_search_generic" model="ir.ui.view">
+        <field name="name">sale.order.search.generic</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="invoice_ids" string="Invoice"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

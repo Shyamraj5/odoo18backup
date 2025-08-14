@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="meal_recipe_form" model="ir.ui.view">
+        <field name="name">meal.recipe.form</field>
+        <field name="model">meal.recipe</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="subscription_plan_id"/>
+                            <field name="meal_id"/>
+                        </group>
+                        <group>
+                            <field name="carbohydrates"/>
+                            <field name="protein"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page id='meal_recipe' name="recipe" string="Recipe" invisible='1'>
+                            <field name="recipe"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="meal_recipe_tree" model="ir.ui.view">
+        <field name="name">meal.recipe.list</field>
+        <field name="model">meal.recipe</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="meal_id"/>
+                <field name="subscription_plan_id"/>
+                <field name="carbohydrates"/>
+                <field name="protein"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_meal_recipe" model="ir.actions.act_window">
+        <field name="name">Recipes</field>
+        <field name="res_model">meal.recipe</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Generate the Recipes
+            </p>
+        </field>
+    </record>
+
+     <record id="subscription_plan_meals_tree" model="ir.ui.view">
+        <field name="name">subscription.plan.meals.list</field>
+        <field name="model">subscription.plan.meals</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="meal_id"/>
+                <field name="plan_id"/>
+                <field name="carbohydrates"/>
+                <field name="protein"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+     <record id="subscription_plan_meals_form" model="ir.ui.view">
+        <field name="name">subscription.plan.meals.form</field>
+        <field name="model">subscription.plan.meals</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,completed"/>
+                    <button name="recipe_completed" string="Completed" type="object" class="oe_highlight" invisible="state not in 'draft'" />
+                    <button string="Export PDF" name="recipe_print_pdf" type="object" class="oe_highlight"/>
+                    <button string="Export Excel" name="recipe_print_excel" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <div>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="meal_id"/>
+                            <field name="plan_id"/>
+                        </group>
+                        <group>
+                            <field name="carbohydrates"/>
+                            <field name="protein"/>
+                            <field name="fats"/>
+                            <field name="calorie"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page id='meal_recipe' name="recipe" string="Recipe" invisible="1">
+                            <field name="recipe"/>
+                        </page>
+                        <page id="recipe_ingredients_id" name="recipe_ingredients" string="Ingredients">
+                            <field name="recipe_ingredient_line_ids">
+                                <list editable="bottom">
+                                    <field name="ingredient_id" domain="[('is_ingredient','=',True)]"/>
+                                    <field name="qty"/>
+                                    <field name="unit"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id='subscription_meal_recipe_search' model='ir.ui.view'>
+        <field name="name">subscription meal recipe search</field>
+        <field name="model">subscription.plan.meals</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="meal_id" />
+                <field name="plan_id" />
+                <field name="carbohydrates"/>
+                <field name="protein"/>
+                <field name="state"/>
+                <filter name="completed" string="Completed" domain="[('state', '=' , 'completed')]"/>
+                 <group expand="1" string="Group By">
+                    <filter string="State" name='state' context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_subscription_plan_meals" model="ir.actions.act_window">
+        <field name="name">Meals</field>
+        <field name="res_model">subscription.plan.meals</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure Recipes
+            </p>
+        </field>
+    </record>
+    
+</odoo>

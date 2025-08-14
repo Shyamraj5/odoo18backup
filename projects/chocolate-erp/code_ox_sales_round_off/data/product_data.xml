@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="product_sales_round_off" model="product.template">
+            <field name="name">Round Off</field>
+            <field name="sequence" eval="11"/>
+            <field name="list_price">0.0</field>
+            <field name="type">service</field>
+            <field name="sale_ok">True</field>
+            <field name="purchase_ok">True</field>
+            <field name="is_roundoff">True</field>
+        </record>
+    </data>
+</odoo>

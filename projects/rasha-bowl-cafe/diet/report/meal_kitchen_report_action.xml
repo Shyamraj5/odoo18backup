@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <record id="action_meal_kitchen_report" model="ir.actions.report">
+            <field name="name">Meals Daily Report</field>
+            <field name="model">meal.kitchen.report.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">meal_kitchen_report_xlsx</field>
+            <field name="report_file">meal_kitchen_report_xlsx</field>
+            <field name="print_report_name">Meal Kitchen Report Excel</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_daily_meals_report_pdf" model="ir.actions.report">
+            <field name="name">Meals Daily Report</field>
+            <field name="model">meal.kitchen.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">diet.daily_meals_report_template</field>
+            <field name="report_file">diet.daily_meals_report_template</field>
+            <field name="binding_model_id" ref="model_meal_kitchen_report_wizard"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="diet.daily_meals_report_paperformat"/>
+        </record>
+
+        <record id="action_daily_meals_report_pdf_preview" model="ir.actions.report">
+            <field name="name">Meals Daily Report</field>
+            <field name="model">meal.kitchen.report.wizard</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">diet.daily_meals_report_template</field>
+            <field name="report_file">diet.daily_meals_report_template</field>
+            <field name="binding_model_id" ref="model_meal_kitchen_report_wizard"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="diet.daily_meals_report_paperformat"/>
+        </record>
+    </data>
+</odoo>

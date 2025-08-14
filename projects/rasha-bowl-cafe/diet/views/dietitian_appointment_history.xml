@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="dietition_appointment_history_search_view" model="ir.ui.view">
+            <field name="name">dietitian.appointment.history.search</field>
+            <field name="model">dietitian.appointment.history</field>
+            <field name="arch" type="xml">
+                <search>
+                    <group expand="1" string="Group By">
+                        <filter string="Patient" name='patient_id' context="{'group_by':'patient_id'}"/>
+                        <filter string="Dietitian" name="dietitian_id" context="{'group_by':'dietitian_id'}"/>
+                        <filter string="Date" name="date" context="{'group_by':'date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_dietition_appointment_history_tree" model="ir.ui.view">
+            <field name="name">dietitian.appointment.history.list</field>
+            <field name="model">dietitian.appointment.history</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name" string="#"/>
+                    <field name="patient_id" string="Customer Name"/>
+                    <field name="date"/>
+                    <field name="dietitian_id"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_dietitian_appointment_history_form" model="ir.ui.view">
+            <field name="name">dietitian.appointment.history.form</field>
+            <field name="model">dietitian.appointment.history</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="action_done" string="Done" type="object" class="oe_highlight" invisible="state != 'confirmed'"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="oe_highlight" invisible="state != 'confirmed'"/>
+                        <button name="action_draft" string="Draft" type="object" class="oe_highlight" invisible="state != 'cancelled'"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="patient_id" context="{'form_view_ref': 'diet.diet_customer_form'}" readonly="state != 'draft'"/>
+                                <field name="dietitian_id" readonly="state != 'draft'"/>
+                            </group>
+                            <group>
+                                <field name="date" readonly="state != 'draft'"/>
+                                <field name="time_slot_id" options="{'no_create': True, 'no_create_edit': True}" readonly="state != 'draft'"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="dietitian_notes" string="Notes">
+                                <field name="dietitian_notes" readonly="state not in ['draft', 'confirmed']"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter reload_on_follower="True"/>
+                </form>
+            </field>
+        </record>
+
+        <!-- action view for dietitian appointment history list view -->
+        <record id="action_dietitian_appointment_history" model="ir.actions.act_window">           
+            <field name="name">Dietitian Appointment History</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">dietitian.appointment.history</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+       </record>
+    </data>
+</odoo>

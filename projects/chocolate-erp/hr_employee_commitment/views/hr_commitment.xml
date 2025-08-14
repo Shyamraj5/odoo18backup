@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_commitments_view_form" model="ir.ui.view">
+        <field name="name">hr.commitment.view.form</field>
+        <field name="model">hr.commitment</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button string="Mark as Done" name="mark_as_done" type="object" class="oe_highlight" invisible="state != 'pending'"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="state != 'pending'"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group >
+                            <field name="employee_id" required="1" options="{'no_create': True, 'no_open': True, 'no_edit': True}" readonly="state != 'pending'"/>
+                            <field name="department_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" readonly="state != 'pending'"/>
+                            <field name="planned_date" required="1" readonly="state != 'pending'"/>
+                            <field name="fullfilled_date" readonly="state != 'pending'" invisible="state != 'completed'"/>
+                        </group>
+                        <group>
+                            <field name="commitment_type_id" required="1" options="{'no_create': True, 'no_open': True, 'no_edit': True}" readonly="state != 'pending'"/>
+                            <field name="commitment_description" required="1" readonly="state != 'pending'"/>
+                            <field name="attachment_ids" widget="many2many_binary" readonly="state != 'pending'"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_commitment_view_list" model="ir.ui.view">
+        <field name="name">hr.commitment.view.list</field>
+        <field name="model">hr.commitment</field>
+        <field name="arch" type="xml">
+            <list string="">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="commitment_type_id"/>
+                <field name="planned_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hr_commitment_action" model="ir.actions.act_window">
+        <field name="name">HR Commitment</field>
+        <field name="res_model">hr.commitment</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Commitment Type -->
+
+    <record id="hr_commitment_type_view_form" model="ir.ui.view">
+        <field name="name">hr.commitment.type.view.form</field>
+        <field name="model">hr.commitment.type</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_commitment_type_view_list" model="ir.ui.view">
+        <field name="name">hr.commitment.type.view.list</field>
+        <field name="model">hr.commitment.type</field>
+        <field name="arch" type="xml">
+            <list string="">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hr_commitment_type_action" model="ir.actions.act_window">
+        <field name="name">HR Commitment Type</field>
+        <field name="res_model">hr.commitment.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem id="hr_commitment_type_menu" name="Commitment Type" action="hr_commitment_type_action" 
+            groups="hr.group_hr_manager" parent="hr.menu_config_employee" sequence="10"/>
+
+    <menuitem id="hr_commitment_menu" name="HR Commitment" action="hr_commitment_action" 
+            groups="hr.group_hr_manager" parent="hr.menu_hr_root" sequence="10"/>
+
+</odoo>

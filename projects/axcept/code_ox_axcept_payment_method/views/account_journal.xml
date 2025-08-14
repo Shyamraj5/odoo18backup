@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_custom_journal_entry_form" model="ir.ui.view">
+        <field name="name">account.journal.form.inherit.vendor</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group//field[@name='default_account_id']" position="after">
+                <field name="payment_method" widget="many2many_tags" options="{'no_create': True}"/>
+                <field name="default_bank_payment_method"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

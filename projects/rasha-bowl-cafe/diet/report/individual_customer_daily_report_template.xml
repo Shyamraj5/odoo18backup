@@ -1,0 +1,137 @@
+<odoo>
+    <template id="individual_daily_meals_report_template_sub">
+    <t t-call="web.html_container">
+        <t t-call="diet.daily_meals_report_header">
+        
+            <div class="page" style="font-size:16px;">
+                <div class="row" style="font-size:21px;background-color:#8bc388;padding:7px;">
+                    <div class="col-6" style="text-align:left;">
+                        <font color="white">
+                            <strong>CUSTOMER DESPATCH CARD</strong>
+                        </font>
+                    </div>
+                    <div class="col-6" style="text-align:right;">
+                        <font color="white">
+                            <strong>Date : <t t-esc="date"/></strong>
+                        </font>
+                    </div>
+                </div>
+                <!-- <div/> -->
+                <div class="row" style="font-size:20px;background-color:#8bc388;padding:7px;">
+                    <div class="col-6" style="text-align:left;">
+                        <font color="white">
+                            <strong>CUSTOMER NAME : <t t-esc="calendar[customer]['id']"/></strong>
+                        </font>
+                    </div>
+                    <div class="col-6" style="text-align:right;">
+                        <font color="white">
+                            <strong>CUSTOMER ID : <t t-esc="customer"/></strong>
+                        </font>
+                    </div>
+                </div>
+                <div class="row" style="font-size:24px;padding:12px;">
+                    <div class="col-12" style="text-align:center;">
+                        <t t-if="(calendar[customer]['snacks_count'] &gt; 0)and (calendar[customer]['meals_count'] &gt; 0)">
+                            <strong>PLAN CATEGORY : <t t-esc="calendar[customer]['plan'].upper()"/> - <t t-esc="calendar[customer]['meals_count']"/> MEALS <t t-esc="calendar[customer]['snacks_count']"/> SNACKS </strong>
+                        </t>
+                        <t t-else="">
+                            <t t-if="(calendar[customer]['snacks_count'] &gt; 0)">
+                                <strong>PLAN CATEGORY : <t t-esc="calendar[customer]['plan'].upper()"/> - <t t-esc="calendar[customer]['snacks_count']"/> SNACKS </strong>
+                            </t>
+                            <t t-if="(calendar[customer]['meals_count'] &gt; 0)">
+                            <strong>PLAN CATEGORY : <t t-esc="calendar[customer]['plan'].upper()"/> - <t t-esc="calendar[customer]['meals_count']"/> MEALS </strong>
+                        </t>
+                        </t>
+                    </div>
+                </div>
+                <span style="font-weight:bold;">Customer Notes: </span>
+                <div class="row" style="padding:20px;font-size:18px;border:2px solid black;vertical-align:middle;">
+                    <div class="col-12" style="text-align:center;vertical-align:middle;">
+                        <t t-esc="calendar[customer]['notes']"/>
+                    </div>
+                </div>
+                <div class="row" style="font-size:18px;margin-top:5px;">
+                    <div class="col-4" style="text-align:left;">
+                        <strong>Delivery time: </strong>
+                        <t t-esc="calendar[customer]['shift']"/>
+                    </div>
+                </div>
+                <table class="table table-bordered" style="border:2px solid black;padding:10px;border-collapse:collapse;margin-top:20px;">
+                    <thead>
+                        <tr style="background-color:#8bc388;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;border-bottom:1px solid black;">
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                SL NO
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                MEAL CATEGORY 
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                MEAL
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                PORTION
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                PROTEIN
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                CARBS
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                FAT
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                CALORIE
+                            </th>
+                        </tr>
+                    </thead>
+                    <t t-set="no" t-value="0"/>
+                    <t t-foreach="calendar[customer]['category']" t-as="meal_category">
+                        <t t-set="no" t-value="no+1"/>
+                        <tr style="border-bottom:1px solid black;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;border-bottom:1px solid black;">
+                            <td style="vertical-align:middle;text-align:center;"><t t-esc="no"/></td>
+                            <td style="vertical-align:middle;text-align:center;"><t t-esc="meal_category"/></td>
+                            <t t-if="calendar[customer]['category'][meal_category]['dislike']">
+                                <td><t t-esc="calendar[customer]['category'][meal_category]['meal']"/><br/><span>Avoid </span><t t-esc="calendar[customer]['category'][meal_category]['dislike']"/>
+                                </td>
+                                <td style="text-align:right;"><br/><t t-esc="calendar[customer]['category'][meal_category]['portion']"/></td>
+                                <td style="text-align:right;"><br/><t t-esc="round(calendar[customer]['category'][meal_category]['protein'],2)"/></td>
+                                <td style="text-align:right;"><br/><t t-esc="round(calendar[customer]['category'][meal_category]['carbs'],2)"/></td>
+                                <td style="text-align:right;"><br/><t t-esc="round(calendar[customer]['category'][meal_category]['fat'],2)"/></td>
+                                <td style="text-align:right;"><br/><t t-esc="round(calendar[customer]['category'][meal_category]['calorie'],2)"/></td>
+                            </t>
+                            <t t-else="">
+                                <td style="vertical-align:middle;"><t t-esc="calendar[customer]['category'][meal_category]['meal']"/></td>
+                                <td style="text-align:right;"><t t-esc="calendar[customer]['category'][meal_category]['portion']"/></td>
+                                <td style="text-align:right;"><t t-esc="round(calendar[customer]['category'][meal_category]['protein'],2)"/></td>
+                                <td style="text-align:right;"><t t-esc="round(calendar[customer]['category'][meal_category]['carbs'],2)"/></td>
+                                <td style="text-align:right;"><t t-esc="round(calendar[customer]['category'][meal_category]['fat'],2)"/></td>
+                                <td style="text-align:right;"><t t-esc="round(calendar[customer]['category'][meal_category]['calorie'],2)"/></td>
+                            </t>
+                        </tr>
+                    </t>
+                </table>
+                <div class="row">
+                    <div class="col-6"/>
+                    <div class="col-4" style="text-align:right; padding:5px;">
+                        <strong>TOTAL MEALS</strong>
+                    </div>
+                    <div class="col-2" style="text-align:right;padding:5px;">
+                        <b><t t-esc="len(calendar[customer]['category'])"/></b>
+                    </div>
+                </div>
+            </div>
+        
+        </t>
+    </t>
+</template>
+
+<template id="individual_daily_meals_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="calendar" t-as="customer">
+                    <t t-call="diet.individual_daily_meals_report_template_sub" />
+            </t>
+        </t>
+    </template>
+
+</odoo>

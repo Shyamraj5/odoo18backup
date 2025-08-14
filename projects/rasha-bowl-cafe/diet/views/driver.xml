@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="area_driver_tree" model="ir.ui.view">
+        <field name="name">area.driver.list</field>
+        <field name="model">area.driver</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="shift_ids" widget="many2many_tags"/>
+                <field name="service_zone_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="area_driver_form" model="ir.ui.view">
+        <field name="name">area.driver.form</field>
+        <field name="model">area.driver</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="print_pdf" string="EXPORT PDF" type="object" class="oe_highlight"/>
+                    <button name="print_excel" string="EXPORT EXCEL" type="object" class="oe_highlight"/>
+                    <button string="Change Driver APP Password" name="change_password" type="object" force_save="1"/>
+                </header>
+                <sheet>
+                    <div class="row">
+                        <div class="col-8">
+                            <field name="code" readonly="1"/>
+                            <h2>
+                                <field name="name" placeholder="Driver Name"/>
+                            </h2>
+                        </div>
+                        <div class="col-4">
+                            <field name="image" widget="image" class="oe_avatar"/>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="phone"/>
+                            <field name="shift_ids" widget="many2many_tags"/>
+                            <field name="gender" required="1"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Driver Details" invisible="1">
+                            <field name="zone_id" placeholder="District..."/>
+                            <field name="street" placeholder="Street..."/>
+                            <field name="avenue" placeholder="Avenue..."/>
+                            <field name="house_number" placeholder="House Number..."/>
+                            <field name="floor_number" placeholder="Floor Number..."/>
+                            <field name="apartment_no" placeholder="Apartment Number..."/>
+                            <field name="phone"/>
+                        </group>
+                        <group string="Service Details">
+                            <field name="service_zone_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_area_driver" model="ir.actions.act_window">
+        <field name="name">Drivers</field>
+        <field name="res_model">area.driver</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Enter the Drivers
+            </p>
+        </field>
+    </record>
+
+    <record id="driver_order_view_tree" model="ir.ui.view">
+        <field name="name">driver.order.view.list</field>
+        <field name="model">driver.order</field>
+        <field name="arch" type="xml">
+            <list string="Driver Orders">
+                <header>
+                    <button string="Change Driver/Shift" name="open_driver_change_wizard" type="object" class="oe_highlight"/>
+                </header>
+                <field name="date" />
+                <field name="delivery_queue_number" string="Queue No"/>
+                <field name="driver_id" />
+                <field name="customer_id" />
+                <field name="partner_id"/>
+                <field name="customer_contact"/>
+                <!-- <field name="zone_id" /> -->
+                <field name="shift_id" />
+                <field name="status" />
+            </list>
+        </field>
+    </record>
+
+    <record id="driver_order_view_form" model="ir.ui.view">
+        <field name="name">driver.order.view.form</field>
+        <field name="model">driver.order</field>
+        <field name="arch" type="xml">
+            <form string="Driver Order">
+                <header>
+                    <button string="Change Driver/Shift" name="open_driver_change_wizard" type="object" class="oe_highlight" invisible="status != 'pending'"/>
+                    <button string="Delivered" name="delivered" type="object" class="oe_highlight" invisible="status in ['delivered', 'not_delivered']"/>
+                    <button string="Not Delivered" name="not_delivered" type="object" class="oe_highlight" invisible="status in ['delivered', 'not_delivered']"/>
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date" readonly="1" force_save="1"/>
+                            <field name="delivery_queue_number" readonly="1" force_save="1" string="Queue No"/>
+                            <field name="customer_id" readonly="1" force_save="1" context="{'form_view_ref': 'diet.diet_customer_form'}"/>
+                            <field name="partner_id"/>
+                            <field name="customer_contact"/>
+                            <field name="driver_id" readonly="1" force_save="1"/>
+                            <field name="driver_comments" readonly="1" force_save="1"/>
+                            <field name="eshop_order_id" invisible="not eshop_order_id" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="address_id" domain="[('parent_id', '=', customer_id)]" readonly="status in ['delivered', 'not_delivered']"/>
+                            <field name="zone_id" invisible="1"/>
+                            <field name="city_id" readonly="1"/>
+                            <field name="district_id" readonly="1"/>
+                            <field name="street" readonly="1"/>
+                            <field name="zone_id" readonly="1" invisible="1"/>
+                            <field name="house_number" readonly="1"/>
+                            <field name="floor_number" readonly="1"/>
+                            <field name="shift_id" readonly="1" force_save="1"/>
+                            <field name="comments" readonly="1"/>
+                        </group>
+                        <notebook>
+                            <page name="delivery_items" string="Items" invisible="eshop_order_id">
+                                <field name="meal_calendar_ids" readonly="1" force_save="1">
+                                    <list>
+                                        <field name="meal_category_id" />
+                                        <field name="meal_id" />
+                                    </list>
+                                </field>
+                            </page>
+                            <page name="eshop_order_line" string="Meals" invisible="not eshop_order_id">
+                                <field name="eshop_order_line_ids" readonly="1" force_save="1">
+                                    <list>
+                                        <field name="meal_id" />
+                                        <field name="quantity" />
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="driver_order_view_search" model="ir.ui.view">
+        <field name="name">driver.order.view.search</field>
+        <field name="model">driver.order</field>
+        <field name="arch" type="xml">
+            <search string="Driver Orders">
+                <field name="date"/>
+                <field name="delivery_queue_number"/>
+                <field name="customer_id"/>
+                <field name="driver_id"/>
+                <field name="address_id"/>
+                <field name="street"/>
+                <field name="district_id"/>
+                <field name="city_id"/>
+                <field name="house_number"/>
+                <field name="floor_number"/>
+                <field name="shift_id"/>
+                <field name="comments"/>
+              
+                <filter string="Delivered" name="delivered" domain="[('status', '=', 'delivered')]"/>
+                <filter string="Pending" name="pending" domain="[('status', '=', 'pending')]"/>
+                
+                
+                <group expand="0" string="Group By">
+                    <filter string="Date" name="group_by_date" context="{'group_by': 'date'}"/>
+                    <filter string="Customer" name="group_by_customer" context="{'group_by': 'customer_id'}"/>
+                    <filter string="Driver" name="group_by_driver" context="{'group_by': 'driver_id'}"/>
+                    <filter string="Shift" name="group_by_shift" context="{'group_by': 'shift_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+
+    <record id="driver_order_action" model="ir.actions.act_window">
+        <field name="name">Driver Order</field>
+        <field name="res_model">driver.order</field>
+        <field name="domain">[('eshop_order_id','=',False)]</field>
+    </record>
+    
+    <record id="eshop_driver_order_action" model="ir.actions.act_window">
+        <field name="name">e-Shop Driver Order</field>
+        <field name="res_model">driver.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('eshop_order_id','!=',False)]</field>
+    </record>
+    
+</odoo>

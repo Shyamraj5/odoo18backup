@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequences for ingredients -->
+        <record id="ir_sequence_ingredients" model="ir.sequence">
+            <field name="name">Ingredients Code</field>
+            <field name="code">ingredients.code</field>
+            <field name="prefix">I</field>
+            <field name="padding">5</field>
+        </record>
+        <!-- Sequences for meals -->
+        <record id="ir_sequence_meals" model="ir.sequence">
+            <field name="name">Meals Code</field>
+            <field name="code">meal.code</field>
+            <field name="prefix">M</field>
+            <field name="padding">5</field>
+        </record>
+        <!-- Sequences for meal category -->
+        <record id="ir_sequence_meal_category" model="ir.sequence">
+            <field name="name">Meals Category Code</field>
+            <field name="code">meal.category.code</field>
+            <field name="prefix">MC</field>
+            <field name="padding">4</field>
+        </record>
+        <!-- Sequences for ingredient category -->
+        <record id="ir_sequence_ingredient_category" model="ir.sequence">
+            <field name="name">Ingredients Category Code</field>
+            <field name="code">ingredients.category.code</field>
+            <field name="prefix">IC</field>
+            <field name="padding">4</field>
+        </record>
+
+        <!-- Sequences for meal Recipe -->
+        <record id="ir_sequence_meal_recipe" model="ir.sequence">
+            <field name="name">Meal Recipe Code</field>
+            <field name="code">recipe.code</field>
+            <field name="prefix">MR</field>
+            <field name="padding">7</field>
+        </record>
+
+        <!-- Sequences for Subscription Order -->
+        <record id="ir_sequence_subscription_order" model="ir.sequence">
+            <field name="name">Subscription Order Code</field>
+            <field name="code">order.code</field>
+            <field name="prefix">SUB</field>
+            <field name="padding">5</field>
+        </record>
+
+        <!-- Sequences for Customers -->
+        <record id="ir_sequence_customer_unique_id" model="ir.sequence">
+            <field name="name">Customer Unique Id</field>
+            <field name="code">customer.code</field>
+            <field name="padding">5</field>
+            <field name="active">False</field>
+        </record>
+
+        <!-- Sequences for Vendors -->
+        <record id="ir_sequence_vendor_unique_id" model="ir.sequence">
+            <field name="name">Vendor Unique Id</field>
+            <field name="code">vendor.code</field>
+            <field name="prefix">VD</field>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="ir_sequence_coupon_program" model="ir.sequence">
+            <field name="name">Coupon Program</field>
+            <field name="code">coupon.program.sequence</field>
+            <field name="prefix">CP</field>
+            <field name="padding">5</field>
+        </record>
+
+        <!-- Squence for drivers -->
+        <record id="ir_sequence_drivers" model="ir.sequence">
+            <field name="name">Driver</field>
+            <field name="code">driver.sequence</field>
+            <field name="prefix">DR</field>
+            <field name="padding">5</field>
+        </record>
+
+        <record id="customer_notification_sequence" model="ir.sequence">
+            <field name="name">Customer Notification</field>
+            <field name="code">customer.notification.sequence</field>
+            <field name="padding">6</field>
+            <field name="number_next">1</field>
+        </record>
+
+        <record id="driver_notification_sequence" model="ir.sequence">
+            <field name="name">Driver Notification</field>
+            <field name="code">driver.notification.sequence</field>
+            <field name="padding">6</field>
+            <field name="number_next">1</field>
+        </record>
+
+        <record id="dietitian_appointment_sequence" model="ir.sequence">
+            <field name="name">Dietitian Appointments</field>
+            <field name="code">dietitian.appointment.sequence</field>
+            <field name="padding">6</field>
+            <field name="number_next">1</field>
+        </record>
+
+        <record id="customer_account_deletion_sequence" model="ir.sequence">
+            <field name="name">Customer Account Deletion</field>
+            <field name="code">customer.account.deletion.sequence</field>
+            <field name="padding">6</field>
+            <field name="number_next">1</field>
+        </record>
+
+        <record id="eshop_order_sequence" model="ir.sequence">
+            <field name="name">e-Shop Order</field>
+            <field name="code">eshop.order</field>
+            <field name="padding">6</field>
+            <field name="number_next">1</field>
+        </record>
+    </data>
+</odoo>

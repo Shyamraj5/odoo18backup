@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates xml:space="preserve">
+
+    <t t-name="codeox_vat_report.CustomJsVatReportView" owl="1">
+        <div class="py-header">
+            <nav class="navbar navbar-expand-lg bg-white">
+                <div class="container-fluid align-items-center">
+
+                    <div class="d-flex">
+                        <a class="navbar-brand" href="#"><strong>VAT Report</strong></a>
+                    </div>
+                    <!-- DATE FILTER -->
+                    <div class="d-flex flex-grow-1 justify-content-center align-items-center">
+                        <div class="d-flex align-items-center mx-2">
+                            <span class="d-flex align-items-center me-2"><i class="fa fa-calendar me-2"/>From</span>
+                            <DateTimeInput
+                                id="dateFrom"
+                                type="'date'"
+                                value="state.date_from"
+                                onChange.bind="onDateFromChanged"
+                                placeholder="fromPlaceholder"
+                            />
+                        </div>
+                        <div class="d-flex align-items-center mx-2">
+                            <span class="d-flex align-items-center me-2"><i class="fa fa-calendar me-2"/>To</span>
+                            <DateTimeInput
+                                id="dateTo"
+                                type="'date'"
+                                value="state.date_to"
+                                onChange.bind="onDateToChanged"
+                                placeholder="toPlaceholder"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="d-flex">
+                        <button class="btn btn-outline-primary" t-on-click.prevent="apply_filters" type="button">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+            </nav>
+            <hr class="my-1" />
+        </div>
+
+        <div class="py-pl-lines-container bg-white">
+            <table style="width: 100%;" class="table py-data-table">
+                <tr style="vertical-align: middle; font-size: 12px; border-bottom: 2px solid;">
+                    <th style="font-size: 17px;"><b>VAT on Sales and all other Outputs (Base)</b> 
+                        <a href="#" t-on-click="viewSalesBaseAction" style="font-size: 17px; color: #443b60;"> <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                    </th>
+                    <t t-if="state.reportLines">
+                        <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                            <t t-if="vat.id == 'sale_untaxed'">
+                                <th style="text-align: right; font-size: 17px;"><t t-esc="vat.amount"/></th>
+                            </t>
+                        </t> 
+                    </t>                    
+                </tr>
+                <tr style="vertical-align: middle;">
+                    <td>1. Standard Rated 15% (Base)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'standard_rated_base'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>                           
+                        </t>
+                    </td>
+                </tr>
+                <tr style="vertical-align: middle;">
+                    <td>2. Special Sales to Locals (Base)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'special_sales_to_local_base'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>                            
+                        </t>                       
+                    </td>
+                </tr>
+
+                <tr style="vertical-align:middle">
+                    <td>3. Local Sales Subject to 0% (Base)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'local_sales_subject_to_zero_base'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>                         
+                        </t>                        
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>4. Export Sales (Base)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'export_sales_base'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>                            
+                        </t>                       
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>5. Exempt Sales (Base)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'exempt_sales_base'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>    
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>6. Net Sales (Base)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'net_sales_base'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle;font-size:12px;border-bottom: 2px solid">
+                    <th style="font-size: 17px;"><b>VAT on Sales and all other Outputs (Tax)</b>
+                        <a href="#" t-on-click="viewSalesTaxAction" style="font-size: 17px; color: #443b60;"> <i class="fa fa-arrow-right" aria-hidden="true"></i></a>  
+                    </th>
+                    <t t-if="state.reportLines">
+                        <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                            <t t-if="vat.id == 'sale_tax'">
+                                <th style="text-align: right; font-size: 17px;"><t t-esc="vat.amount"/></th>
+                            </t>
+                        </t>
+
+                    </t>
+
+                </tr>        
+                <tr style="vertical-align:middle">
+                    <td>1. Standard Rated 15% (Tax)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'standard_rated_tax'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>    
+                <tr style="vertical-align:middle">
+                    <td>2. Special Sales to Locals (Tax)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'special_sales_to_locals_tax'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>3. Local Sales Subject to 0% (Tax)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'local_sales_subject_to_zero_percent_tax'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>    
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>4. Export Sales (Tax)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'export_sales_tax'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>   
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>5. Exempt Sales (Tax)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'exempt_sales_tax'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>6. Net Sales (Tax)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'net_sales_tax'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle;font-size:12px;border-bottom: 2px solid">
+                    <th style="font-size: 17px;"><b>VAT on Expenses and all other Inputs (Base)</b>
+                        <a href="#" t-on-click="viewExpensesBaseAction" style="font-size: 17px; color: #443b60;"> <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                    </th>
+                    <t t-if="state.reportLines">
+                        <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                            <t t-if="vat.id == 'purchase_untaxed'">
+                                <th style="text-align: right; font-size: 17px;"><t t-esc="vat.amount"/></th>
+                            </t>
+                        </t>
+
+                    </t>
+
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>7. Standard rated 15% Purchases (Base)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'standard_rated_purchases_base'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>8. Taxable Imports 15% Paid to Customs (Base)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'taxable_imprts_paid_customs_base'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>    
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>9. Imports subject to reverse charge mechanism (Base)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'imports_subject_to_reverse_charge_mechanism_base'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>10. Zero Rated Purchases (Base)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'zero_rated_purchases_base'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>    
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>11. Exempt Purchases (Base)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'exempt_purchases_base'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>    
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>12. Net Purchases (Base)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'net_purchases_base'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>    
+                </tr>
+                <tr style="vertical-align:middle;font-size:12px;border-bottom: 2px solid">
+                    <th style="font-size: 17px;"><b>VAT on Expenses and all other Inputs (Tax)</b>
+                        <a href="#" t-on-click="viewExpensesTaxAction" style="font-size: 17px; color: #443b60;"> <i class="fa fa-arrow-right" aria-hidden="true"></i></a>       
+                    </th>
+                    <t t-if="state.reportLines">
+                        <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                            <t t-if="vat.id == 'purchase_tax'">
+                                <th style="text-align: right; font-size: 17px;"><t t-esc="vat.amount"/></th>
+                            </t>
+                        </t>
+
+                    </t>
+
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>7. Standard rated 15% Purchases (Tax)</td>
+                    <t t-if="state.reportLines">
+                        <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                            <t t-if="vat.id == 'standard_rated_purchases_tax'">
+                                <td style="text-align: right;"><t t-esc="vat.amount"/></td>
+                            </t>
+                        </t>
+
+                    </t>
+
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>8. Taxable Imports 15% Paid to Customs (Tax)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'taxable_imprts_paid_customs_base_tax'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>9. Imports subject to reverse charge mechanism (Tax)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'imports_subject_to_reverse_charge_mechanism_tax'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>10. Zero Rated Purchases (Tax)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'zero_rated_purchases_tax'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>11. Exempt Purchases (Tax)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'exempt_purchases_tax'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>12. Net Purchases (Tax)</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'net_purchases_tax'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle;font-size:12px;border-bottom: 2px solid">
+                    <th style="font-size: 17px;"><b>Net VAT Due</b></th>                      
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>Total value of due tax for the period</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'total_value_of_due_tax_for_the_period'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>Total value of recoverable tax for the period</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'total_value_of_recoverable_tax_for_the_period'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+                <tr style="vertical-align:middle">
+                    <td>Net VAT due (or reclaimed) for the period</td>
+                    <td style="text-align: right;">
+                        <t t-if="state.reportLines">
+                            <t t-foreach="state.reportLines" t-as="vat" t-key="vat.id">
+                                <t t-if="vat.id == 'net_vat_due_for_the_period'">
+                                    <t t-esc="vat.amount"/>
+                                </t>
+                            </t>
+
+                        </t>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </t>
+
+</templates>

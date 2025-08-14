@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="employee_other_allowance_view_form" model="ir.ui.view">
+        <field name="name">employee.other.allowance.view.form</field>
+        <field name="model">employee.other.allowance</field>
+        <field name="arch" type="xml">
+            <form string="Other Allowance">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_confirm" type="object" string="Confirm" invisible="state != 'draft'" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" force_save="1" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                             <field name="employee_id" readonly="state == 'confirm'" options="{'no_create': True, 'no_open': True, 'no_edit': True}" required="1"/> 
+                             <field name="allowance_type_id" readonly="state == 'confirm'" options="{'no_create': True, 'no_open': True, 'no_edit': True}" required="1"/> 
+                             <field name="company_id" force_save="1" readonly="1" options="{'no_create': True, 'no_open': True, 'no_edit': True}" required="1"/>
+                        </group>
+                        <group>
+                            <field name="date" required="1" readonly="state == 'confirm'"/>
+                            <field name="amount" required="1" readonly="state == 'confirm'"/>
+                            <field name="note" />
+                            <field name="currency_id" force_save="1" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="employee_other_allowance_view_list" model="ir.ui.view">
+        <field name="name">employee.other.allowance.view.list</field>
+        <field name="model">employee.other.allowance</field>
+        <field name="arch" type="xml">
+            <list string="Other Allowance">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="allowance_type_id"/>
+                <field name="date"/>
+                <field name="amount"/>
+                <field name="company_id" optional="hide"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="employee_other_allowance_action" model="ir.actions.act_window">
+        <field name="name">Other Allowance</field>
+        <field name="res_model">employee.other.allowance</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Other Allowance Type -->
+
+    <record id="other_allowance_type_view_form" model="ir.ui.view">
+        <field name="name">other.allowance.type.view.form</field>
+        <field name="model">other.allowance.type</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="code" required="1"/>
+                    </group>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="other_allowance_type_view_list" model="ir.ui.view">
+        <field name="name">other.allowance.type.view.list</field>
+        <field name="model">other.allowance.type</field>
+        <field name="arch" type="xml">
+            <list string="Other Allowance Type">
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="other_allowance_type_action" model="ir.actions.act_window">
+        <field name="name">Other Allowance Type</field>
+        <field name="res_model">other.allowance.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu -->
+
+    <menuitem id="menu_employee_other_allowance" name="Other Allowance" parent="om_hr_payroll.menu_hr_payroll_root" 
+            groups="om_hr_payroll.group_hr_payroll_manager" sequence="10">
+        <menuitem id="menu_employee_other_allowance_action" name="Other Allowance" action="employee_other_allowance_action"/>
+        <menuitem id="menu_other_allowance_type" name="Other Allowance Type" action="other_allowance_type_action"/>
+    </menuitem>
+
+</odoo>

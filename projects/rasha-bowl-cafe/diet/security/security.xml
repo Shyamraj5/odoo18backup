@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record model="ir.module.category" id="module_subscription_category">
+      <field name="name">Subscription</field>
+      <field name="description">Helps you handle your subscription security.</field>
+      <field name="sequence">9</field>
+    </record>
+
+      <record id="group_subscription_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_subscription_category"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+      <record id="group_subscription_manager" model="res.groups">
+        <field name="name">Subscription Administrator</field>
+        <field name="category_id" ref="module_subscription_category"/>
+        <field name="implied_ids" eval="[(4, ref('group_subscription_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <!-- Groups for dietition to edit carbs and protein values in the subscription order -->
+    <record id="group_dietition" model="res.groups">
+      <field name="name">Dietition</field>
+      <field name="comment">Give permission to edit Carbs and Protein values of customer subscription order</field>
+    </record>
+
+    <!-- Groups for extension of subscription order -->
+    <record id="group_subscription_extension" model="res.groups">
+      <field name="name">Subscription Extension</field>
+      <field name="comment">Give permission to extend subscription order</field>
+      <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+     <record id="group_order_capacity_manager" model="res.groups">
+      <field name="name">Subscription Order Limit</field>
+      <field name="comment">Give permission to Set Limit For Subscription</field>
+      
+    </record>
+
+
+    <record id="group_diet_app_admin" model="res.groups">
+      <field name="name">Diet App Admin</field>
+      <field name="comment">Administrator of Diet App</field>
+    </record>
+
+    <record model="ir.module.category" id="module_customer_care_category">
+      <field name="name">Customer Care</field>
+      <field name="description">Helps you handle your subscription security.</field>
+      <field name="sequence">10</field>
+    </record>
+
+    <!-- Groups for customer care to edit mobile number value in the subscription order -->
+    <record id="group_customer_care" model="res.groups">
+      <field name="name">User</field>
+      <field name="category_id" ref="module_customer_care_category"/>
+      <field name="implied_ids" eval="[(4, ref('group_subscription_user'))]"/>
+      <field name="comment">Give permission to edit mobile number value of customer subscription order</field>
+      <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="group_payment_type" model="res.groups">
+        <field name="name">Payment Type Group</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+    <record id="group_subscription_delete" model="res.groups">
+      <field name="name">Subscription Delete Group</field>
+      <field name="category_id" ref="base.module_category_hidden"/>
+  </record>
+
+  <record id="group_administrator_delete" model="res.groups">
+    <field name="name">Administrator Delete Group</field>
+    <field name="category_id" ref="base.module_category_hidden"/>
+  </record>
+
+  <record model="ir.module.category" id="security_shift_groups">
+    <field name="name">Customer Shift Rights</field>
+  </record>
+
+  <record model="res.groups" id="group_shift_user">
+    <field name="name">Shift User</field>
+    <field name="category_id" ref="diet.security_shift_groups" />
+  </record>
+
+  <record model="res.groups" id="group_shift_admin">
+    <field name="category_id" ref="diet.security_shift_groups" />
+    <field name="implied_ids" eval="[(4, ref('diet.group_shift_user'))]" />
+    <field name="name">Shift Admin</field>
+  </record>
+
+  <record id="base.group_system" model="res.groups">
+      <field name="implied_ids" eval="[(4, ref('diet.group_shift_admin'))]"/>
+  </record>
+
+  <record model="ir.module.category" id="security_ramdan_unprocess_category">
+    <field name="name">Un-Process Ramdan Plan</field>
+  </record>
+
+  <record model="res.groups" id="group_ramdan_unprocess_user">
+    <field name="name">Un-Process Ramdan</field>
+    <field name="category_id" ref="diet.security_ramdan_unprocess_category" />
+  </record>
+  
+  <record model="res.groups" id="group_bypass_order_limit">
+      <field name="name">Bypass Order Limit</field>
+      <field name="category_id" ref="base.module_category_sales"/>
+  </record>
+  
+  <record model="res.groups" id="group_edit_customer_lat_long">
+    <field name="name">Edit Customer Latitude &amp; Longitude</field>
+  </record>
+    
+  </data> 
+</odoo>

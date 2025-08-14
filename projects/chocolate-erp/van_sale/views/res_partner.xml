@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_custom" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.custom</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="customer_code" invisible="customer_rank == 0"/>
+                <field name="cr_number" required="1"/>
+                <field name="country_city_id"/>
+                <field name="latitude"/>
+                <field name="longitude"/>
+                <field name="route_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_search_inherit_custom" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit.custom</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="customer_code"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

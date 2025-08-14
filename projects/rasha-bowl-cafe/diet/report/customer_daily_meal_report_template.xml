@@ -1,0 +1,127 @@
+<odoo>
+    <template id="customer_daily_meals_report_template">
+    <t t-call="web.html_container">
+        <t t-call="diet.daily_meals_report_header">
+            <div class="page" style="font-size:16px;">
+                <div class="row" style="font-size:21px;background-color:#8bc388;padding:7px;">
+                    <div class="col-6" style="text-align:center;">
+                        <font color="white">
+                            <strong>CUSTOMERS DAILY REPORT</strong>
+                        </font>
+                    </div>
+                    <div class="col-6" style="text-align:center;">
+                        <font color="white">
+                            <strong>Date : <t t-esc="date"/></strong>
+                        </font>
+                    </div>
+                </div>
+                <table class="table table-bordered" style="border:2px solid black;padding:10px;border-collapse:collapse;margin-top:20px;">
+                    <thead>
+                        <tr style="background-color:#8bc388;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;border-bottom:1px solid black;">
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                SL NO
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                CUSTOMER ID
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                CUSTOMER
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                PLAN CATEGORY
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                MEAL CATEGORY
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                MEAL
+                            </th>
+                        </tr>
+                    </thead>
+                    <t t-set="no" t-value="0"/>
+                    <t t-foreach="calendar" t-as="name">
+                        <t t-set="no" t-value="no+1"/>
+                        
+                        <tr style="border-bottom:1px solid black;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;border-bottom:1px solid black;">
+                            <t t-set="length" t-value="len(calendar[name]['meal_type'])"/>
+                            
+                                <td t-att-rowspan="length+1" style="text-align:center;vertical-align:middle;"><t t-esc="no"/></td>
+                            
+                                <td t-att-rowspan="length+1" style="text-align:center;vertical-align:middle;"><t t-esc="name"/></td>
+                                <td t-att-rowspan="length+1" style="text-align:center;vertical-align:middle;"><t t-esc="calendar[name]['id']"/></td>
+                                <td t-att-rowspan="length+1" style="text-align:center;vertical-align:middle;"><t t-esc="calendar[name]['plan']"/></td>
+                              
+                                <td><t t-esc="list(calendar[name]['meal_type'].keys())[0]"/></td>
+                                <td><t t-esc="list(calendar[name]['meal_type'].values())[0]"/></td>
+                                <t t-set="i" t-value="1"/>
+                                <t t-foreach="calendar[name]['meal_type']" t-as="category">
+                                    <t t-if="i &lt; length">
+                                        <tr >
+                                            
+                                            <td><t t-esc="list(calendar[name]['meal_type'].keys())[i]"/></td>
+                                            <td><t t-esc="list(calendar[name]['meal_type'].values())[i]"/></td>
+                                            
+                                        </tr>
+                                        <t t-set="i" t-value="i + 1"/>
+                                    </t>
+                                </t>
+                            
+                        </tr>
+                        
+                        <tr style="font-weight:bold;">
+                            <td>Total</td>
+                            <td style="text-align:right;"><t t-esc="length"/></td>                            
+                        </tr>
+                    </t>
+                </table>
+                <div style="page-break-inside:avoid;">
+                    <div class="row">
+                        <div class="col-6"/>
+                        <div class="col-4" style="text-align:right; padding:5px;">
+                            <strong>TOTAL PERSONS</strong>
+                        </div>
+                        <div class="col-2" style="text-align:right;padding:5px;">
+                            <b><t t-esc="persons"/></b>
+                        </div>
+                    </div>
+                    <t t-foreach="plan_dict" t-as="plan">
+                        <div class="row">
+                            <div class="col-6"/>
+                            <div class="col-4" style="text-align:right;padding:5px;">
+                                <t t-esc="plan"/>
+                            </div>
+                            <div class="col-2" style="text-align:right;padding:5px;">
+                                <t t-esc="plan_dict[plan]"/>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+                <div style="height:16px;"/>
+                <div style="page-break-inside:avoid;">
+                    <div class="row">
+                        <div class="col-6"/>
+                        <div class="col-4" style="text-align:right; padding:5px;">
+                            <strong>TOTAL MEALS</strong>
+                        </div>
+                        <div class="col-2" style="text-align:right;padding:5px;">
+                            <b><t t-esc="total_meals"/></b>
+                        </div>
+                    </div>
+                    <t t-foreach="meal_dict" t-as="meal">
+                        <div class="row">
+                            <div class="col-6"/>
+                            <div class="col-4" style="text-align:right;padding:5px;">
+                                <t t-esc="meal"/>
+                            </div>
+                            <div class="col-2" style="text-align:right;padding:5px;">
+                                <t t-esc="meal_dict[meal]"/>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </t>
+</template>
+
+</odoo>

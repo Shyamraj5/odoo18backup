@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <record id="action_individual_customer_daily_report" model="ir.actions.report">
+            <field name="name">Customer Despatch Card</field>
+            <field name="model">individual.customer.daily.report.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">individual_customer_daily_report_xlsx</field>
+            <field name="report_file">individual_customer_daily_report_xlsx</field>
+            <field name="print_report_name">Individual Customer Daily Report Excel</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_individual_customer_daily_report_pdf" model="ir.actions.report">
+            <field name="name">Customer Despatch Card</field>
+            <field name="model">individual.customer.daily.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">diet.individual_daily_meals_report_template</field>
+            <field name="report_file">diet.individual_daily_meals_report_template</field>
+            <field name="binding_model_id" ref="model_individual_customer_daily_report_wizard"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="diet.individual_customer_daily_meals_report_paperformat"/>
+        </record>
+
+        <record id="action_individual_customer_daily_report_pdf_preview" model="ir.actions.report">
+            <field name="name">Customer Despatch Card</field>
+            <field name="model">individual.customer.daily.report.wizard</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">diet.individual_daily_meals_report_template</field>
+            <field name="report_file">diet.individual_daily_meals_report_template</field>
+            <field name="binding_model_id" ref="model_individual_customer_daily_report_wizard"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="diet.individual_customer_daily_meals_report_paperformat"/>
+        </record>
+    </data>
+</odoo>

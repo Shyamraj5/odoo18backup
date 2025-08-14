@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        <record id="action_meal_calendar_report" model="ir.actions.report">
+            <field name="name">Meal Calendar Report</field>
+            <field name="model">meal.calendar.report.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">meal_calendar_report_xlsx</field>
+            <field name="report_file">meal_calendar_report_xlsx</field>
+            <field name="print_report_name">Meal Calendar Report Excel</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_meal_calendar_report_preview" model="ir.actions.report">
+            <field name="name">Meal Calendar Report</field>
+            <field name="model">meal.calendar.report.wizard</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">diet.meal_calendar_preview_template</field>
+            <field name="report_file">diet.meal_calendar_preview_template</field>
+            <field name="print_report_name">Meal Calendar Report</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="diet.meal_calendar_report_paperformat"/>
+        </record>
+
+        <record id="action_meal_calendar_report_pdf" model="ir.actions.report">
+            <field name="name">Meal Calendar Report</field>
+            <field name="model">meal.calendar.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">diet.meal_calendar_preview_template</field>
+            <field name="report_file">diet.meal_calendar_preview_template</field>
+            <field name="print_report_name">Meal Calendar Report</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="diet.meal_calendar_report_paperformat"/>
+        </record>
+        
+    </data>
+</odoo>

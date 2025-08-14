@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_category_view_form" model="ir.ui.view">
+        <field name="name">res.partner.category.view.form</field>
+        <field name="model">res.partner.category</field>
+        <field name="inherit_id" ref="base.view_partner_category_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='active']" position="after">
+                <field name="show_in_app"/>
+                <field name="is_default_tag"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

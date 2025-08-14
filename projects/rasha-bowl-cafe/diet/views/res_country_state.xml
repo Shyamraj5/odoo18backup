@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_country_state_view_search" model="ir.ui.view">
+        <field name="name">res.country.state.view.search</field>
+        <field name="model">res.country.state</field>
+        <field name="inherit_id" ref="base.view_country_state_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='country_id']" position="after">
+                <filter name="active" string="Active" domain="[('active', '=', True)]" />
+                <filter name="inactive" string="Inactive" domain="[('active', '=', False)]" />
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter name="active_group" string="Active" context="{'group_by': 'active'}" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="base.action_country_state" model="ir.actions.act_window">
+        <field name="name">Cities</field>
+    </record>
+
+</odoo>

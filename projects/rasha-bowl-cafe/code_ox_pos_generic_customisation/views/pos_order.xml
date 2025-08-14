@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_order_inherit" model="ir.ui.view">
+        <field name="name">pos.order.view.form.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="customer_type" readonly="state == 'invoiced'"/>
+                <field name="pos_order_type_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" readonly="state == 'invoiced'"/>
+                <field name="pos_order_type_text" force_save="1" invisible="1" readonly="state == 'invoiced'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

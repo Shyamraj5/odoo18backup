@@ -1,0 +1,37 @@
+<odoo>
+    <record id="purchase_order_inherited_advance_payments_form_view" model="ir.ui.view">
+        <field name="name">purchase.order.inherited.advance.payment.form.view</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button string="Approve" type="object" name="approve_purchase" invisible="state in ['purchase', 'done', 'cancel']" groups="purchase.group_purchase_user"/>
+                <button string="Disapprove" type="object" name="disapprove_purchase" invisible="state in ['purchase', 'done', 'cancel']" groups="purchase.group_purchase_user"/>
+            </xpath>
+            <xpath expr="//header/button[@id='draft_confirm']" position="attributes">
+                <attribute name="groups">purchase.group_purchase_user</attribute>
+            </xpath>
+           
+            <xpath expr="//sheet/group/group[1]" position="inside">
+                <field name="purchase_team_id" readonly="state not in ['draft', 'sent']" options="{'no_create_edit': True, 'no_create': True}"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Approve Route">
+                    <field name="purchase_approve_line" mode="list" readonly="1">
+                        <list editable="bottom">
+                            <field name="purchase_id" column_invisible="True" options="{'invisible': True}"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="role" readonly="1"/>
+                            <field name="state"
+                                widget="badge"
+                                decoration-info="state == 'draft'"
+                                decoration-success="state == 'done'"
+                                decoration-danger="state == 'cancel'"
+                                readonly="1"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

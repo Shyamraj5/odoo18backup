@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="meal_kitchen_report_wizard_view" model="ir.ui.view">
+        <field name="name">meal.kitchen.report.wizard.view</field>
+        <field name="model">meal.kitchen.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Meals Daily Report">
+                <group>
+                    <group>
+                        <field name="date"/>
+                        <field name="plan_category_id"/>
+                    </group>
+                    <group>
+                        <field name="meal_category_id"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_pdf" string="Export PDF" type="object" class="btn-primary"/>
+                    <button name="print_excel" string="Export Excel" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_meal_kitchen_report_wizard" model="ir.actions.act_window">
+        <field name="name">Meals Daily Report</field>
+        <field name="res_model">meal.kitchen.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

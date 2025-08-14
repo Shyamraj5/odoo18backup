@@ -1,0 +1,66 @@
+<odoo>
+    <data>
+     
+        <record id="seq_universal_pause_days" model="ir.sequence">
+            <field name="name">Universal Pause Days</field>
+            <field name="code">universal.pause.days</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+     
+        <record id="view_universal_pause_days_tree" model="ir.ui.view">
+            <field name="name">universal.pause.days.list</field>
+            <field name="model">universal.pause.days</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <field name="reason"/>
+                    <field name="state"/>
+                    <field name="create_date"/>
+                </list>
+            </field>
+        </record>
+
+   
+        <record id="view_universal_pause_days_form" model="ir.ui.view">
+            <field name="name">universal.pause.days.form</field>
+            <field name="model">universal.pause.days</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm" type="object" string="Confirm" class="btn-primary" invisible="state != 'draft'"/>
+                        <button name="action_reset_to_draft" type="object" string="Rest to draft" invisible="state != 'confirm'"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <label for="from_date" string="Date"/>
+                                <div class="o_row">
+                                    <field name="from_date" widget="daterange" options="{'end_date_field': 'to_date'}" readonly="state == 'confirm'"/>
+                                    <field name="to_date" invisible="1"/>
+                                </div>
+                                <field name="reason" readonly="state == 'confirm'"/>
+                            </group>
+                            <group>
+                                <field name="create_date" readonly="1"/>
+                            </group>
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    
+        <record id="action_universal_pause_days" model="ir.actions.act_window">
+            <field name="name">Universal Pause Days</field>
+            <field name="res_model">universal.pause.days</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>

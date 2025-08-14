@@ -1,0 +1,10 @@
+<odoo>
+    <data noupdate="1">
+        <record id="subscription_upgrade_discount" model="product.product">
+            <field name="name">Subscription Upgrade Discount</field>
+            <field name="type">service</field>
+            <field name="is_ingredient">False</field>
+            <field name="is_meal">False</field>
+        </record>
+    </data>
+</odoo>

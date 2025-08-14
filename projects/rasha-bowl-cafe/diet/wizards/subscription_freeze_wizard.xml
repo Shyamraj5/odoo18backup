@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="subscription_freeze_wizard_view_form" model="ir.ui.view">
+        <field name="name">subscription.freeze.wizard.view.form</field>
+        <field name="model">subscription.freeze.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Subscription Freeze">
+                <sheet>
+                    <group>
+                        <field name="subscription_id" invisible="1"/>
+                        <field name="mode" invisible="1" force_save="1"/>
+                        <label for="freeze_date_from" string="Freeze Period" invisible="mode == 'unfreeze'"/>
+                        <div class="o_row" invisible="mode == 'unfreeze'">
+                            <field name="freeze_date_from" placeholder="From" class="oe_inline" required="mode == 'freeze'"/>
+                            <field name="freeze_date_to" placeholder="To" class="oe_inline" required="mode == 'freeze'"/>
+                        </div>
+                        <field name="freeze_date_from" options="{'min_date': 'today'}" string="Date" invisible="mode == 'freeze'"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Freeze" name="button_confirm" type="object" class="oe_highlight" invisible="mode == 'unfreeze'" context="{'skip_base_price_calculation': True}"/>
+                    <button string="Un-Freeze" name="unfreeze" type="object" class="oe_highlight" invisible="mode == 'freeze'" context="{'skip_base_price_calculation': True}"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

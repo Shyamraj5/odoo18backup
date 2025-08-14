@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_branch_transfer_in_tree" model="ir.ui.view">
+        <field name="name">branch.transfer.in.tree</field>
+        <field name="model">branch.transfer.in</field>
+        <field name="arch" type="xml">
+            <list string="Branch Transfers In">
+                <field name="name"/>
+                <field name="vendor_id"/>
+                <field name="branch_id"/>
+                <field name="state"/>
+                <field name="amount_total"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_branch_transfer_in_form" model="ir.ui.view">
+        <field name="name">branch.transfer.in.form</field>
+        <field name="model">branch.transfer.in</field>
+        <field name="arch" type="xml">
+            <form string="Branch Transfer In">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object"  class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_done" string="Done" type="object"  class="btn-primary" invisible="state != 'confirmed'"/>
+                    <!-- <button name="action_return"
+                            string="Return"
+                            type="object"
+                            class="btn-primary"
+                            invisible = "state != 'done'"/> -->
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+            <field name="return_transfer_ids" invisible="1"/>
+                <button name="action_view_return_transfers"
+                        type="object"
+                        invisible="not return_transfer_ids"
+                        class="oe_stat_button"
+                        icon="fa-undo">
+                    <!-- <field name="return_transfer_ids" widget="statinfo"/> -->
+                    <span>Returns</span>
+                </button>
+                        <button name="open_picking" type="object" class="oe_stat_button" icon="fa-truck" invisible="state == 'draft'">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Receipt</span>
+                            </div>
+                        </button>
+                        <button name="action_view_journal_entry" type="object" class="oe_stat_button" icon="fa-book"
+                                invisible="not journal_entry_id" >
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Journal Entry</span>
+                            </div>
+                        </button>
+                    </div>
+                     <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" force_save="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="branch_id" force_save="1" readonly="1"/>
+                            <field name="vendor_id" force_save="1" readonly="1"/>
+                            <field name="company_id" force_save="1" readonly="1"/>
+                            <field name="branch_transfer_out_id" force_save="1" invisible="1" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="date" readonly="state != 'draft'"/>
+                            <field name="currency_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" invisible="1" readonly="state != 'draft'"/>
+s                        </group>
+                        <field name="picking_id" invisible='1' readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Transfer Lines">
+                            <field name="line_ids" force_save="1" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="uom_id"/>
+                                    <field name="qty"/>
+                                    <field name="unit_price"/>
+                                    <field name="total"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <div class="mt16" style="text-align: right;">
+                        <div class="oe_subtotal_footer">
+                            <span><strong>Total:</strong> <field name="amount_total" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/></span><br/><br/>
+                            <!-- <span><strong>Margin:</strong> <field name="margin_total" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/></span> -->
+                        </div>
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_branch_transfer_in" model="ir.actions.act_window">
+        <field name="name">Branch Transfers In</field>
+        <field name="res_model">branch.transfer.in</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new branch transfer in.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <!-- <menuitem id="menu_branch_transfer_in_root" name="Branch Transfers In" parent="stock.menu_stock_warehouse_mgmt" sequence="30"/> -->
+    <menuitem id="menu_branch_transfer_in" name="Transfer In" parent="menu_branch_transfer_out_root" action="action_branch_transfer_in"/>
+</odoo>

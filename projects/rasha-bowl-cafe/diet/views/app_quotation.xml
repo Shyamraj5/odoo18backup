@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="sale_app_quotation"
+    name="App Quotation"
+    parent="sale.sale_order_menu"
+    action="sale.action_quotations_with_onboarding"
+    sequence="7"/>
+</odoo>

@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <record id="action_driver_details_report" model="ir.actions.report">
+            <field name="name">Driver Details Report</field>
+            <field name="model">driver.details.report.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">driver_details_report_xlsx</field>
+            <field name="report_file">driver_details_report_xlsx</field>
+            <field name="print_report_name">Driver Report Excel</field>
+            <field name="binding_model_id" ref="model_driver_details_report_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_driver_details_report_preview" model="ir.actions.report">
+            <field name="name">Driver Details Report</field>
+            <field name="model">driver.details.report.wizard</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">diet.driver_details_report_template</field>
+            <field name="report_file">diet.driver_details_report_template</field>
+            <field name="binding_model_id" ref="model_driver_details_report_wizard"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="diet.individual_customer_daily_meals_report_paperformat"/>
+        </record>
+
+        <record id="action_driver_details_report_pdf" model="ir.actions.report">
+            <field name="name">Driver Details Report</field>
+            <field name="model">driver.details.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">diet.driver_details_report_template</field>
+            <field name="report_file">diet.driver_details_report_template</field>
+            <field name="binding_model_id" ref="model_driver_details_report_wizard"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="diet.individual_customer_daily_meals_report_paperformat"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="customer_referrals_form_view" model="ir.ui.view">
+        <field name="name">customer.referrals.form</field>
+        <field name="model">customer.referrals</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="add_received_manually" type="object" string="Add Received Amount" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="referral_code" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="total_received"/>
+                            <field name="total_paid" />
+                            <field name="balance_amount" />
+                        </group>
+                        <group>
+                            <field name="reward_level_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="total_splite" string="Total Split">
+                            <field name="total_split_ids" nolabel="1" options="{'create': False}">
+                                <list editable="bottom">
+                                    <field name="wallet_type" />
+                                    <field name="total" />
+                                </list>
+                            </field>
+                        </page>
+                        <page name="received_amount" string="Received Amount">
+                            <field name="received_ids" nolabel="1" options="{'create': False}">
+                                <list editable="bottom">
+                                    <field name="wallet_type" />
+                                    <field name="amount"/>
+                                    <field name="date" />
+                                    <field name="remarks" />
+                                    <field name="currency_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="spend_amount" string="Spend Amount">
+                            <field name="spend_ids" nolabel="1" options="{'create': False}">
+                                <list editable="bottom">
+                                    <field name="wallet_type" />
+                                    <field name="amount"/>
+                                    <field name="date" />
+                                    <field name="remarks" />
+                                    <field name="currency_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="customer_referrals_tree_view" model="ir.ui.view">
+        <field name="name">customer.referrals.view.list</field>
+        <field name="model">customer.referrals</field>
+        <field name="arch" type="xml">
+            <list create="0" delete="0">    
+                <field name="customer_id"/>
+                <field name="referral_code"/>
+                <field name="total_received"/>
+                <field name="total_paid"/>
+                <field name="balance_amount"/>
+                </list>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_customer_referrals">
+            <field name="name">Referral Transactions</field>
+            <field name="res_model">customer.referrals</field>
+            <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="referral_reward_levels_view_tree" model="ir.ui.view">
+        <field name="name">referral.reward.levels.view.list</field>
+        <field name="model">referral.reward.levels</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name" string="Level"/>
+                <field name="reward_amount" string="Reward Amount"/>
+                <field name="reward_eligible_item_ids" widget="many2many_tags" string="Reward Eligible Items"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="referral_reward_levels_action" model="ir.actions.act_window">
+        <field name="name">Referral Reward Levels</field>
+        <field name="res_model">referral.reward.levels</field>
+        <field name="view_mode">list</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record id="offer_wheel_view_tree" model="ir.ui.view">
+        <field name="name">offer.wheel.view.list</field>
+        <field name="model">offer.wheel</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="active" widget="boolean_toggle"/>
+                <field name="name" />
+                <field name="reward_amount"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="offer_wheel_action" model="ir.actions.act_window">
+        <field name="name">Action Name</field>
+        <field name="res_model">offer.wheel</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <record id="weekly_spin_log_view_tree" model="ir.ui.view">
+        <field name="name">weekly.spin.log.view.list</field>
+        <field name="model">weekly.spin.log</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0">
+                <field name="date" />
+                <field name="customer_id" />
+                <field name="wheel_item_id" />
+            </list>
+        </field>
+    </record>
+
+    <record id="weekly_spin_log_action" model="ir.actions.act_window">
+        <field name="name">Weekly Spin</field>
+        <field name="res_model">weekly.spin.log</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

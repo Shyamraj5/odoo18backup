@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="diet_menu_root"
+        name="Diet"
+        web_icon="diet,static/description/icon.png"
+        sequence="1"/>
+
+    <menuitem
+        id="diet_reports_root_menu"
+        name="REPORTS"
+        parent="diet.diet_menu_root"
+        sequence="3"/>
+
+    <menuitem
+        id="model_name_menu"
+        name="name"
+        sequence="10"/>
+
+    <menuitem id="diet_sales_menu" name="SUBSCRIPTION" parent="diet.diet_menu_root" sequence="1">
+        <menuitem id="diet_customer_root_menu" name="Customers" sequence="1">
+            <menuitem id="diet_customer_menu" name="Customers" action="diet.customised_diet_customers_action" sequence="1"/>
+            <!-- <menuitem id="menu_no_meal_customer" name="Incorrect Meal Customers" sequence="2" action="diet.diet_customers_non_action"/> -->
+            <menuitem id="menu_customer_meal_calendar_menu" name="Meal Calendar" action="diet.customer_meal_calendar_action" sequence="2" groups="base.group_no_one" active="true"/>
+        </menuitem>
+        <menuitem id="diet_subscription_orders_menu" name="Subscription Order" action="diet.customer_sale_order_line_action" sequence="2"/>
+        <menuitem id="meal_customer_rating_menu" name="Meals Rating" action="diet.meal_customer_rating_action" sequence="4"/>  
+    </menuitem> 
+    
+    <!-- <menuitem
+        id="diet_subscription_orders_free_menu"
+        name="Free Subscriptions"
+        action="diet.customer_sale_order_free_line_action"
+        parent="diet.diet_reports_root_menu"
+        sequence="5"/> -->
+    
+    <!-- <menuitem
+        id="diet_subscription_orders_day_wise_menu"
+        name="Sales Order Day Wise"
+        action="diet.customer_sale_order_line_action"
+        parent="diet.diet_sales_menu"
+        sequence="3"/> -->  
+
+     <!-- <menuitem 
+        id="diet_dietitian_appointment_history_menu"
+        name="Dietitian Appointments"
+        parent="diet_sales_menu"
+        action="diet.action_dietitian_appointment_history"
+        sequence="5"/> -->
+        
+    <menuitem
+        id="diet_operations_menu"
+        name="OPERATION"
+        parent="diet.diet_menu_root"
+        sequence="2"/>
+    
+    <menuitem
+        id="diet_subscription_plan_menu"
+        name="Plans"
+        action="diet.action_conf_subscription_plan"
+        parent="diet.diet_operations_menu"
+        sequence="1"/>
+    
+    <menuitem
+        id="diet_subscription_plan_category_menu"
+        name="Plan Category"
+        action="diet.action_plan_category"
+        parent="diet.diet_operations_menu"
+        sequence="2"/>
+        
+    <menuitem
+        id="diet_meals_menu"
+        name="Meals"
+        action="diet.meals_action"
+        parent="diet.diet_operations_menu"
+        sequence="3"/>
+
+    <menuitem
+        id="diet_meal_category_menu"
+        name="Meal Categories"
+        action="diet.action_meals_category"
+        parent="diet.diet_operations_menu"
+        sequence="4"/>
+        
+    <menuitem
+        id="diet_ingredients_menu"
+        name="Ingredients"
+        action="diet.ingredient_action"
+        parent="diet.diet_operations_menu"
+        sequence="5"/>
+
+    <menuitem
+        id="diet_meal_ingredient_category_menu"
+        name="Ingredient Categories"
+        action="diet.meal_ingredient_category_action"
+        parent="diet.diet_operations_menu"
+        sequence="6"/>
+
+    <menuitem
+        id="diet_area_driver_menu"
+        name="Drivers"
+        parent="diet.diet_operations_menu"
+        action="diet.action_area_driver"
+        sequence="7"/>
+
+    <menuitem
+        id="diet_driver_order_menu"
+        name="Driver Orders"
+        parent="diet.diet_operations_menu"
+        action="diet.driver_order_action"
+        sequence="8"/>
+
+    <menuitem
+        id="diet_customer_zone_menu"
+        name="District"
+        action="diet.action_customer_zone"
+        parent="diet.diet_operations_menu"
+        sequence="9"/>
+
+    <menuitem
+        id="diet_customer_district_menu"
+        name="Zones"
+        action="diet.customer_district_action"
+        parent="diet.diet_operations_menu"
+        sequence="10"/>
+
+    <!-- <menuitem id="state_master_menu"
+        action="base.action_country_state"
+        name="Cities"
+        parent="diet.diet_operations_menu"
+        sequence="11"/> -->
+
+    <menuitem
+        id="diet_shifts_menu"
+        name="Shifts"
+        action="diet.action_customer_shift"
+        parent="diet.diet_operations_menu"
+        sequence="12"/>
+        
+    <!-- <menuitem 
+        id="diet_dietitian_menu"
+        name="Dietitians"
+        parent="diet.diet_operations_menu"
+        action="diet.diet_dietitian_action"
+        sequence="13"/>  -->
+
+    <menuitem 
+        id="product_tag_menu"
+        name="Meal Tag"
+        parent="diet.diet_operations_menu"
+        action="diet.action_meals_tag"
+        sequence="14"/> 
+
+    <menuitem 
+        id="customer_goals"
+        name="Customer Goals"
+        parent="diet.diet_operations_menu"
+        action="diet.action_customer_goals"
+        sequence="15"/>
+
+    <menuitem
+        id="order_report_wizard_menu"
+        name="Order Report"
+        parent="diet.diet_reports_root_menu"
+        action="diet.order_report_wizard_action"
+        sequence="1"/>
+
+    <menuitem
+        id="diet_kitchen_report_root_menu"
+        name="Customers Daily Report"
+        parent="diet.diet_reports_root_menu"
+        action="diet.action_customer_daily_meal_report_wizard"
+        active="false"
+        sequence="2"/>
+
+    <menuitem
+        id="diet_meal_kitchen_report_root_menu"
+        name="Meals Daily Report"
+        parent="diet.diet_reports_root_menu"
+        action="diet.action_meal_kitchen_report_wizard"
+        active="false"
+        sequence="3"/>
+
+    <menuitem
+        id="diet_individual_customer_daily_report_root_menu"
+        name="Customer Despatch Card"
+        parent="diet.diet_reports_root_menu"
+        action="diet.action_individual_customer_daily_report_wizard"
+        active="false"
+        sequence="1"/>
+
+    <menuitem
+        id="diet_meal_calendar_report_root_menu"
+        name="Meal Calendar"
+        parent="diet.diet_reports_root_menu"
+        action="diet.action_meal_calendar_report_wizard"
+        groups="base.group_no_one"
+        sequence="4"/>
+
+    <menuitem
+        id="diet_driver_report_root_menu"
+        name="Driver Delivery Daily Report"
+        parent="diet.diet_reports_root_menu"
+        action="diet.action_driver_report_wizard"
+        active="false"
+        sequence="5"/>
+
+    <menuitem
+        id="diet_container_sticker_root_menu"
+        name="Container Sticker"
+        parent="diet.diet_reports_root_menu"
+        action="diet.action_container_sticker_wizard"
+        active="false"
+        sequence="6"/>
+
+    <menuitem 
+        id="diet_driver_details_root_menu"
+        name="Driver Details"
+        parent="diet.diet_reports_root_menu"
+        action="diet.action_driver_details_report_wizard"
+        active="false"
+        sequence="7"/>
+
+    <menuitem
+        id="diet_delivery_report_root_menu"
+        name="Delivery Report"
+        parent="diet.diet_reports_root_menu"
+        action="diet.action_delivery_report_wizard"
+        sequence="9"/>
+    
+    <menuitem
+        id="diet_meal_sticker_menu"
+        name="Meal Sticker"
+        parent="diet.diet_reports_root_menu"
+        action="diet.action_customer_meals_wizard"
+        sequence="9"/>
+
+    
+    
+
+    <menuitem
+        id="diet_package_report_root_menu"
+        name="Package Report"
+        parent="diet.diet_reports_root_menu"
+        action="diet.package_report_wizard_action"
+        sequence="8"/>
+
+    <menuitem 
+        id="monthly_sale_report"
+        sequence="10"
+        name="Monthly Sales Report"
+        action="diet.action_sale_report_wizard"
+        parent="diet.diet_reports_root_menu"
+        groups="base.group_no_one"/>
+    
+    <menuitem 
+        id="diet_customer_tags_menu"
+        name="Customer Tags"
+        parent="diet.diet_operations_menu"
+        action="base.action_partner_category_form"
+        sequence="7"/>
+    
+    <menuitem id="menu_universal_pause_days" 
+        name="Universal Pause" 
+        parent="diet.diet_operations_menu" 
+        action="diet.action_universal_pause_days"
+        sequence="16"/>
+
+    <menuitem
+        id="diet_config_root_menu"
+        name="SETTINGS"
+        parent="diet.diet_menu_root"
+        sequence="4"/>
+
+    <menuitem
+        id="diet_special_offer_menu"
+        name="Special Offer"
+        action="diet.action_special_offer"
+        parent="diet.diet_config_root_menu"
+        sequence="4"/>
+
+    <menuitem
+        id="subscription_menu_close_reason"
+        name="Reason to Close"
+        action="action_config_subscription_stop"
+        parent="diet.diet_config_root_menu"
+        sequence="5"/>
+
+    <menuitem
+        id="subscription_extension_reason_menu"
+        name="Subscription Extension Reasons"
+        action="diet.subscription_extension_reason_action"
+        parent="diet.diet_config_root_menu"
+        sequence="5"/>
+
+    <menuitem id="kitchen_type"
+        name="Kitchen Type"
+        parent="diet.diet_config_root_menu"
+        action="kitchen_type_action"
+        sequence="7"/>
+
+    <menuitem
+        id="driver_notification_menu"
+        name="Driver Notification"
+        action="diet.action_driver_notification"
+        parent="diet.diet_config_root_menu"
+        sequence="4"/>
+
+    <menuitem
+        id="product_brand_menu"
+        name="Brand"
+        action="diet.product_brand_action"
+        parent="diet.diet_config_root_menu"
+        sequence="5"/>
+    
+    <menuitem
+        id="diet_admin_root_menu"
+        name="ADMIN"
+        parent="diet.diet_menu_root"
+        groups="diet.group_diet_app_admin"
+        sequence="5"/>
+
+    <menuitem
+        id="diet_sales_invoices_menu"
+        name="Payment"
+        action="diet.diet_invoice_action"
+        parent="diet.diet_admin_root_menu"
+        sequence="2"/>
+    <menuitem
+        id="diet_config_menu"
+        name="Diet Settings"
+        action="diet.diet_config_action"
+        parent="diet.diet_admin_root_menu"
+        sequence="1"/>
+
+    <menuitem
+        id="notification_menu"
+        name="Notification"
+        action="diet.action_customer_notification"
+        parent="diet.diet_admin_root_menu"
+        sequence="3"/>
+
+    <menuitem
+        id="schedule_notification_menu"
+        name="Schedule Notification"
+        action="diet.action_customer_notification_schedule"
+        parent="diet.diet_admin_root_menu"
+        sequence="4"/>
+
+    <menuitem
+        id="coupon_program_menu"
+        name="Promo Code"
+        action="diet.coupon_program_action"
+        parent="diet.diet_admin_root_menu"
+        sequence="5"/>
+    
+    <menuitem
+        action="base.action_res_users"
+        id="menu_action_res_users"
+        parent="diet.diet_admin_root_menu"
+        sequence="6"/>
+
+    <!-- <menuitem
+        id="menu_access_model"
+        action="codeox_access_models.action_access_model"
+        name="Access Rights"
+        parent="diet.diet_admin_root_menu"
+        sequence="6"/> -->
+
+    <menuitem
+        id="customer_account_deletion_menu"
+        action="customer_account_deletion_action"
+        parent="diet.diet_admin_root_menu"
+        sequence="7"/>
+
+    <menuitem
+        id="customer_referrals"
+        action="action_customer_referrals"
+        parent="diet.diet_admin_root_menu"
+        sequence="8"/>
+
+    <menuitem
+        id="referral_reward_levels_menu"
+        action="referral_reward_levels_action"
+        parent="diet.diet_admin_root_menu"
+        sequence="9"/>
+
+    <menuitem id="menu_wallet_type"
+        name="Wallet Type" 
+        parent="diet.diet_admin_root_menu" 
+        action="diet.action_wallet_amount_type"
+        sequence="10"/> 
+
+    <menuitem id="offer_wheel_items"
+        name="Offer Wheel Items" 
+        parent="diet.diet_admin_root_menu" 
+        action="diet.offer_wheel_action"
+        sequence="11"/> 
+
+    <menuitem id="weekly_spin_log"
+        name="Weekly Spin Log" 
+        parent="diet.diet_admin_root_menu" 
+        action="diet.weekly_spin_log_action"
+        sequence="12"/> 
+
+    <menuitem id="menu_customer_meal_calendar"
+        name="Meal Calendar"
+        parent="diet.diet_admin_root_menu"
+        action="diet.customer_meal_calendar_action"
+        groups="base.group_user"
+        active="true"/>
+
+    <!-- <menuitem id="menu_admin_dietitian"
+        name="Dietitian"
+        parent="diet.diet_admin_root_menu"
+        action="diet.action_dietitian_profile"
+        sequence="6"/> -->
+
+    <menuitem
+        id="sms_gateway_menu"
+        name="SMS Gateway"
+        action="sms_gateway_action"
+        parent="phone_validation.phone_menu_main"
+        sequence="10"/>
+        
+    <!-- <menuitem
+        id="diet_eshop_driver_order_menu"
+        name="e-SHOP Driver Order"
+        sequence="2"
+        parent="diet.diet_eshop_menu"
+        action="diet.eshop_driver_order_action"
+    /> -->
+
+    <menuitem
+        id="ramdan_process_log_menu"
+        name="Ramdan Process Log"
+        action="ramdan_process_log_action"
+        parent="base.menu_administration"
+        sequence="10"/>
+
+</odoo>

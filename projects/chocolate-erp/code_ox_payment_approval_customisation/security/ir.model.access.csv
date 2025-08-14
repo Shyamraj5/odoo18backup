@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payment_team_user,code_ox_payment_approval_customisation.payment.team,model_payment_team,base.group_user,1,1,1,1
+access_payment_team_approver_user,code_ox_payment_approval_customisation.payment.team.approver,model_payment_team_approver,base.group_user,1,1,1,1
+access_account_payment_approver_user,code_ox_payment_approval_customisation.account.payment.approver,model_account_payment_approver,base.group_user,1,1,1,1
+access_account_payment_approval_user,code_ox_payment_approval_customisation.account.payment.approval,model_account_payment_approval,base.group_user,1,1,1,1

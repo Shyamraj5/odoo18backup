@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="order_report_html">
+        <t t-call="web.html_container">
+            <div class="page">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Sl. No.</th>
+                            <th style="text-align:center;">Item Name</th>
+                            <t t-foreach="pc_combinations" t-as="pc">
+                                <th style="text-align:center;"><t t-esc="pc"/></th>
+                            </t>
+                            <th style="text-align:center;">No Of Meals</th>
+                            <th style="text-align:center;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="report_data" t-as="meal_data">
+                            <t t-if="meal_data['sl_no']">
+                                <tr>
+                                    <td style="text-align:center;background-color:#ffd6f6;font-weight:bold;"><t t-esc="meal_data['sl_no']"/></td>
+                                    <td style="background-color:#ffd6f6;font-weight:bold;"><t t-esc="meal_data['meal_name']"/></td>
+                                    <t t-set="total_meal_value" t-value="0"/>
+                                    <t t-set="total_gram" t-value="0"/>
+                                    <t t-foreach="pc_combinations" t-as="pc">
+                                        <t t-set="p_value_str" t-value="pc.split('/')[0]"/>
+                                        <t t-set="p_value_int" t-value="int(p_value_str[1:])"/>
+                                        <t t-set="result" t-value="(p_value_int / 100) * meal_data[pc]"/>
+                                        <t t-set="total_gram" t-value="total_gram + result"/>
+                                        <t t-set="total_meal_value" t-value="total_meal_value + meal_data[pc]"/>
+                                        <td style="text-align:center;background-color:#ffd6f6;font-weight:bold;"><t t-esc="meal_data[pc]"/></td>
+                                    </t>
+                                    <td style="text-align:center;background-color:#ffd6f6;font-weight:bold;"><t t-esc="total_meal_value"/></td>
+                                    <td style="text-align:center;background-color:#ffd6f6;font-weight:bold;"><t t-esc="total_gram"/></td>
+                                </tr>
+                            </t>
+                            <t t-else="">
+                                <tr>
+                                    <td style="text-align:center;"><t t-esc="meal_data['sl_no']"/></td>
+                                    <td><t t-esc="meal_data['meal_name']"/></td>
+                                    <t t-set="totalmeal_value" t-value="0"/>
+                                    <t t-set="totalgram" t-value="0"/>
+                                    <t t-foreach="pc_combinations" t-as="pc">
+                                        <t t-set="p_valuestr" t-value="pc.split('/')[0]"/>
+                                        <t t-set="p_valueint" t-value="int(p_valuestr[1:])"/>
+                                        <t t-set="totalvalue" t-value="(p_valueint / 100) * meal_data[pc]"/>
+                                        <t t-set="totalgram" t-value="totalgram + totalvalue"/>
+                                        <t t-set="totalmeal_value" t-value="totalmeal_value + meal_data[pc]"/>
+                                        <td style="text-align:center;"><t t-esc="meal_data[pc]"/></td>
+                                    </t>
+                                    <td style="text-align:center"><t t-esc="totalmeal_value"/></td>
+                                    <td style="text-align:center"><t t-esc="totalgram"/></td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <record id="order_report_html_action" model="ir.actions.report">
+        <field name="name">Order Report HTML</field>
+        <field name="model">order.report.wizard</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">diet.order_report_html</field>
+        <field name="report_file">diet.order_report_html</field>
+        <field name="print_report_name">'Order Report'</field>
+    </record>
+
+</odoo>

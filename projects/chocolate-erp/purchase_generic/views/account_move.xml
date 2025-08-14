@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_move_lot_expiration_date" model="ir.ui.view">
+        <field name="name">account.move.view.form.lot.expiration</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']/list/field[@name='product_uom_id']" position="after">
+                <field name="move_type" column_invisible="1"/>
+                <field name="expiration_date" column_invisible="parent.move_type != 'in_invoice'"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

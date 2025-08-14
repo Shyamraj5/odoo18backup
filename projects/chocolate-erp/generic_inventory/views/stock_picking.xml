@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_picking_package_view_form" model="ir.ui.view">
+        <field name="name">stock.picking.view.form.package</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_ids_without_package']//list//field[@name='product_uom_qty']" position="attributes">
+                <attribute name="sum">Total</attribute>
+            </xpath>
+            <xpath expr="//field[@name='move_ids_without_package']//list//field[@name='quantity']" position="attributes">
+                <attribute name="sum">Total</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location_id']" position="after">
+                <field name="picker_domain" invisible="1"/>
+                <field name="is_picker_assigned" invisible="1"/>
+                <field name="picker_id" domain="picker_domain" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button string="Assign Picker" invisible="is_picker_assigned == True or state == 'done'" name="assign_picker" type="object" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="grn_received" invisible="1"/>
+                <widget name="web_ribbon" title="GRN Received" invisible="not grn_received"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_picking_search_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.search.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='activities_exception']" position="after">
+                <filter string="GRN Received" name="grn_received" domain="[('grn_received', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

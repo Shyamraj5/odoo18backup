@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="driver_notification_tree_view" model="ir.ui.view">
+        <field name="name">driver.notification.list</field>
+        <field name="model">driver.notification</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="driver_ids" widget="many2many_tags"/>
+                <field name="message"/>
+                <field name="state" />
+                <field name="message_send_datetime" />
+            </list>
+        </field>
+    </record>
+    <record id="driver_notification_view_form" model="ir.ui.view">
+        <field name="name">driver.notification.form</field>
+        <field name="model">driver.notification</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Send" name="send" type="object" class="oe_highlight" invisible="state == 'sent'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <p>Placeholder: <b>EN_FIRSTNAME / AR_FIRSTNAME</b></p>
+                    <group>
+                        <group>
+                            <field name="title" readonly="state == 'sent'" required="1"/>
+                            <field name="driver_ids" string="Drivers" widget="many2many_tags" placeholder="Search drivers" readonly="state == 'sent'"/>
+                            <field name="driver_gender_filter" widget="radio" string=" " readonly="state == 'sent'" options="{'horizontal': true}"/>
+                            <field name="message" placeholder="Description" readonly="state == 'sent'" required="1"/>
+                        </group>
+                        <group>
+                            <field name="photo" class="oe_inline" nolabel="1" placeholder="Choose an image" widget="image" readonly="state == 'sent'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="notifications" string="Notifications">
+                            <field name="notification_line_ids" context="{'default_notification_id': id}" options="{'no_create': True}" readonly="state == 'sent'">
+                                <list>
+                                    <field name="driver_id"/>
+                                    <field name="title"/>
+                                    <field name="message"/>
+                                    <field name="image" widget="image"/>
+                                    <field name="response" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_driver_notification">
+            <field name="name">Notification</field>
+            <field name="res_model">driver.notification</field>
+            <field name="view_mode">list,form</field>
+    </record>
+</odoo>

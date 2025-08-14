@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Van Allocation Request Form View-->
+    <record id="van_allocation_request_view_form" model="ir.ui.view">
+        <field name="name">van.allocation.request.view.form</field>
+        <field name="model">van.allocation.request</field>
+        <field name="arch" type="xml">
+            <form string="Van Allocation Request Form">
+                <header>
+                    <button name="create_sale_order" string="Create Sale Order"
+                            class="oe_highlight" type="object"
+                            invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="view_sale_order" string="Sale Order" type="object" icon="fa-pencil" invisible="not so_id" />
+                    </div>
+                    <group>
+                        <group>
+                            <field name="user_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" required="1"/>
+                            <field name="van_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" required="1"/>
+                            <field name="van_company_id" />
+                        </group>
+                        <group>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <field name="order_line">
+                                <list editable="bottom">
+                                    <field name="product_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+                                    <field name="lot_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Van Allocation Request List View -->
+    <record id="van_allocation_request_list_view" model="ir.ui.view">
+        <field name="name">van.allocation.request.list</field>
+        <field name="model">van.allocation.request</field>
+        <field name="arch" type="xml">
+            <list string="Allocation Request">
+                <field name="user_id"/>
+                <field name="van_id"/>
+                <field name="date"/>
+                <field name="van_company_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action Van Allocation Request  -->
+    <record id="action_van_allocation" model="ir.actions.act_window">
+        <field name="name">Van Allocation Request</field>
+        <field name="res_model">van.allocation.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p>
+                Create Van Allocation Request.
+            </p>
+        </field>
+    </record>
+</odoo>

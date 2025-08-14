@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    
+    <function model="ir.module.module" name="button_install">
+        <function model="ir.module.module" name="search" eval="[[
+                ('name','in',[
+                    'report_xlsx',
+                    'contacts',
+                    'mail',
+                    'web',
+                    'hr',
+                    'sale_margin',
+
+                    'account_dynamic_reports',
+                    'code_ox_account_generic_customisation',
+                    'codeox_expense_generic_customisation',
+                    'credit_management',
+                    'employee_document',
+                    'generic_inventory',
+                    'hr_employee_commitment',
+                    'hr_employee_transfer',
+                    'ica_web_responsive',
+                    'leave_encashment',
+                    'location_report',
+                    'new_customer_report',
+                    'om_account_accountant',
+                    'ot_payroll',
+                    'payroll_incentive',
+                    'pos_sale_rest_api',
+                    'product_offer',
+                    'product_price_lock',
+                    'product_transaction_history',
+                    'purchase_dynamic_approval',
+                    'purchase_generic',
+                    'purchase_rebate',
+                    'purchase_sale_inter_company',
+                    'sale_order_line_price_history',
+                    'sale_return',
+                    'sales_excel_report',
+                    'sales_generic_customisation',
+                    'sales_location',
+                    'salesman_ageing_report',
+                    'stock_no_negative',
+                    'stock_picking_auto_create_lot',
+                    'summary_sales_report',
+                    'weekly_sales_report'
+                   
+                    
+                    
+                ])
+            ]]"/>
+    </function>
+
+</odoo>
+

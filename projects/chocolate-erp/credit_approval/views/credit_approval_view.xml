@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Credit Approval Form View -->
+    <record id="credit_approval_view_form" model="ir.ui.view">
+        <field name="name">credit.approval.view.form</field>
+        <field name="model">credit.approval</field>
+        <field name="arch" type="xml">
+            <form string="Credit Approval">
+                <header>
+                    <button name="approve" string="Approve"
+                            class="oe_highlight" type="object"
+                            invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="move_id"/>
+                        <field name="customer_id" />
+                        <field name="user_id"/>
+                        <field name="create_date"/>
+                        <field name="approval_date" readonly="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Credit Approval List View -->
+    <record id="credit_approval_view_list" model="ir.ui.view">
+        <field name="name">credit.approval.view.list</field>
+        <field name="model">credit.approval</field>
+        <field name="arch" type="xml">
+            <list string="Credit Approval" decoration-info="state == 'draft'"
+                  decoration-muted="state in ('approved','cancel')">
+                <field name="move_id"/>
+                <field name="customer_id" />
+                <field name="user_id"/>
+                <field name="create_date"/>
+                <field name="approval_date"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Credit Approval Action -->
+    <record id="credit_approval_action" model="ir.actions.act_window">
+        <field name="name">Credit Approval</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">credit.approval</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Create a new Credit Approval.
+            </p>
+        </field>
+    </record>
+
+    <!-- Credit Approval Menu -->
+    <menuitem id="credit_approval_menu"
+              name="Credit Approval"
+              sequence="10"
+              action="credit_approval_action"
+              web_icon="credit_approval,static/description/icon.png"/>
+</odoo>

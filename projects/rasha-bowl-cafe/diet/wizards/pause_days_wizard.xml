@@ -1,0 +1,17 @@
+<odoo>
+    <record id="view_pause_days_wizard_form" model="ir.ui.view">
+        <field name="name">pause.days.wizard.form</field>
+        <field name="model">pause.days.wizard</field>
+        <field name="arch" type="xml">
+          <form string="Confirm Pause Day">
+            <field name="time" readonly="1" invisible="1"/>
+            <field name="message" nolabel="1" readonly="1"/>
+            <field name="universal_pause_day_id" invisible="1"/>
+            <footer>
+                <button string="Confirm" type="object" class="btn-primary" name="action_confirm"/>
+                <button string="Cancel" class="btn-secondary" special="cancel"/>
+            </footer>
+        </form>
+        </field>
+    </record>
+</odoo>

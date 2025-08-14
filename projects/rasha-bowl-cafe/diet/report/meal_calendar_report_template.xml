@@ -1,0 +1,103 @@
+<odoo>
+    <template id="meal_calendar_preview_template">
+        <t t-call="web.html_container">
+            <t t-call="diet.meal_calendar_report_header">
+
+                <div class="page" style="font-size:16px;">
+                    <div class="row" style="font-size:21px;background-color:#8bc388;padding:7px;">
+                        <div class="col-6" style="text-align:left;">
+                            <font color="white">
+                                <strong>MEAL CALENDAR</strong>
+                            </font>
+                        </div>
+                        <div class="col-6" style="text-align:right;">
+                            <font color="white">
+                                <span><b>Date : <t t-esc="date_from"/> - <t t-esc="date_to"/></b></span>
+                            </font>
+                        </div>
+                    </div>
+                    <table class="table table-bordered" style="border:2px solid black;padding:10px;border-collapse:collapse;margin-top:20px;">
+                        <thead>
+                            <tr style="background-color:#8bc388;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;border-bottom:1px solid black;">
+                                <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                    SL NO
+                                </th>
+                                <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                    CUSTOMER ID 
+                                </th>
+                                <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                    CUSTOMER
+                                </th>
+                                <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                    PLAN
+                                </th>
+                                <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                    MEAL TYPE
+                                </th>
+                                <t t-foreach="date_list" t-as="date">
+                                    <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                        <t t-esc="date"/>
+                                    </th>
+                                </t>
+
+                            </tr>
+                        </thead>
+                        <t t-set="no" t-value="0"/>
+                        <t t-set="length" t-value="0"/>
+                        <t t-foreach="cus_dict" t-as="customer_id">
+                            <t t-set="no" t-value="no+1"/>
+                            <t t-set="length" t-value="len(cus_dict[customer_id]['meal_type'])"/>
+                            <tr style="border-bottom:1px solid black;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;border-bottom:1px solid black;">
+                                <td t-att-rowspan="length" style="vertical-align:middle;text-align:center;"><t t-esc="no"/></td>
+                                <td t-att-rowspan="length" style="vertical-align:middle;text-align:center;"><t t-esc="customer_id"/></td>
+                                <td t-att-rowspan="length" style="vertical-align:middle;text-align:center;"><t t-esc="cus_dict[customer_id]['cus_name']"/></td>
+                                <td t-att-rowspan="length" style="vertical-align:middle;text-align:center;"><t t-esc="cus_dict[customer_id]['plan']"/></td>
+                                <t t-set="i" t-value="0"/>
+                                <t t-foreach="cus_dict[customer_id]['meal_type']" t-as="meal_type">
+                                    <t t-set="i" t-value="i +1"/>
+                                    <t t-if="i &gt; 1">
+                                        <tr>
+
+                                            <td style="vertical-align:middle;text-align:center;"><t t-esc="meal_type"/></td>
+                                            <t t-foreach="date_list" t-as="d">
+                                            <t t-set="meal_found" t-value="0"/>
+                                            <t t-foreach="cus_dict[customer_id]['meal_type'][meal_type]" t-as="meals">
+                                                <t t-if="d == meals['date']">
+                                                    <td style="vertical-align:middle;text-align:center;"><t t-esc="meals['meal']"/></td>
+                                                    <t t-set="meal_found" t-value="1"/>
+                                                </t>
+                                            </t>
+                                            <t t-if="meal_found == 0">
+                                                <td><b><font color="red">Off day</font></b></td>
+                                            </t>
+                                        </t>
+                                        </tr>
+                                    </t>
+                                    <t t-else="">
+                                        <td style="vertical-align:middle;text-align:center;"><t t-esc="meal_type"/></td>
+                                        <t t-foreach="date_list" t-as="d">
+                                            <t t-set="meal_found" t-value="0"/>
+                                            <t t-foreach="cus_dict[customer_id]['meal_type'][meal_type]" t-as="meals">
+                                                <t t-if="d == meals['date']">
+                                                    <td style="vertical-align:middle;text-align:center;"><t t-esc="meals['meal']"/></td>
+                                                    <t t-set="meal_found" t-value="1"/>
+                                                </t>
+                                            </t>
+                                            <t t-if="meal_found == 0">
+                                                <td><b><font color="red">Off day</font></b></td>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </t>
+                            </tr>
+                        </t>
+                    </table>
+
+                </div>
+
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

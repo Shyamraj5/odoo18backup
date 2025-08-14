@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.diet</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="90"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//app" position="inside">
+                    <t groups="diet.group_order_capacity_manager">
+                        <block title="Subscription Limit" name="order_capacity_container">
+                            <setting id="order_capacity">
+                                <div class="w-50">
+                                    <field name="language_count" class="w-auto ps-1 fw-bold"/>
+                                    <span class="o_form_label" invisible="language_count &gt; 1">
+                                        Daily Order Limit
+                                    </span>
+                                </div>
+                                <group>
+                                    <field name="order_capacity"/>
+                                </group>
+                            </setting>
+                        </block>
+                    </t>
+                    <block title="Pause day Time" name="pause_time">
+                        <setting id="universal_pause_time">
+                            <group>
+                                <field name="universal_pause_time" widget="float_time"/>
+                            </group>
+                        </setting>
+                    </block>
+                    <block title="Offer Wheel" name="offer_wheel">
+                        <setting id="offer_wheel">
+                            <group>
+                                <field name="max_weekly_spins"/>
+                            </group>
+                        </setting>
+                    </block>
+                    <!-- <block title="Workflow Buffer Time(HRS)" name="workflow_buffer_time">
+                        <setting id="workflow_buffer_time">
+                            <group>
+                                <field name="buffer_before_4_30"/>
+                                <field name="buffer_after_4_30"/>
+                            </group>
+                        </setting>
+                    </block> -->
+                    <!-- <block title="Workflow Buffer Time(HRS)" name="workflow_buffer_time">
+                        <setting id="workflow_buffer_time">
+                            <group>
+                                <field name="subscription_create_buffer"/>
+                                <field name="subscription_freeze_buffer"/>
+                            </group>
+                        </setting>
+                    </block> -->
+                </xpath>
+                <!-- <xpath expr="//div[@id='invite_users']" position="before">
+                    <block title="Ramdan" name="ramdan">
+                        <setting id="ramdan">
+                            <group>
+                                <field name="ramdan_start_date" string="Start Date"/>
+                                <field name="ramdan_end_date" string="End Date"/>
+                                <button string="Process Ramdan Plans" name="process_ramdan_plans" type="object" class="oe_highlight"/>
+                            </group>
+                        </setting>
+                    </block>
+                </xpath> -->
+                
+                <xpath expr="//div[@id='invite_users']" position="after">
+                    <div id="invite_users">
+                            <block title ="Customer Support" name="custom_settings_group">
+                                <setting id="customer_support_setting">
+                                    <field name="customer_support_number"/>
+                                </setting>
+                            </block>
+                        </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="diet_config_settings_action" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'diet', 'bin_size': False}</field>
+        </record>
+
+    </data>
+</odoo>

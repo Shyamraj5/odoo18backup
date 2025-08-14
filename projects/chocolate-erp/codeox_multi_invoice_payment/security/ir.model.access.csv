@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_invoice_payment_allocation_account_readonly_user,codeox_multi_invoice_payment.invoice.payment.allocation.readonly,model_invoice_payment_allocation,account.group_account_readonly,1,0,0,0
+access_invoice_payment_allocation_account_user,codeox_multi_invoice_payment.invoice.payment.allocation.user,model_invoice_payment_allocation,account.group_account_user,1,1,1,1

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="subscription_minus_days_wizard_view_form" model="ir.ui.view">
+        <field name="name">extent.minus.days.wizard.form</field>
+        <field name="model">extent.minus.days.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Minus Days">
+                <sheet>
+                    <group>
+                        <group>
+                            <label for="days" string="Minus Extend for"/>
+                            <div class="o_row">
+                                <field name="days" nolabel="1" placeholder="Days" class="oe_inline" required="1"/>
+                                <span class="oe_inline">Days</span>
+                            </div>
+                            <field name="current_extended_days"  class="oe_inline"/>
+                            <field name="subscription_id" invisible="1" force_save="1"/>
+                           
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Confirm" name="button_confirm_reduction" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

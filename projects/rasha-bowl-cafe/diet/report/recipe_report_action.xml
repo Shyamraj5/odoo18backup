@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_meal_recipe_pdf" model="ir.actions.report">
+        <field name="name">Print Recipe</field>
+        <field name="model">subscription.plan.meals</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">diet.report_meal_recipe</field>
+        <field name="report_file">diet.report_meal_recipe</field>
+        <field name="binding_model_id" ref=""/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">("%s-%s"%(object.name,object.meal_id.name))</field>
+        <field name="paperformat_id" ref="diet.meal_recipe_paperformat"/>
+    </record>
+
+     <record id="action_report_meal_recipe_preview" model="ir.actions.report">
+        <field name="name">Print Recipe</field>
+        <field name="model">subscription.plan.meals</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">diet.report_meal_recipe</field>
+        <field name="report_file">diet.report_meal_recipe</field>
+        <field name="binding_model_id" ref=""/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">("%s-%s"%(object.name,object.meal_id.name))</field>
+        <field name="paperformat_id" ref="diet.meal_recipe_paperformat"/>
+    </record>
+
+    <record id="action_report_product_recipe" model="ir.actions.report">
+        <field name="name">Print Recipe</field>
+        <field name="model">product.template</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">diet.report_product_recipe</field>
+        <field name="report_file">diet.report_product_recipe</field>
+        <!-- <field name="binding_model_id" ref="model_product_template"/> -->
+        <field name="binding_model_id" ref=""/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">("%s-%s"%(object.default_code,object.name))</field>
+        <field name="paperformat_id" ref="diet.meal_recipe_paperformat"/>
+    </record>
+
+    <record id="action_report_product_recipe_preview" model="ir.actions.report">
+        <field name="name">Print Recipe</field>
+        <field name="model">product.template</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">diet.report_product_recipe</field>
+        <field name="report_file">diet.report_product_recipe</field>
+        <!-- <field name="binding_model_id" ref="model_product_template"/> -->
+        <field name="binding_model_id" ref=""/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">("%s-%s"%(object.default_code,object.name))</field>
+        <field name="paperformat_id" ref="diet.meal_recipe_paperformat"/>
+    </record>
+</odoo>

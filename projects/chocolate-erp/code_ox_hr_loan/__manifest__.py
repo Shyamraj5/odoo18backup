@@ -1,0 +1,25 @@
+{
+    'name': 'HR Loan',
+    'version': '18.0.1.0.0',
+    'category': 'Human Resources',
+    'summary': 'Employee Loans',
+    'description': 'This module allows the employee to request loan from company',
+    'author': 'Code-Ox Technologies LLP',
+    'company': 'Code-Ox Technologies LLP',
+    'maintainer': 'Code-Ox Technologies LLP',
+    'website': 'https://code-ox.com/',
+    'depends': ['hr', 'om_hr_payroll_account'],
+    'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        'views/hr_loan.xml',
+        'views/menu.xml',
+        'views/ir_sequence.xml',
+    ],
+    'images': [
+        "static/description/icon.png",
+    ],
+    'license': 'LGPL-3',
+    'installable': True,
+    'auto_install': False,
+}

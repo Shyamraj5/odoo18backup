@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="customer_notification_schedule_tree_view" model="ir.ui.view">
+        <field name="name">customer.notification.schedule.list</field>
+        <field name="model">customer.notification.schedule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="customer_ids" widget="many2many_tags"/>
+                <field name="message"/>
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+    <record id="customer_notification_schedule_view_form" model="ir.ui.view">
+        <field name="name">customer.notification.schedule.form</field>
+        <field name="model">customer.notification.schedule</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Activate" name="activate" type="object" class="oe_highlight" invisible="state == 'active'"/>
+                    <button string="Deactivate" name="deactivate" type="object" class="oe_highlight" invisible="state != 'active'"/>
+                    <button string="Reset to Draft" name="reset_draft" type="object" class="oe_highlight" invisible="state != 'inactive'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <p>Placeholder: <b>EN_FIRSTNAME / AR_FIRSTNAME</b></p>
+                    <group>
+                        <group>
+                            <field name="title" readonly="state == 'sent'" required="1"/>
+                            <field name="customer_ids" string="Customers" widget="many2many_tags" placeholder="Search customers" readonly="state == 'sent'"/>
+                            <field name="customer_gender_filter" widget="radio" string=" " readonly="state == 'sent'" options="{'horizontal': true}"/>
+                            <field name="message" string="Description" placeholder="Description" readonly="state == 'sent'" required="1"/>
+                            <field name="photo" class="oe_inline" nolabel="1" placeholder="Choose an image" widget="image" readonly="state == 'sent'"/>
+                        </group>
+                        <group>
+                            <field name="schedule_type" widget="radio" options="{'horizontal': true}" required="1"/>
+                            <field name="scheduled_datetime" required="schedule_type == 'datetime'" invisible="schedule_type != 'datetime'"/>
+                            <lable for="sunday" string="Days" invisible="schedule_type != 'daytime'"/>
+                            <div class="o_row">
+                                <field name="sunday" nolabel="1" invisible="schedule_type != 'daytime'" class="oe_inline"/>
+                                <label for="sunday" string="Sunday" invisible="schedule_type != 'daytime'" class="o_form_label o_form_field"/>
+                                <field name="monday" nolabel="1" invisible="schedule_type != 'daytime'" class="oe_inline"/>
+                                <label for="monday" string="Monday" invisible="schedule_type != 'daytime'" class="o_form_label o_form_field"/>
+                                <field name="tuesday" nolabel="1" invisible="schedule_type != 'daytime'" class="oe_inline"/>
+                                <label for="tuesday" string="Tuesday" invisible="schedule_type != 'daytime'" class="o_form_label o_form_field"/>
+                                <field name="wednesday" nolabel="1" invisible="schedule_type != 'daytime'" class="oe_inline"/>
+                                <label for="wednesday" string="Wednesday" invisible="schedule_type != 'daytime'" class="o_form_label o_form_field"/>
+                            </div>
+                            <lable for="thursday" string="" invisible="schedule_type != 'daytime'"/>
+                            <div class="o_row">
+                                <field name="thursday" nolabel="1" invisible="schedule_type != 'daytime'" class="oe_inline"/>
+                                <label for="thursday" string="Thursday" invisible="schedule_type != 'daytime'" class="o_form_label o_form_field"/>
+                                <field name="friday" nolabel="1" invisible="schedule_type != 'daytime'" class="oe_inline"/>
+                                <label for="friday" string="Friday" invisible="schedule_type != 'daytime'" class="o_form_label o_form_field"/>
+                                <field name="saturday" nolabel="1" invisible="schedule_type != 'daytime'" class="oe_inline"/>
+                                <label for="saturday" string="Saturday" invisible="schedule_type != 'daytime'" class="o_form_label o_form_field"/>
+                            </div>
+                            <label for="scheduled_month_day" string="Day of Month" invisible="schedule_type != 'monthly'"/>
+                            <field name="scheduled_month_day" nolabel="1" invisible="schedule_type != 'monthly'"/>
+                            <label for="scheduled_time" string="Time" invisible="schedule_type == 'datetime'"/>
+                            <field name="scheduled_time" nolabel="1" widget="float_time" invisible="schedule_type == 'datetime'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="notifications" string="Notifications">
+                            <field name="notification_ids" context="{'default_notification_id': id}">
+                                <list create="false" delete="false" edit="false">
+                                    <field name="name"/>
+                                    <field name="state"/>
+                                    <button string="Open" name="open_notification" type="object" class="oe_highlight"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_customer_notification_schedule">
+            <field name="name">Schedule Notification</field>
+            <field name="res_model">customer.notification.schedule</field>
+            <field name="view_mode">list,form</field>
+    </record>
+</odoo>

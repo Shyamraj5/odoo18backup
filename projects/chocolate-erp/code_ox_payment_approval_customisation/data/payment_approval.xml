@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="payment_approval">
+            <p>
+                Dear
+                <t t-if="object.user_id.sudo().name">
+                    <t t-esc="object.user_id.sudo().name"/>,
+                </t>
+                <t t-else="object.create_uid.sudo().name">
+                    <t t-esc="object.create_uid.sudo().name"/>,
+                </t>
+            </p>
+            <p>
+                payment  "<t t-esc="object.name"/>" was approved.
+            </p>
+            <p>
+                <a t-att-href="'/mail/view?model=%s&amp;res_id=%s' % (object._name, object.id)">
+                    View Payment 
+                </a>
+            </p>
+        </template>
+    </data>
+</odoo>

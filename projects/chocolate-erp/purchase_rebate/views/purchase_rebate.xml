@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_template_rabate" model="ir.ui.view">
+        <field name="name">product.template.view.form.rebate</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page name="Rebate" string="Rebate">
+                    <group>
+                        <field name="rebate_type"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_rabate" model="ir.ui.view">
+        <field name="name">purchase.order.view.form.rebate</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="after">
+                <field name="list_price" optional="hide"/>
+                <field name="monthly_discount" optional="hide" sum="Total"/>
+                <field name="quarterly_discount" optional="hide" sum="Total"/>
+                <field name="yearly_discount" optional="hide" sum="Total"/>
+                <field name="other_scheme" optional="hide" sum="Total"/>
+                <field name="total_discount" optional="hide" sum="Total"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_ref']" position="after">
+                <field name="rebate_applied" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//button[@name='button_cancel']" position="after">
+                <button name="apply_discount" invisible="rebate_applied == True or state not in ('draft', 'to approve')" string="Apply Discount" type="object" groups="purchase.group_purchase_user"/>
+                <button name="remove_rebate_discount" invisible="rebate_applied == False or state not in ('draft', 'to approve')" string="Remove Discount" type="object" groups="purchase.group_purchase_user"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

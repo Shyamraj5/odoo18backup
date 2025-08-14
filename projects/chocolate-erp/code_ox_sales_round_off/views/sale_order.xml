@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sales_round_off_button_view" model="ir.ui.view">
+        <field name="name">Sales Round-off</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_open_discount_wizard']" position="after">
+                <button string="Round-off" type="object" class="btn btn-secondary" name="action_open_round_off_wizard"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_move_view_form" model="ir.ui.view">
+        <field name="name">account.move.view.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@id='header_left_group']" position="inside">
+                <field name="customer_so_line_id" readonly="1"/>
+                <field name="payment_state" invisible="1"/>
+                <field name="payment_platform" readonly="1" string="Payment Type"/>
+            </xpath>
+            <xpath expr="//button[@id='account_invoice_payment_btn']" position="attributes">
+                <attribute name="invisible">state != 'posted' or payment_state not in ('not_paid', 'partial') or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt') or payment_platform != 'off_line'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="context">{'form_view_ref': 'diet.diet_customer_form'}</attribute>
+            </xpath>
+            <xpath expr="//sheet/field[@name='id']" position="before">
+                <widget name="web_ribbon" title="Free" invisible="payment_platform != 'free'"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="diet_invoices_view_tree" model="ir.ui.view">
+        <field name="name">diet.invoices.view.list</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <list string="Invoices">
+                <field name="name" string="Sl No."/>
+                <field name="partner_id" string="Customer Name" />
+                <field name="partner_phone" string="Contact" />
+                <field name="create_date" string="Date &amp; Time"/>
+                <field name="payment_platform" string="Payment Method"/>
+                <field name="amount_untaxed" string="Amount"/>
+                <field name="discount" string="Discount"/>
+                <field name="amount_total" string="Total"/>
+                <button icon="fa-download" title="Action" name="print_invoice" type="object"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="diet_invoice_action" model="ir.actions.act_window">
+        <field name="name">Invoices</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('move_type','=','out_invoice')]</field>
+        <field name="context">{}</field>
+    </record>
+    
+    <record id="diet_invoice_tree_view_connect" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="diet_invoices_view_tree"/>
+        <field name="act_window_id" ref="diet_invoice_action"/>
+    </record>
+
+</odoo>

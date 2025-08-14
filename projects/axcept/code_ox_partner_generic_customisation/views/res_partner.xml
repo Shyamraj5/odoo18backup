@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_partner_generic_customisation_form" model="ir.ui.view">
+            <field name="name">partner.generic.customisation.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group//group/div[@class='o_address_format']/field[@name='city']" position="before">
+                    <div class="o_row">
+                        <field name="district" placeholder="District" required="1"/>
+                        <field name="post_office" placeholder="Post Office"/>
+                    </div>
+                </xpath>
+                <xpath expr="//div//field[@name='name'][@id='individual']" position="replace">
+                    <div class="o_row">
+                        <field name="name" id="individual" options="{'line_breaks': False}" widget="text"
+                            class="text-break" default_focus="1" placeholder="e.g. Brandon Freeman"
+                            invisible="is_company" required="type == 'contact'"/>
+                        <field name="last_name" placeholder="Last Name" required="1" invisible="is_company"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='function']" position="after">
+                        <field name="gender" required="1" invisible="is_company"/>
+                </xpath>
+                <xpath expr="//field[@name='l10n_in_pan']" position="after">
+                        <field name="aadhar_no" placeholder="Aadhaar Number" invisible="is_company"/>
+                </xpath>
+                <xpath expr="//field[@name='post_office']" position="after">
+                    <field name="lsgd_name" placeholder="LSGD Name" required="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

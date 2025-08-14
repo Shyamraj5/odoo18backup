@@ -1,0 +1,108 @@
+<!-- views/branch_transfer_out_views.xml -->
+<odoo>
+    <record id="view_tree_branch_transfer_out" model="ir.ui.view">
+        <field name="name">branch.transfer.out.tree</field>
+        <field name="model">branch.transfer.out</field>
+        <field name="arch" type="xml">
+            <list string="Branch Transfers">
+                <field name="name"/>
+                <field name="branch_id"/>
+                <field name="customer_id" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+    <record id="view_form_branch_transfer_out" model="ir.ui.view">
+        <field name="name">branch.transfer.out.form</field>
+        <field name="model">branch.transfer.out</field>
+        <field name="arch" type="xml">
+            <form string="Branch Transfer Out">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_done" type="object" string="Done" invisible="state != 'confirmed'" class="btn-primary"/>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                <div class="oe_button_box" name="button_box">
+                    <button name="open_picking" type="object" class="oe_stat_button" icon="fa-truck" invisible="not picking_id">
+                        <div class="o_stat_info">
+                            <span class="o_stat_text">Delivery</span>
+                        </div>
+                    </button>
+                     <button name="action_view_journal_entry" type="object" class="oe_stat_button" icon="fa-book"
+                            invisible="not journal_entry_id" >
+                        <div class="o_stat_info">
+                            <span class="o_stat_text">Journal Entry</span>
+                        </div>
+                    </button>
+                </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" force_save="1"/>
+                        </h1>
+                    </div>                    
+                    <group>
+                        <group>
+                            <field name="branch_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" readonly="state != 'draft'"/>
+                            <field name="customer_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" force_save="1" readonly="state != 'draft'"/>
+                            <field name="company_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" force_save="1" readonly="1"/>
+                            <field name="picking_id" invisible='1' readonly="1"/>
+                            <field name="branch_transfer_in_id" force_save="1" invisible="1" readonly="1"/>
+                            <field name="is_return" force_save="1" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="date" readonly="state != 'draft'"/>
+                            <field name="currency_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" invisible="1" readonly="state != 'draft'"/>
+                            <field name="returned_transfer_in_id" force_save="1" invisible="1" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order Lines">
+                            <field name="line_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="product_id" readonly= "parent.returned_transfer_in_id"/>
+                                    <field name="description" readonly= "parent.returned_transfer_in_id"/>
+                                    <field name="lot_domain" force_save="1" column_invisible="1"/>
+                                    <field name="lot_id" domain="lot_domain" readonly= "parent.returned_transfer_in_id"/>
+                                    <field name="uom_id" readonly= "parent.returned_transfer_in_id"/>
+                                    <field name="qty"/>
+                                    <field name="sale_price" readonly= "parent.returned_transfer_in_id and parent.is_return"/>
+                                    <field name="cost" force_save="1" readonly="1"/>
+                                    <field name="margin" force_save="1" readonly="1"/>
+                                    <field name="total" force_save="1" readonly="1"/>
+                                    <field name="returned_transfer_in_line_id" readonly="1" column_invisible='1'/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <div class="mt16" style="text-align: right;">
+                        <div class="oe_subtotal_footer">
+                            <span><strong>Total:</strong> <field name="amount_total" force_save="1" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/></span><br/><br/>
+                            <span><strong>Margin:</strong> <field name="margin_total" force_save="1" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}"/></span>
+                        </div>
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+
+        </field>
+    </record>
+
+    <record id="action_branch_transfer_out" model="ir.actions.act_window">
+        <field name="name">Branch Transfer Out</field>
+        <field name="res_model">branch.transfer.out</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_branch_transfer_return" model="ir.actions.act_window">
+        <field name="name">Branch Transfer Return</field>
+        <field name="res_model">branch.transfer.out</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'default_is_return': True}</field>
+        <field name="domain">[('is_return', '=', True)]</field>
+    </record>
+
+    <menuitem id="menu_branch_transfer_out_root" name="Branch Transfers" sequence="5" groups="code_ox_branch_sale.group_branch_sale" web_icon="code_ox_branch_sale,static/description/branch_sale.png"/>
+    <menuitem id="menu_branch_transfer_out" name="Transfer Out" parent="menu_branch_transfer_out_root" action="action_branch_transfer_out"/>
+    <menuitem id="menu_branch_transfer_return" name="Return" parent="menu_branch_transfer_out_root" action="action_branch_transfer_return"/>
+</odoo>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="pos_order_report_template">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <main>
+                    <div class="mt-1 mb-1" style="text-align: left;">
+                        <h2 style="color: #009b3d; font-weight: bolder;">POS Order Report</h2>
+                    </div>
+                    
+                    <div>
+                        <strong>From Date:</strong> <t t-esc="data.get('date_from')" /><br />
+                        <strong>To Date:</strong> <t t-esc="data.get('date_to')" />
+                    </div>
+                    <t t-if="data.get('customer_type')">
+                        <div>
+                            <strong>Customer Type:</strong>
+                            <t t-esc="dict([('walk_in_customer', 'Walk-in Customer'),
+                                            ('hotel_customer', 'Hotel Customer'),
+                                            ('complementary_customer', 'Complementary Customer')])[data.get('customer_type')]" />
+                        </div>
+                    </t>
+                    <t t-if="data.get('partner_ids')">
+                        <div>
+                            <strong>Selected Customers:</strong>
+                            <t t-foreach="data.get('partner_names')" t-as="partner">
+                                <t t-esc="partner" />,
+                            </t>
+                        </div>
+                    </t>
+                </main>
+
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="color: #009b3d; font-weight: bold;">Customer</th>
+                            <th class="text-center" style="color: #009b3d; font-weight: bold;">Customer Type</th>
+                            <th class="text-center" style="color: #009b3d; font-weight: bold;">No. of Guests</th>
+                            <th class="text-center" style="color: #009b3d; font-weight: bold;">Order Type</th>
+                            <th class="text-center" style="color: #009b3d; font-weight: bold;">Room Number</th>
+                            <th class="text-center" style="color: #009b3d; font-weight: bold;">Amount Paid</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs" t-as="order">
+                            <tr>
+                                <td class="p-2" style="text-align: left"><t t-esc="order.partner_id.name" /></td>
+                                <td class="p-2" style="text-align: left"><t t-esc="dict([('walk_in_customer', 'Walk-in Customer'),
+                                            ('hotel_customer', 'Hotel Customer'),
+                                            ('complementary_customer', 'Complementary Customer')]).get(order.customer_type, '')" /></td>
+                                <td class="p-2" style="text-align: left"><t t-esc="order.customer_count" /></td>
+                                <td class="p-2" style="text-align: left"><t t-if="order.pos_order_type_id" t-esc="order.pos_order_type_id.name" /></td>
+                                <td class="p-2" style="text-align: left"><t t-esc="order.general_note" /></td>
+                                <td class="p-2" style="text-align: right"><t t-esc="order.amount_paid" /></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,49 @@
+<odoo>
+    <template id="sale_preview_template">
+        <t t-call="web.html_container">
+
+                <div class="page" style="font-size:16px;">
+                    <div class="row" style="font-size:21px;padding:7px;">
+                        <div class="col-6" style="text-align:left; font-size:40px;">
+                                <strong>Sale Report</strong>
+                        </div>
+                        <div class="col-6" style="text-align:right; font-size:30px;">
+                                <span><b>Date : <t t-esc="month"/> - <t t-esc="year"/></b></span>
+                        </div>
+
+                        <table class="table table-sm table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px;">No</th>
+                                    <th style="width: 150px;">Customer</th>
+                                    <t t-foreach="days" t-as="day">
+                                        <th style="width: 120px;"><t t-esc="day"/></th>
+                                    </t>
+                                    <th style="width: 150px;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="customers" t-as="o">
+                                    <tr>
+                                        <td><t t-esc="o.get('sl_no')"/></td>
+                                        <td><t t-esc="o.get('name')"/></td>
+                                        <t t-foreach="o.get('daily_amounts')" t-as="amount">
+                                            <td style="text-align: right;"><t t-esc="'%.4f' % amount"/></td>
+                                        </t>
+                                        <td style="text-align: right;"><t t-esc="'%.4f' % o.get('total')"/></td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="2" style="text-align: center;"><strong>Total</strong></td>
+                                    <t t-foreach="day_totals" t-as="day_total">
+                                        <td style="text-align: right;"><strong><t t-esc="'%.4f' % day_total"/></strong></td>
+                                    </t>
+                                    <td style="text-align: right;"><strong><t t-esc="'%.4f' % total"/></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+    </template>
+</odoo>

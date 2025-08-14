@@ -1,0 +1,89 @@
+<odoo>
+    <template id="driver_details_report_template">
+    <t t-call="web.html_container">
+        <t t-call="diet.daily_meals_report_header">
+        
+            <div class="page" style="font-size:16px;">
+                <div class="row" style="font-size:21px;background-color:#8bc388;padding:7px;">
+                    <div class="col-12" style="text-align:center;">
+                        <font color="white">
+                            <strong>DRIVER DETAILS REPORT</strong>
+                        </font>
+                    </div>
+                </div>
+                <table class="table table-bordered" style="border:2px solid black;padding:10px;border-collapse:collapse;margin-top:20px;">
+                    <thead>
+                        <tr style="background-color:#8bc388;border-right:1px solid black;border-left:1px solid black;border-collapse:collapse;border-bottom:1px solid black;">
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                SI NO
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                DRIVER ID 
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                DRIVER
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                MOBILE
+                            </th>
+                            <th style="text-align:center;padding:10px;border-left:1px solid black; border-top:1px solid black;border-bottom:1px solid black; border-collapse:collapse">
+                                AREA (ENGLISH)
+                            </th>
+                        </tr>
+                        <t t-set="no" t-value="0"/>
+                        <t t-foreach="driver_list" t-as="driver">
+                            <t t-set="length" t-value="len(driver['area_english'])"/>
+                            <t t-set="no" t-value="no + 1"/>
+                            <tr style="padding:5px;">
+                                <t t-if="length &gt; 1">
+                                    <td t-att-rowspan="length" style="padding:5px;text-align:center;vertical-align:middle;"><t t-esc="no"/></td>
+                                    <td t-att-rowspan="length" style="padding:5px;text-align:center;vertical-align:middle;"><t t-esc="driver['code']"/></td>
+                                    <td t-att-rowspan="length" style="padding:5px;text-align:center;vertical-align:middle;"><t t-esc="driver['name']"/></td>
+                                    <td t-att-rowspan="length" style="padding:5px;text-align:center;vertical-align:middle;"><t t-esc="driver['phone']"/></td>
+                                    <td style="padding:5px;text-align:left;"><t t-esc="driver['area_english'][0]"/></td>
+                                    <t t-set="i" t-value="0"/>
+                                    <t t-foreach="driver['area_english']" t-as="english">
+                                        <t t-set="i" t-value="i + 1"/>
+                                        <t t-if="i &lt; length">
+                                            <tr>
+                                                <t t-if="driver['area_english']">
+                                                    <td style="padding:5px;text-align:left;"><t t-esc="driver['area_english'][i]"/></td>
+                                                </t>
+                                                <t t-else="">
+                                                    <td/>
+                                                </t>
+                                                <t t-else="">
+                                                    <td/>
+                                                </t>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <td style="padding:5px;text-align:center;vertical-align:middle;"><t t-esc="no"/></td>
+                                    <td style="padding:5px;text-align:center;vertical-align:middle;"><t t-esc="driver['code']"/></td>
+                                    <td style="padding:5px;text-align:center;vertical-align:middle;"><t t-esc="driver['name']"/></td>
+                                    <td style="padding:5px;text-align:center;vertical-align:middle;"><t t-esc="driver['phone']"/></td>
+                                    <t t-if="driver['area_english']">
+                                        <td style="padding:5px;text-align:left;"><t t-esc="driver['area_english'][0]"/></td>
+                                    </t>
+                                    <t t-else="">
+                                        <td/>
+                                    </t>
+                                    <t t-else="">
+                                        <td/>
+                                    </t>
+                                </t>
+                            </tr>
+                        </t>
+                    </thead>
+                </table>
+               
+            </div>
+        
+        </t>
+    </t>
+</template>
+
+
+</odoo>

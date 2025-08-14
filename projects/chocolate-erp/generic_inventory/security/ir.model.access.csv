@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_uom,product.uom,model_product_uom,base.group_user,1,1,1,1
+access_stock_picking_picker_assign,stock.picking.picker.assign,model_stock_picking_picker_assign,base.group_user,1,1,1,1
+access_stock_picking_picker_task,stock.picking.picker.task,model_stock_picking_picker_task,base.group_user,1,1,1,1
+access_stock_picking_picker_task_line,stock.picking.picker.task.line,model_stock_picking_picker_task_line,base.group_user,1,1,1,1

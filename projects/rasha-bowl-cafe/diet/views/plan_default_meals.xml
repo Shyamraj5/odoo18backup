@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="plan_default_meals_view_form" model="ir.ui.view">
+        <field name="name">plan.default.meals.view.form</field>
+        <field name="model">plan.default.meals</field>
+        <field name="arch" type="xml">
+            <form string="Default Meals">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="meal_category_id" readonly="1" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="meal_count_line_id" invisible="1" force_save="1"/>
+                            <field name="plan_id" invisible="1" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="sunday_meal_ids" string="Sunday" widget="many2many_tags" domain="[('is_meal','=',True),('meal_category_id', 'in', meal_category_id), ('sunday','=',True)]"/>
+                            <field name="monday_meal_ids" string="Monday" widget="many2many_tags" domain="[('is_meal','=',True),('meal_category_id', 'in', meal_category_id), ('monday', '=', True)]"/>
+                            <field name="tuesday_meal_ids" string="Tuesday" widget="many2many_tags" domain="[('is_meal','=',True),('meal_category_id', 'in', meal_category_id), ('tuesday', '=', True)]"/>
+                            <field name="wednesday_meal_ids" string="Wednesday" widget="many2many_tags" domain="[('is_meal','=',True),('meal_category_id', 'in', meal_category_id), ('wednesday','=', True)]"/>
+                            <field name="thursday_meal_ids" string="Thursday" widget="many2many_tags" domain="[('is_meal','=',True),('meal_category_id', 'in', meal_category_id), ('thursday', '=', True)]"/>
+                            <field name="friday_meal_ids" string="Friday" widget="many2many_tags" domain="[('is_meal','=',True),('meal_category_id', 'in', meal_category_id), ('friday', '=', True)]"/>
+                            <field name="saturday_meal_ids" string="Saturday" widget="many2many_tags" domain="[('is_meal','=',True),('meal_category_id', 'in', meal_category_id), ('saturday', '=', True)]"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

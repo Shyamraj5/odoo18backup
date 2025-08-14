@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="inherit_close_pos_config_view_form" model="ir.ui.view">
+            <field name="name">pos.config.view.form.inherit.session.close</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('o_settings_container')][1]" position="after">
+                    <div class="col-12 col-lg-6 o_setting_box" title="Enable Manager Validation for POS Session Closure.">
+                        <div class="o_setting_right_pane">
+                            <label for="enable_closure_validation"/>
+                            <div class="text-muted">
+                                Enable Manager Validation for POS Session Closure
+                            </div>
+                            <div class="content-group mt16">
+                                <field name="enable_closure_validation" colspan="4" nolabel="1"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

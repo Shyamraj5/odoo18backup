@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_return_view_form" model="ir.ui.view">
+        <field name="name">purchase.return.view.form</field>
+        <field name="model">purchase.return</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Return">
+                <header>
+                    <field name="state" widget="statusbar" />
+                    <button name="action_confirm" invisible="state != 'draft'" type="object" string="Confirm" class="oe_highlight" 	 groups="base.group_user"/>
+                    <button name="create_return" invisible="state != 'confirmed'" type="object" string="Create Return" class="oe_highlight" groups="purchase.group_purchase_manager"/>
+                    <button name="create_bill_refund" invisible="state != 'done' or (state == 'done' and refund_count &gt; 0)" type="object" string="Bill Refund" class="oe_highlight" groups="base.group_user"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="view_pickings" type="object" class="oe_stat_button" icon="fa-truck" invisible="picking_count &lt; 1">
+                            <field name="picking_count" string="Return Receipt" widget="statinfo"/>
+                        </button>
+                        <button name="view_purchase_orders" type="object" class="oe_stat_button" icon="fa-pencil-square-o" string="Purchase Order"></button>
+                        <button name="view_refunds" type="object" class="oe_stat_button" icon="fa-pencil-square-o" invisible="refund_count &lt; 1">
+                            <field name="refund_count" string="Bill Refunds" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div name="title" class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" nolabel="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" readonly="state != 'draft'"/>
+                            <field name="vendor_bill_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" readonly="state != 'draft'" domain="[('partner_id', '=', partner_id), ('move_type', '=', 'in_invoice')]"/>
+                            <field name="purchase_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True, 'no_edit': True}" readonly="state != 'draft'" domain="[('invoice_ids', 'in', vendor_bill_id)]"/>
+                        </group>
+                        <group>
+                            <field name="return_date" readonly="state != 'draft'"/>
+                            <field name="return_reason" readonly="state != 'draft'"/>
+                            <field name="location_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <field name="return_line_ids" readonly="state != 'draft'">
+                                <list editable="bottom" create="false">
+                                    <field name="product_id" force_save="1" readonly="1" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+                                    <field name="product_code" force_save="1" string="Product Code"/>
+                                    <field name="lot_id" force_save="1" readonly="1" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+                                    <field name="product_qty" string="Purchased Qty" sum="Total Purchased Qty"/>
+                                    <field name="return_qty" string="Return Qty" sum="Total Return Qty"/>
+                                    <field name="price_unit" force_save="1" readonly="1" sum="Total Price"/>
+                                    <field name="uom_id" force_save="1" readonly="1" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+                                    <field name="tax_ids" widget="many2many_tags" force_save="1" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+                                    <field name="discount_fixed" force_save="1" readonly="1" string="Discount Fixed"/>
+                                    <field name="discount" force_save="1" readonly="1" string="Discount %"/>
+                                    <field name="discount_amount" force_save="1" readonly="1" string="Discount" sum="Total Discount"/>
+                                    <field name="price_subtotal" force_save="1" readonly="1" sum="Total Gross Total"/>
+                                    <field name="price_tax" force_save="1" readonly="1" string="Vat Amount" sum="Total Vat"/>
+                                    <field name="price_total" force_save="1" readonly="1" sum="Total Grand Total"/>
+                                    <field name="purchase_line_id" force_save="1" column_invisible="1"/>
+                                    <field name="move_id" force_save="1" column_invisible="1"/>
+                                    <field name="return_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                            <group>
+                                <div class="float-end d-flex gap-1 mb-2"
+                                    name="po_button_below_order_lines">
+                                    <button string="Round Off"
+                                            name="action_open_round_off_wizard"
+                                            type="object"
+                                            invisible="state not in ['draft', 'confirmed']"
+                                            class="btn btn-secondary"/>
+                                </div>
+                            </group>
+                            <group class="oe_subtotal_footer" name="purchase_total">
+                                <field name="tax_totals" widget="account-tax-totals-field" nolabel="1" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="purchase_return_view_list" model="ir.ui.view">
+        <field name="name">purchase.return.view.list</field>
+        <field name="model">purchase.return</field>
+        <field name="arch" type="xml">
+            <list string="Purchase Returns" create="1">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="vendor_bill_id"/>
+                <field name="return_date"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_purchase_return_filter" model="ir.ui.view">
+        <field name="name">purchase.return.list.select</field>
+        <field name="model">purchase.return</field>
+        <field name="priority" eval="15"/>
+        <field name="arch" type="xml">
+            <search string="Search Purchase Return">
+                <field name="name" string="Return"/>
+                <field name="partner_id" operator="child_of" string="Supplier"/>
+                <field name="vendor_bill_id" string="Bill"/>
+                <field name="purchase_ids" string="Purchase Order"/>
+                <field name="return_line_ids" string="Product" filter_domain="[('order_line.product_id', 'ilike', self)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Supplier" name="supplier" domain="[]" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Return Date" name="return_month" domain="[]" context="{'group_by': 'return_date'}"/>
+                    <filter string="State" name="state" domain="[]" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="purchase_return_action" model="ir.actions.act_window">
+        <field name="name">Purchase Returns</field>
+        <field name="res_model">purchase.return</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_purchase_return_filter"/>
+    </record>
+
+    <menuitem 
+        id="menu_purchase_return" 
+        name="Purchase Returns" 
+        parent="purchase.menu_procurement_management" 
+        action="purchase_return_action" 
+        groups="purchase.group_purchase_user"
+        sequence="5"/>
+
+</odoo>

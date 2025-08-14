@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record id="view_partner_form_inherit_days_limit" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.days.limit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='warning_company']" position="after">
+                <button name="approve_credit_limit"
+                    string="Approve Credit Limit"
+                    type="object"
+                    groups="account.group_account_manager"
+                    invisible="credit_approval_state == 'approved' or use_partner_credit_limit == False"
+                />
+            </xpath>
+            <xpath expr="//group[@name='credit_limits']" position="replace">
+                <group string="Credit Limits"
+                    name="credit_limits"
+                    groups="account.group_account_invoice,account.group_account_readonly"
+                    invisible="not show_credit_limit">
+                    <field name="credit"/>
+                    <field name="days_sales_outstanding"/>
+                    <label for="use_partner_credit_limit"/>
+                    <div class="o_row">
+                        <field name="use_partner_credit_limit"/>
+                    </div>
+                        <field name="days_limit" invisible="not use_partner_credit_limit"/>
+                        <field name="credit_limit" string="Amount" invisible="not use_partner_credit_limit"/>
+                        <field name="credit_approval_state" invisible='1'/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

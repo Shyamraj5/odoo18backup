@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mobile_api_token,mobile.api.token,model_mobile_api_token,base.group_user,1,1,1,1
+access_sync_tracking,sync.tracking,model_sync_tracking,base.group_user,1,1,1,1
+access_delivery_priority,delivery.priority,model_delivery_priority,base.group_user,1,1,1,1

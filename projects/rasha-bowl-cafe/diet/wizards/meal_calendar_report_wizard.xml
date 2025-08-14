@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="meal_calendar_report_wizard_view" model="ir.ui.view">
+        <field name="name">meal.calendar.report.wizard.view</field>
+        <field name="model">meal.calendar.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Meal Calendar Report Wizard">
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                    </group>
+                    <group>
+                        <field name="date_to"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_pdf" string="PRINT PDF" type="object" class="btn-primary"/>
+                    <button name="print_excel" string="Print Excel" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_meal_calendar_report_wizard" model="ir.actions.act_window">
+        <field name="name">Meal Calendar_Report</field>
+        <field name="res_model">meal.calendar.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

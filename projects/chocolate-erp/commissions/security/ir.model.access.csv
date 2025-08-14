@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_commission_plan,commission.plan,model_commission_plan,base.group_user,1,1,1,1
+access_commission_plan_salesperson,commission.plan.salesperson,model_commission_plan_salesperson,base.group_user,1,1,1,1
+access_commission_plan_incentive,commission.plan.incentive,model_commission_plan_incentive,base.group_user,1,1,1,1
+access_incentive_bonus,incentive.bonus,model_incentive_bonus,base.group_user,1,1,1,1
+access_salesperson_target_line,salesperson.target.line,model_salesperson_target_line,base.group_user,1,1,1,1
+access_commission_achievements,commission.achievements,model_commission_achievements,base.group_user,1,1,1,1

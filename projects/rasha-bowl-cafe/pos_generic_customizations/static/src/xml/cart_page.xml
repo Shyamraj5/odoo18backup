@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="pos_self_order.CartPage" t-inherit-mode="extension">
+    
+        <!-- Hide Total and Taxed div -->
+        <xpath expr="//div[@class='absolute-content-price']" position="replace"/>
+        <!-- Hide button -->
+        <xpath expr="//div[@class='d-flex align-items-start gap-2 gap-md-3 my-2']/button" position="replace" />
+
+    </t>
+</templates>

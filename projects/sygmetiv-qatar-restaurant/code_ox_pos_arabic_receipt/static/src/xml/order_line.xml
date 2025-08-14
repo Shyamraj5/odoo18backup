@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.Orderline" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('product-name d-inline-block flex-grow-1 fw-bolder pe-1 text-truncate')]" position="inside">
+            <t t-if="line.arabicName">
+                <br/><span t-esc="line.arabicName" style="font-size: 0.8em; direction: rtl;"/>
+            </t>
+        </xpath>
+    </t>
+</templates>

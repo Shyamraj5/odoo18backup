@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+    <!--    xml to add new fields to the account.payment-->
+    <record id="view_account_payment_form_reconcile" model="ir.ui.view">
+        <field name="name">account.payment.view.form.inherit</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//form/header" position="inside">
+                <button name="action_view_unpaid_invoices" string="Reconcile" type="object" class="oe_highlight" invisible="state != 'paid' or  payment_type != 'inbound'"/>/>
+                <button name="action_view_unpaid_bills" string="Reconcile" type="object" class="oe_highlight" invisible="state != 'paid' or  payment_type != 'outbound'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

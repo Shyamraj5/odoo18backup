@@ -1,0 +1,26 @@
+<odoo>
+    <record id="view_sale_return_roundoff_wizard_form" model="ir.ui.view">
+        <field name="name">sale.return.roundoff.wizard.form</field>
+        <field name="model">sale.return.roundoff.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Apply Round-off">
+                <group>
+                    <field name="roundoff_amount" />
+                </group>
+                <footer>
+                    <button name="apply_roundoff" type="object" string="Apply Round-off" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_return_roundoff_wizard" model="ir.actions.act_window">
+        <field name="name">Round Off</field>
+        <field name="res_model">sale.return.roundoff.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_sale_return_roundoff_wizard_form"/>
+        <field name="target">new</field>
+        <field name="context">{'default_sale_return_id': active_id}</field>
+    </record>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record id="view_res_config_settings_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='total_amount_words']" position="before">
+                <setting company_dependent="1" help="Trigger alerts when creating Invoices and Sales Orders for Partners exceeding the configured days limit.">
+                    <field name="account_use_days_limit"/>
+                    <div class="content-group mt-2" invisible="not account_use_days_limit">
+                        <div class="row">
+                            <label for="days_limit" class="col-lg-4 o_light_label"/>
+                            <field name="days_limit"/>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

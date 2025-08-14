@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <record id="action_container_sticker_print" model="ir.actions.report">
+            <field name="name">Container Sticker</field>
+            <field name="model">container.sticker.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">diet.container_sticker_template</field>
+            <field name="report_file">diet.container_sticker_template</field>
+            <field name="binding_model_id" ref="model_container_sticker_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_container_sticker_print_preview" model="ir.actions.report">
+            <field name="name">Container Sticker</field>
+            <field name="model">container.sticker.wizard</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">diet.container_sticker_template</field>
+            <field name="report_file">diet.container_sticker_template</field>
+            <field name="binding_model_id" ref="model_container_sticker_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

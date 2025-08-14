@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="payment_team_list" model="ir.ui.view">
+            <field name="name">payment.team.tree</field>
+            <field name="model">payment.team</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="active" column_invisible="1"/>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="payment_team_form" model="ir.ui.view">
+            <field name="name">payment.team.form</field>
+            <field name="model">payment.team</field>
+            <field name="arch" type="xml">
+                <form string="PO Team" class="o_payment_team">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="user_id" domain="[('share', '=', False)]" widget="many2one_avatar_user"/>
+                            </group>
+                            <group>
+                                <field name="company_id" groups="base.group_multi_company"
+                                       options="{'no_create': True}"/>
+                                <field name='approval_level'/>
+                                <field name='approve_type' widget='radio' force_save="1" invisible="1"/>
+                            </group>
+                        </group>
+                        <!-- <group string="Approvers"> -->
+                        <notebook>
+                            <page name="approvers" string="Approvers">
+                                <field name="approver_ids" nolabel="1">
+                                    <list editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="user_ids" widget="many2many_tags"/>
+                                        <field name="role_id" column_invisible="1"/>
+                                        <field name="role_ids" widget="many2many_tags"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="payment_team_act_window" model="ir.actions.act_window">
+            <field name="name">Payment Approval</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">payment.team</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No team found. Let's create one!
+                </p>
+            </field>
+        </record>
+        <menuitem id="payment_team_menu" name="payment Approval"  sequence="70" parent="account.root_payment_menu" />
+        <menuitem name="Payment Approval" id="payment_team_mkkenu" action="payment_team_act_window"
+            parent="payment_team_menu" sequence="65"/>
+    </data>
+</odoo>

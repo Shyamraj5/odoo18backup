@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="sale_report_header">
+            <div class="header">
+                <div class="row">
+                    <div class="col-6" style="float: left; padding: 15px;">
+                        <img t-if="env.company.logo" t-att-src="image_data_uri(env.company.logo)" alt="Company Logo" style="max-height: 80px;" />
+                    </div>
+                    <div class="col-6" style="float: right; text-align: right; font-size: 16px; padding: 15px;">
+                        <strong>FEED</strong><br/>
+                        <br/>
+                        <t t-esc="env.company.phone"/> <!-- Company Phone -->
+                    </div>
+                </div>
+                <div class="row" style="clear: both; text-align: right; padding-right: 15px;">
+                    <p>
+                        <!-- <strong>Date:</strong> <t t-esc="fields.datetime.today()"/><br/> -->
+                        <strong>Prepared By:</strong> <t t-esc="env.user.name"/> <!-- User preparing the report -->
+                    </p>
+                </div>
+            </div>
+            
+            <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-call="web.address_layout"/>
+                <t t-raw="0"/>
+            </div>
+            
+            <div class="footer" style="border-top: 4px solid #8bc388; margin-top: 30px;">
+                <p style="text-align: center; padding-top: 16px;">
+                    <span class="page"/> <!-- Page number -->
+                    <span t-if="o and o.company_id"> | <t t-esc="o.company_id.name"/></span> <!-- Company Name -->
+                </p>
+            </div>
+        </template>
+    </data>
+</odoo>

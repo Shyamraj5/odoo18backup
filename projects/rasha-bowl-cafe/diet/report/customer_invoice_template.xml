@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="customer_invoice_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="diet.custom_header_footer">
+                    <div class="page">
+                        <style>
+                            table, tr, td, th{
+                                border: 2px solid #ffffff;
+                            }
+                        </style>
+                        <div style="text-align: center; font-size: 20px; font-weight: bold; padding-bottom: 10px;">
+                            <div>
+                                <img t-if="doc.company_id and doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)"
+                                    style="max-height: 100px;" alt="Company Logo"/>
+                            </div> <br/>
+                            <p><t t-esc="docs.company_id.country_id.name"/></p>
+                            <p><strong>Simplified Tax Invoice</strong></p>
+                            <p><strong>فاتورة ضريبة مبسطة</strong></p>
+                        </div>
+
+                        <hr style="border: 1px solid black; margin-bottom: 20px;"/>
+
+                        <table style="width: 100%; border: none !important;">
+                            <tr>
+                                <td style="text-align: left; width:20%;">
+                                    <p><strong>Bill To</strong></p>
+                                </td>
+
+                                <td style="text-align: center;">
+                                    <p><t t-esc="doc.partner_id.name"/></p>
+                                </td>
+
+                                <td style="text-align: right; width:20%;">
+                                    <p><strong>فاتورة الى</strong></p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align: left;">
+                                    <p><strong>Mobile No #</strong></p>
+                                </td>
+
+                                <td style="text-align: center;">
+                                    <p><t t-esc="doc.partner_id.phone"/></p>
+                                </td>
+
+                                <td style="text-align: right;">
+                                    <p><strong>رقم الجوال</strong></p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align: left;">
+                                    <p><strong>Invoice #</strong></p>
+                                </td>
+
+                                <td style="text-align: center;">
+                                    <p><t t-esc="doc.name"/></p>
+                                </td>
+
+                                <td style="text-align: right;">
+                                    <p><strong>رقم الفاتورة #</strong></p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align: left;">
+                                    <p><strong>Invoice Issue Date</strong></p>
+                                </td>
+
+                                <td style="text-align: center;">
+                                    <p><t t-esc="doc.invoice_date"/></p>
+                                </td>
+
+                                <td style="text-align: right;">
+                                    <p><strong>تاريخ اصدار الفاتورة</strong></p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table style="width: 100%; margin-top: 30px;">
+                            <tr style="background-color :#b5976a; color: white;">
+                                <th style="text-align: center; border: 2px solid white; padding-left: 10px"><strong>Nature of Goods or Service</strong> <br/> <strong>طبيعة السلعة أو الخدمة</strong></th>
+                                <th style="text-align: center; border: 2px solid white;"><strong>Unit Price</strong> <br/> <strong>سعر الوحدة</strong></th>
+                                <th style="text-align: center; border: 2px solid white;"><strong>Quantity</strong> <br/> <strong>كمية</strong></th>
+                                <th style="text-align: center; border: 2px solid white;"><strong>Discount</strong> <br/> <strong>التخفيض</strong></th>
+                                <th style="text-align: center; border: 2px solid white;"><strong>Tax</strong> <br/> <strong>الضريبة</strong></th>
+                                <th style="text-align: center; border: 2px solid white; width: 25%;"><strong>Item Subtotal</strong> <br/> (Including VAT) <br/> <strong>المجموع الفرعي للعنصر (بما في ذلك ضريبة القيمة المضافة)</strong></th>
+                            </tr>
+
+                            
+                            <t t-foreach="doc.invoice_line_ids" t-as="line">
+                                <tr>
+                                    <td style="text-align: left; padding-left: 10px">
+                                        <p><t t-esc="doc.customer_so_line_id.plan_id.name"/>: <t t-esc="doc.customer_so_line_id.plan_choice_id.name"/>
+                                        <br/>
+                                        <t t-foreach="doc.customer_so_line_id.plan_id.meal_config_ids" t-as="meal_config">
+                                            <t t-esc="meal_config.meal_category_id.name"/> (<t t-esc="meal_config.meal_count"/>)<br/>
+                                        </t>
+                                        <t t-esc="doc.customer_so_line_id.package_days"/> Days
+                                        </p>
+                                    </td>
+                                    <td style="text-align: center; vertical-align: top;">
+                                        <p><t t-esc="line.price_unit"/> <t t-esc="doc.currency_id.name"/></p>
+                                    </td>
+
+                                    <td style="text-align: center; vertical-align: top;">
+                                        <p><t t-esc="line.quantity"/></p>
+                                    </td>
+
+                                    <td style="text-align: center; vertical-align: top;">
+                                        <p><t t-esc="line.discount"/></p>
+                                    </td>
+
+                                    <td style="text-align: center; vertical-align: top;">
+                                        <p><t t-esc="', '.join(line.tax_ids.filtered(lambda t: t.active).mapped('name'))"/></p>
+                                    </td>
+
+                                    <td style="text-align: center; vertical-align: top;">
+                                        <p><t t-esc="doc.amount_total"/> <t t-esc="doc.currency_id.name"/></p>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+
+                        <hr style="border: 1px solid black; margin-bottom: 20px;"/>
+
+                        <table style="width: 100%; margin-top: 30px">
+                            <tr style="height: 50px;">
+                                <td><p>Total Taxable Amount <br/>
+                                        (Excluding VAT)
+                                    </p>
+                                </td>
+
+                                <td style="text-align : right"><p>اجمالي المبلغ الخاضع للضريبة ( باستثناء ضريبة القيمة المضافة )
+                                    </p>
+                                </td>
+                                
+                                <td style="text-align : right"><p><t t-esc="doc.amount_untaxed"/> <t t-esc="doc.currency_id.name"/></p></td>
+                            </tr>
+                            
+                            <tr style="height: 50px;">
+                                <td><p>Total VAT<br/>
+                                    </p>
+                                </td>
+
+                                <td style="text-align : right"><p>اجمالي ضريبة القيمة المضافة</p></td>
+
+                                <td style="text-align : right"><p><t t-esc="', '.join(line.tax_ids.filtered(lambda t: t.active).mapped('name'))"/></p></td>
+                            </tr>
+                            
+                            <tr style="height: 50px;">
+                                <td><p>Total Amount Due<br/>
+                                    </p>
+                                </td>
+
+                                <td style="text-align : right"><p>المبلغ الاجمالي المستحق</p></td>
+
+                                <td style="text-align : right"><p><t t-esc="doc.amount_residual"/> <t t-esc="doc.currency_id.name"/></p></td>
+                            </tr>
+                        </table>
+
+                        <div style="text-align: center; margin-top: 30px; margin-left: 385px;">
+                            <t t-if="doc.l10n_sa_qr_code_str">
+                                <img t-if="doc.l10n_sa_qr_code_str" style="display:block;" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(doc.l10n_sa_qr_code_str), 200, 200)"/>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="diet.customer_invoice_report_paperformat" model="report.paperformat">
+        <field name="name">Customer Invoice Report Paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">10</field>
+        <field name="dpi">100</field>
+    </record>
+    
+    <record id="action_customer_invoice_report_pdf" model="ir.actions.report">
+        <field name="name">Customers Invoice Report</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">diet.customer_invoice_report_template</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="diet.customer_invoice_report_paperformat"/>
+    </record>
+</odoo>

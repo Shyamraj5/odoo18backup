@@ -1,0 +1,9 @@
+<odoo>
+    <record id="seq_kitchen_usage" model="ir.sequence">
+        <field name="name">Kitchen Usage Sequence</field>
+        <field name="code">kitchen.usage</field>
+        <field name="prefix">KITCH-</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

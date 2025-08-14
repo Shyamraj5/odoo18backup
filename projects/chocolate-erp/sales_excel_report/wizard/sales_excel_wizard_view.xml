@@ -1,0 +1,35 @@
+<odoo>
+    <record id="view_sales_excel_wizard_form" model="ir.ui.view">
+        <field name="name">sales.excel.wizard.form</field>
+        <field name="model">sales.excel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate Sales Report">
+                <group>
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="product_id" widget="many2many_tags" options="{'no_create': True}" />
+                    <field name="customer_id" widget="many2many_tags" options="{'no_create': True}" />
+                    <field name="location_id" widget="many2many_tags" options="{'no_create': True}" />
+                    <field name="company_id" widget="many2many_tags" options="{'no_create': True}" />
+                </group>
+                <footer>
+                    <button string="Generate Report" type="object" name="generate_excel_report" class="btn-primary" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sales_excel_wizard" model="ir.actions.act_window">
+        <field name="name">Sales Report</field>
+        <field name="res_model">sales.excel.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_reporting_sales_report"
+          name="Sales Report"
+          parent="sale.menu_sale_report"
+          action="action_sales_excel_wizard"
+          sequence="50"/>
+</odoo>

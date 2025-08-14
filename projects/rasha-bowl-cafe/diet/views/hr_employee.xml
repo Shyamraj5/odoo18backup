@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <!-- Action for diet dietitian -->
+         <record id="diet_dietitian_action" model="ir.actions.act_window">
+            <field name="name">Dietitian</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="domain">[('employee_type','=','dietitian')]</field>
+            <field name="context">{'default_employee_type': 'dietitian'}</field>
+        </record>
+    </data>
+
+    <record id="view_employee_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='coach_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='job_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='category_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>               
+            <xpath expr="//notebook" position="inside">
+                <page name="area_of_speciality" string="Area of Speciality">
+                    <field name="area_of_speciality_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                        </list>
+
+                    </field>
+
+                </page>
+                
+                <page name="dietitian_schedule" string="Diettitan Schedule">
+                    <group>
+                        <group>
+                            <field name="dietitian_available_days" widget="many2many_tags" options="{'no_create': True, 'no_create_edit': True}"/>
+                        </group>
+                        <field name="dietitian_time_slots">
+                            <list editable="bottom">
+                                <field name="start_time" widget="float_time"/>
+                                <field name="end_time" widget="float_time"/>
+                            </list>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

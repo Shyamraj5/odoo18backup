@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  Cron Job: To check close date  -->
+    <record id="close_limit_cron" model="ir.cron">
+        <field name="name">Check Close Limit</field>
+        <field name="model_id" ref="model_subscription_package"/>
+        <field name="state">code</field>
+        <field name="code">model.close_limit_cron()</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+        <field name="active" eval="False"/>
+    </record>
+
+    <!-- scheduled action to assign any meal calendar entries
+     with unassinged address and shift -->
+    <record id="assign_unassigned_address_shift" model="ir.cron">
+        <field name="name">Assign Unassigned Address and Shift</field>
+        <field name="model_id" ref="diet.model_customer_meal_calendar"/>
+        <field name="state">code</field>
+        <field name="code">model.assign_unassigned_address_shift()</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+        <!-- <field name="numbercall">-1</field> -->
+    </record>
+
+    <!-- scheduler to process scheduled notifications -->
+    <record id="process_scheduled_notifications" model="ir.cron">
+        <field name="name">Process Scheduled Notifications</field>
+        <field name="model_id" ref="diet.model_customer_notification_schedule"/>
+        <field name="state">code</field>
+        <field name="code">model.process_notifications()</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+        <!-- <field name="numbercall">-1</field> -->
+    </record>
+
+    <!-- scheduler to check customer birthday -->
+    <record id="check_customer_birthday" model="ir.cron">
+        <field name="name">Check Customer Birthday</field>
+        <field name="model_id" ref="diet.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">model.check_is_birthday_today()</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+        <!-- <field name="numbercall">-1</field> -->
+    </record>
+
+
+    <record id="ir_cron_update_next_birthdays" model="ir.cron">
+        <field name="name">Update Partner Birthdays</field>
+        <field name="model_id" ref="diet.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">model.update_next_birthday()</field>
+        <field name="interval_number">6</field>
+        <field name="interval_type">months</field>
+        <!-- <field name="numbercall">1</field> -->
+        <field name="active">True</field>
+    </record>
+
+    <record id="ir_cron_pause_subscription" model="ir.cron">
+        <field name="name">Pause Subscription Process</field>
+        <field name="model_id" ref="diet.model_universal_pause_days"/>
+        <field name="state">code</field>
+        <field name="code">model.pause_subscription()</field>
+        <field name="interval_type">days</field>
+        <field name="interval_number">1</field>
+        <field name="nextcall" eval="(DateTime.now() + timedelta(days=365)).strftime('%Y-%m-%d %H:%M:%S')"/> 
+        <!-- <field name="numbercall">1</field>  -->
+        <field name="active" eval="True"/>
+    </record>
+    
+</odoo>

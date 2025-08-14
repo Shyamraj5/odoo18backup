@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_category_replenishment" model="ir.module.category">	
+		<field name="name">Replenishment</field>
+	</record>			
+
+	<record id="group_repleneishment_notification" model="res.groups">
+		<field name="name">Replenishment Notification</field>
+		<field name="category_id" ref="module_category_replenishment" />
+	</record>
+
+</odoo>

@@ -1,0 +1,1028 @@
+<odoo>
+    <data>
+        <record id="view_inherit_res_partner_tree" model="ir.ui.view">
+            <field name="name">inherit.res.partner.list</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='complete_name']" position="before">
+                    <field name="customer_sequence_no"/>
+                </xpath>
+                <xpath expr="//field[@name='email']" position="before">
+                    <field name="address"/>
+                    <field name="shift_id" invisible = "1"/>
+                    <field name="no_of_total_sales"/>
+                    <field name="note"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_inherit_res_partner_form" model="ir.ui.view">
+            <field name="name">inherit.res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <div name="button_box" position="inside">
+                    <button class="oe_stat_button" type="object" name="action_view_tickets"
+                        icon="fa-bug" invisible="1">
+                        <field string="Tickets" name="ticket_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_view_total_rated"
+                        icon="fa-star" invisible="1">
+                        <field string="Total Rated" name="total_rated_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_view_referred"
+                        icon="fa-thumbs-up" invisible="1">
+                        <field string="Referred" name="referred_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_view_deliveries"
+                        icon="fa-car" invisible="1">
+                        <field string="Deliveries" name="deliveries_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_view_meals"
+                        icon="fa-cutlery" invisible="1">
+                        <field string="Meals" name="meals_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_view_sms"
+                        icon="fa-envelope" invisible="1">
+                        <field string="SMS" name="sms_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_view_notifications"
+                        icon="fa-mobile" invisible="1">
+                        <field string="Notifications" name="notification_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_view_consultation"
+                        icon="fa-user-md" invisible="1">
+                        <field string="Consultations" name="consultation_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_view_wallet"
+                        icon="fa-dollar" invisible="1">
+                        <field string="Wallet Amount" name="wallet_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_view_payment"
+                        icon="fa-edit" invisible="1">
+                        <field string="Total Payments" name="payment_count" widget="statinfo"/>
+                    </button>
+                   
+                </div>
+                <xpath expr="//field[@name='parent_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='create_company']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//sheet/group[1]" position="replace">
+                    <group name="basic_customer_details">
+                        <group name="contact_details">
+                            <field name="phone"/>
+                            <field name="mobile" />
+                            <field name="email" />
+                            <field name="shift_id"/>
+                            <field name="comments" />
+                        </group>
+                        <group name="customer_bmi">
+                            <field name="date_of_birth" />
+                            <field name="gender" />
+                            <field name="is_birthday_today" invisible="1"/>
+                            <field name="age" />
+                            <field name="height" />
+                            <field name="weight" />
+                        </group>
+                        <group name="required_odoo_default_fields" invisible="1">
+                            <field name="type"/>
+                            <field name="street" />
+                            <field name="street2" />
+                            <field name="city" />
+                            <field name="state_id" />
+                            <field name="zip" />
+                            <field name="country_id" />
+                            <field name="lang" />
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='child_ids']/form/sheet/group/group/label[@for='street']" position="replace">
+                    <label for="zone_id" string="Address" invisible="'contact' in type" />
+                </xpath>
+                <xpath expr="//field[@name='child_ids']/form/sheet/group/group/div/div[@name='div_address']" position="replace">
+                    <group name="custom_address">
+                        <field name="zone_id" placeholder="District..."/>
+                        <field name="street" placeholder="Street..."/>
+                        <field name="avenue" placeholder="Avenue..."/>
+                        <field name="house_number" placeholder="House Number..."/>
+                        <field name="floor_number" placeholder="Floor Number..."/>
+                        <field name="partner_latitude" />
+                        <field name="partner_longitude" />
+                        <field name="apartment_no" placeholder="Apartment Number..."/>
+                        <field name="is_default_address"/>
+                        <field name="leave_at_door"/>
+                        <field name="delivery_instruction" string="Additional Instructions"/>
+                        <field name="shift_id" string="Delivery Time" invisible="1"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='child_ids']/form/sheet/group/group[2]/field[@name='email']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='child_ids']/form/sheet/group/group[2]/field[@name='phone']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='child_ids']/form/sheet/group/group[2]/field[@name='mobile']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='child_ids']/form/sheet/field[@name='type']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='child_ids']/form/sheet//div" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='child_ids']/form/sheet/group[2]/field[@name='comment']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_title')]//field[@id='individual']" position="replace">
+                    <label for="name" string="Name"/>
+                    <div class="o_row">
+                        <field name="name" default_focus="1" required="'contact' in type and not is_company" invisible="is_company"  placeholder="First Name..."/>
+                        <field name="last_name" invisible="is_company" placeholder="Last Name..."/>
+                    </div>
+                </xpath>
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button string="Create Subscription Order" name="create_subscription_order" type="object" class="oe_highlight"/>
+                        <!-- <button string="Regenerate Meal Calendar" name="regenerate_meal_calendar" type="object" class="oe_highlight"/> -->
+                    </header>
+                </xpath>
+                <page name="contact_addresses" position="attributes">
+                    <attribute name="autofocus">false</attribute>
+                </page>
+                <page name="contact_addresses" position="before">
+                    <page name="sale_order" string="Subscriptions" autofocus="autofocus">
+                        <field name="customer_sale_order_line_ids" readonly="1">
+                            <list default_order="actual_start_date desc, order_number desc">
+                                <button string="Open" name="open_subscription_order" type="object" class="oe_highlight"/>
+                                <field name="order_number" optional="show"/>
+                                <field name="date" optional="show" invisible="1"/>
+                                <field name="partner_id" invisible="1"/>
+                                <field name="start_date" invisible="1"/>
+                                <field name="actual_start_date" string="Start Date"/>
+                                <field name="end_date"/>
+                                <field name="plan_id"/>
+                                <field name="state" optional="hide"/>
+                                <field name="sales_person_id" optional="show" invisible="1"/>
+                                <field name="total"/>
+                                <field name="payment_status" invisible="1"/>
+                                <field name="paid_amount" invisible="1"/>
+                                <field name="balance_amount" invisible="1"/>
+                                <field name="promo_code" optional="show" invisible="1" />
+                                <button string="Meal Calendar" name="view_meal_calendar" type="object" class="oe_highlight"/>
+                            </list>
+                        </field>
+                    </page>
+                </page>
+                <page name="contact_addresses" position="after"> 
+                    <page name="dislikes_and_allergies" string="Allergies &amp; Dislikes">
+                        <group>
+                            <group name="allergies" string="Allergies">
+                                <field name="allergy_category_ids" widget="many2many_tags"/>
+                                <field name="allergies" widget="many2many_tags"/>
+                            </group>
+                            <group name="dislikes" string="Dislikes">
+                                <field name="dislike_category_ids" widget="many2many_tags"/>
+                                <field name="dislikes_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page name="pause_days" string="Pause Days" invisible="1">
+                        <field name="pause_days_line_ids">
+                            <list editable="bottom">
+                                <field name="start_date"/>
+                                <field name="Paused_days_date"/>
+                                <field name="assigned_by"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page name="delivery_schedule" string="Delivery Schedule" invisible="1">
+                        <field name="delivery_schedule_line_ids">
+                            <list editable="bottom">
+                                <field name="week_days"/>
+                                <field name="address"/>
+                                <field name="shift_id"/>
+                                <field name="start_date" width="15%"/>
+                                <field name="end_date"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page name="customer_medical_report" id="medical_report" string ="Medical Reports">
+                        <separator string="Document 1"/>
+                        <field name="medical_report1" widget="pdf_viewer"/>
+                        <separator string="Document 2"/>
+                        <field name="medical_report2" widget="pdf_viewer"/>
+                    </page>
+                </page>
+                <xpath expr="//notebook/page[@name='sales_purchases']/group" position="after">
+                    <group string="Language" name='language'>
+                        <group>
+                            <field name="language"/>
+                            <field name="commun_language"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="is_customer"/>
+                            <field name="is_supplier"/>
+                            <field name="is_driver"/>
+                        </group>
+                        <group>
+                            <field name="is_specialist"/>
+                            <field name="is_active"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//page[@name='sales_purchases']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_type']" position="replace">
+                    <label for="customer_sequence_no" string="Customer Code"/>
+                    <field name="customer_sequence_no" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="partner_account_inherit_view_form" model="ir.ui.view">
+            <field name="name">partner.account.inherit.view.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='accounting']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="res_prtner_search_view" model="ir.ui.view">
+            <field name="name">res.partner.search.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="customer_sequence_no" string="Anything" filter_domain="['|', '|', '|', '|', '|', '|',('phone', 'ilike',self),('customer_sequence_no', 'ilike', self),('full_name', 'ilike', self),('email', 'ilike', self),('customer_address_district_id', 'ilike', self),('customer_address_street', 'ilike', self)]"/>
+                    <field name="phone"/>
+                    <field name="customer_sequence_no"/>
+                </xpath>
+                <xpath expr="//search" position="inside">
+                    <field name="street"/>
+                    <field name="jedha"/>
+                    <separator/>
+                    <filter string="Active Customers" name="active_customers" domain="[('customer_sale_order_line_ids.state','=','in_progress')]"/>
+                    <separator/>
+                    <filter string="Inactive Customers" name="inactive_customers" domain="[('customer_sale_order_line_ids.state','!=','in_progress')]"/>
+                    <separator/>
+                    <filter string="Birth Day" name="birth_day" domain="[('day_month','like',context_today().strftime('%m-%d'))]"/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="Tags" string="Tags" domain="[]" context="{'group_by' : 'category_id'}"/>
+                    </group>
+                    <group expand="1" string="Group By">
+                        <filter name="group_create_date" string="Created Date" context="{'group_by': 'create_date:day'}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        <record id="customer_medical_reports_view_form" model="ir.ui.view">
+            <field name="name">medical.report.view.form</field>
+            <field name="model">medical.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="attatchment"/> 
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <menuitem id="menu_address"
+            name="Locations"
+            parent="contacts.res_partner_menu_config" sequence="7"/>
+        <menuitem id="menu_customer_zone"
+            name="Districts"
+            parent="menu_address"
+            sequence="10"
+            action="action_customer_zone"/>
+        <menuitem id="menu_customer_shift"
+            name="Shifts"
+            parent="menu_address"
+            sequence="12"
+            action="action_customer_shift"/>
+
+        <record id="diet_customers_action" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="domain">[('parent_id','=',False)]</field>
+            <field name="context">{'search_default_active_subscribers':1}</field>
+        </record>
+
+        <record id="diet_customers_non_action" model="ir.actions.act_window">
+            <field name="name">Incorrect Meal Customers</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form,kanban</field>
+            <field name="domain">[('incorrect_meals','=',True)]</field>
+            <field name="context">{'search_default_active_subscribers':1}</field>
+        </record>
+        
+        <record id="diet_customer_form" model="ir.ui.view">
+            <field name="name">diet.customer.form</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Edit" name="action_edit" type="object" class="oe_highlight" invisible="not is_form_readonly"/>
+                        <button string="Save" name="action_save" type="object" class="oe_highlight" invisible="is_form_readonly"/>
+                        <button string="Create Subscription Order" name="create_subscription_order" type="object" class="oe_highlight"/>
+                        <button string="Send Notification" name="send_notification" type="object" class="oe_highlight"/>
+                        <button string="Referral" name="action_referral" type="object" class="oe_highlight"/>
+                        <button string="Reset password" name="reset_password" type="object" class="oe_highlight"/>
+                        <button string="Delete Related Records" 
+                            name="action_delete_customer_related_records" 
+                            type="object" 
+                            class="oe_highlight"
+                            confirm="Are you sure you want to delete? Every record related to the customer will be deleted from the system."
+                            groups="base.group_no_one"
+                        />
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="view_notification" type="object" class="oe_stat_button" string="Notification" icon="fa-bell-o" invisible="is_form_readonly">
+                                <field name="notification_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <group>
+                            <div class="float-left">
+                                <field name="image_1920" widget="image" options='{"preview_image": "avatar_128"}'/>
+                            </div>
+                            <div>
+                                <field name="customer_sequence_no" readonly="1" nolabel="1" />
+                                <div class="o_row">
+                                    <field name="name" default_focus="1" placeholder="First Name..." readonly="is_form_readonly"/>
+                                    <field name="last_name" placeholder="Last Name..." readonly="is_form_readonly"/>
+                                </div>
+                                <field name="customer_priority" widget="priority" nolabel="1" readonly="1"/>
+                                <field name="category_id" widget="many2many_tags" placeholder="Customer Tags..."/>
+                            </div>
+                        </group>
+                                    
+                        <div style="margin-top:20px;">
+                            <group name="partner_details">
+                                <group name="address" string="Address">
+                                    <field name="id" invisible="1"/>
+                                    <label for="customer_address_id" string="Address"/>
+                                    <div class="o_row">
+                                        <field
+                                            name="customer_address_id"
+                                            string="Address"
+                                            domain="[('parent_id','=',id)]"
+                                            options="{'no_create':True,'no_open':True,'no_edit':True}"
+                                            context="{'is_address':True}"
+                                            readonly="1"
+                                        />
+                                        <button
+                                            name="get_previous_address_id"
+                                            icon="fa-arrow-left"
+                                            type="object"
+                                            class="oe_highlight oe_inline"
+                                            invisible="not child_ids"
+                                            title="Previous"
+                                        />
+                                        <button
+                                            name="get_next_address_id"
+                                            icon="fa-arrow-right"
+                                            type="object"
+                                            class="oe_highlight oe_inline"
+                                            invisible="not child_ids"
+                                            title="Next"
+                                        />
+                                        <button
+                                            name="add_customer_address"
+                                            icon="fa-plus"
+                                            type="object"
+                                            class="oe_highlight oe_inline"
+                                            title="Add"
+                                        />
+                                        <button
+                                            name="edit_customer_address"
+                                            icon="fa-pencil"
+                                            type="object"
+                                            class="oe_highlight oe_inline"
+                                            title="Edit"
+                                        />
+                                        <button
+                                            name="delete_customer_address"
+                                            icon="fa-trash"
+                                            type="object"
+                                            confirm="Are you sure you want to delete?"
+                                            class="oe_highlight oe_inline"
+                                            title="Delete"
+                                        />
+                                    </div>
+                                    <field name="customer_address_house_number" readonly="1"/>
+                                    <field name="customer_address_street" readonly="1"/>
+                                    <field name="customer_address_floor_number" readonly="1"/>
+                                    <field name="customer_address_zip" readonly="1"/>
+                                    <field name="customer_address_delivery_time" readonly="1"/>
+                                    <field name="customer_address_city_id" readonly="1"/>
+                                    <field name="customer_address_district_id" readonly="1"/>
+                                    <field name="customer_address_route" readonly="1"/>
+                                    <field name="customer_address_country_id" readonly="1"  />
+                                    <field name="customer_address_apartment_no" readonly="1"/>
+                                    <field name="customer_address_shift_id" readonly="1"/>
+                                    <field name="customer_address_comments" readonly="1"/>
+                                    <field name="customer_address_latitude" string="Latitude" groups="diet.group_edit_customer_lat_long"/>
+                                    <field name="customer_address_longitude" string="Longitude" groups="diet.group_edit_customer_lat_long"/>
+                                    <field name="is_form_readonly" invisible="1"/>
+                                    <field name="is_default_address" readonly="1" invisible="1"/>
+                                </group>
+                                <group name="other_details" string="Personal Info">
+                                    <field name="day_month" invisible ="1"/>
+                                    <field name="gender" column_invisible="True" readonly="is_form_readonly"/>
+                                    <field name="date_of_birth" readonly="is_form_readonly" placeholder="Enter your Date of Birth"/>
+                                    <field name="is_birthday_today" invisible="1"/>
+                                    <field name="age" readonly="True" force_save="1"/>
+                                    <field name="height" invisible="1"/>
+                                    <field name="weight" invisible="1"/>
+                                    <field name="phone" readonly="is_form_readonly" placeholder="Enter your Contact number"/>
+                                    <field name="mobile" invisible="1"/>
+                                    <field name="email" readonly="is_form_readonly" placeholder="Enter your Email"/>
+                                    <field name="shift_id" invisible="1"/>
+                                    <field name="create_date" invisible="1"/>
+                                    <field name="comments" invisible="1"/>
+                                    <field name="profile_picture_attachment_id" invisible="1" force_save="1" />
+                                    <field name="source"/>
+                                    <field name="is_pregnent"/>
+                                    <field name="customer_goals_id"/>
+                                    <field name="other_source" invisible="source not in ['other']" force_save="1"/>
+                                    <field name="incorrect_meals" invisible="1"/>
+                                    <field name="is_vegetarian"/>
+                                    <field name="comment"/>
+                                    <field name="favourite_meals_ids" widget="many2many_tags" readonly="1" force_save="1"/>
+                                </group>
+                            </group>
+                        </div>
+                        <notebook>
+                            <page name="sale_order" string="Subscription" autofocus="autofocus">
+                                <field name="subscription_count" invisible="1"/>
+                                <field name="customer_sale_order_line_ids" readonly="1">
+                                    <list decoration-danger="payment_status in ('not_paid','partial')"
+                                        default_order="create_date desc" no_open="1">
+                                        <button string="Open" name="open_subscription_order" type="object" class="oe_highlight"/>
+                                        <field name="partner_id" column_invisible="True"/>
+                                        <field name="order_number" optional="show"/>
+                                        <field name="date" optional="show" column_invisible="True"/>
+                                        <field name="create_date" string="Date, Time"/>
+                                        <field name="start_date" column_invisible="True"/>
+                                        <field name="actual_start_date" string="Start Date"/>
+                                        <field name="end_date"/>
+                                        <field name="sales_person_id"/>
+                                        <field name="plan_id"/>
+                                        <field name="total_days" />
+                                        <field name="state"/>
+                                        <field name="payment_status"/>
+                                        <field name="sales_person_id" optional="show" column_invisible="True"/>
+                                        <field name="total" column_invisible="True"/>
+                                        <field name="plan_base_price"/>
+                                        <field name="coupon_discount"/>
+                                        <field name="addons_price"/>
+                                        <field name="payment_status" column_invisible="True"/>
+                                        <field name="paid_amount" column_invisible="True"/>
+                                        <field name="balance_amount" column_invisible="True"/>
+                                        <field name="promo_code" optional="show"/>
+                                        <field name="promo_code_discount"/>
+                                        <field name="grand_total"/>
+                                        <field name="paid_by"/>
+                                        <button string="Meal Calendar" name="view_meal_calendar" type="object" class="oe_highlight"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Contacts &amp; Addresses" name="contact_addresses" invisible="1">
+                                <field name="child_ids" mode="kanban" context="{'default_parent_id': id}" force_save="1">
+                                    <kanban>
+                                        <field name="id"/>
+                                        <field name="name"/>
+                                        <field name="function"/>
+                                        <field name="lang"/>
+                                        <field name="color"/>
+                                        <field name="title"/>
+                                        <field name="zone_id"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
+                                                <div t-att-class="color + (record.title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">
+                                                    <div class="o_kanban_image">
+                                                        <img alt="Contact image" t-att-src="kanban_image('res.partner', 'avatar_128', record.id.raw_value)"/>
+                                                    </div>
+                                                    <div class="oe_kanban_details">
+                                                        <strong><field name="name"/></strong>
+                                                        <div>
+                                                            <field name="zone_id"/>
+                                                        </div>
+                                                        <div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form string="Contact / Address">
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="name" string="Contact Name"/>
+                                                <label for="zone_id" string="Address"/>
+                                                <div>
+                                                    <group name="custom_address">
+                                                        <field name="zone_id" placeholder="District..."/>
+                                                        <field name="street" placeholder="Street..." required="1"/>
+                                                        <field name="jedha" placeholder="Jedha..."/>
+                                                        <field name="avenue" placeholder="Avenue..."/>
+                                                        <field name="house_number" placeholder="House Number..." required="1"/>
+                                                        <field name="floor_number" placeholder="Floor Number..."/>
+                                                        <field name="shift_id" placeholder="Shift..." required="1"/>
+                                                        <field name="partner_latitude" />
+                                                        <field name="partner_longitude" />
+                                                        <field name="apartment_no" placeholder="Apartment Number..."/>
+                                                        <field name="is_default_address"/>
+                                                        <field name="leave_at_door"/>
+                                                        <field name="delivery_instruction" string="Additional Instructions"/>
+                                                        <field name="shift_id" string="Delivery Time" invisible="1"/>
+                                                    </group>
+                                                </div>
+                                            </group>
+                                        </group>
+                                        <field name="lang" invisible="True"/>
+                                        <field name="user_id" invisible="True"/>
+                                    </sheet>
+                                </form>
+                                </field>
+                            </page>
+                             <page name="dislikes_and_allergies" string="Allergies &amp; Dislikes">
+                                <group>
+                                    <group name="allergies" string="Allergies">
+                                        <field name="allergy_category_ids" widget="many2many_tags" readonly="is_form_readonly"/>
+                                        <field name="allergies" widget="many2many_tags" readonly="is_form_readonly"/>
+                                    </group>
+                                    <group name="dislikes" string="Dislikes">
+                                        <field name="dislike_category_ids" widget="many2many_tags" readonly="is_form_readonly" invisible="1" />
+                                        <field name="dislikes_ids" widget="many2many_tags" readonly="is_form_readonly"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="customer_medical_report" id="medical_report" string ="Medical Reports">
+                                <separator string="Document 1"/>
+                                <field name="medical_report1" widget="pdf_viewer" readonly="is_form_readonly"/>
+                                <separator string="Document 2"/>
+                                <field name="medical_report2" widget="pdf_viewer" readonly="is_form_readonly"/>
+                            </page>
+                            <page name="day_shift_select" id="day_shift" string ="Delivery Schedule">
+                                <field name="shift_ids" string="Delivery Schedule" readonly="is_form_readonly">
+                                    <list>
+                                        <field name="customer_id" column_invisible="True"/>
+                                        <field name="display_name" />
+                                        <field name="shift_type" />
+                                        <field name="address_id" />
+                                    </list>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="period"/>
+                                                    <field name="day_of_week" invisible="'day_of_week' != period" required="'day_of_week' in period"/>
+                                                    <field name="from_date" invisible="'date_range' != period" required="'date_range' in period"/>
+                                                    <field name="to_date" invisible="'date_range' != period" required="'date_range' in period"/>
+                                                    <field name="shift_type"/>
+                                                    <field name="customer_id" invisible="True"/>
+                                                    <field name="address_id" domain="[('parent_id','=',customer_id)]"/>
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                            
+                            <page name="_customer_meal_rating" id="meal_rating" string ="Meal Rating">
+                                <field name="customer_meal_rating" readonly="1">
+                                    <list editable="bottom" delete="false">
+                                        <field name="partner_id" column_invisible="True"/>
+                                        <field name="meal_id" domain="[('is_meal','=',True)]"/>
+                                        <field name="rating"/>
+                                    </list>
+                                </field>
+                            </page>
+
+                            <page name="parter_config" string="Configuration" invisible="1">
+                                <group>
+                                    <group>
+                                        <field name="is_customer" />
+                                        <field name="is_supplier" />
+                                    </group>
+                                </group>
+                            </page>
+                            <!-- <page name="dietitian_consultation" string="Dietitian Consultation">
+                                <field name="dietition_appointment_history_line_ids" readonly="is_form_readonly">
+                                    <list editable="bottom">
+                                        <field name="patient_id" column_invisible="True"/>
+                                        <field name="name" string="ID"/>
+                                        <field name="date" string="Requested Date"/>
+                                        <field name="dietitian_id" domain="[('employee_type','=','dietitian')]"/>
+                                    </list>
+                                </field>
+                            </page> -->
+                            <page name="health_history_details" id="health_history" string="Health History">
+                                <field name="health_history_ids" readonly="is_form_readonly">
+                                    <list editable="bottom">
+                                        <button string="Add" name="add_health_history" type="object" class="oe_highlight"/>
+                                        <field name="partner_id" column_invisible="True"/>
+                                        <field name="date"/>
+                                        <field name="weight"/>
+                                        <field name="height"/>
+                                        <field name="smm"/>
+                                        <field name="pbf"/>
+                                        <field name="bmi"/>
+                                        <field name="notes"/>
+                                        <field name="update"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Partner Assignment" name="geo_location">
+                            <group>
+                                <group string="Geolocation">
+                                    <label for="date_localization" string="Geo Location"/>
+                                    <div>
+                                        <span>Lat : <field name="partner_latitude" nolabel="1" class="oe_inline"/></span>
+                                        <br/>
+                                        <span>Long: <field name="partner_longitude" nolabel="1" class="oe_inline"/></span>
+                                        <br/>
+                                        <span invisible="not date_localization">Updated on:
+                                            <field name="date_localization" nolabel="1" readonly="1" class="oe_inline"/>
+                                            <br/>
+                                        </span>
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                        </notebook>
+                    </sheet>
+                    <chatter reload_on_follower="True"/>
+                </form>
+            </field>
+        </record>
+
+    <data noupdate="1">
+        <record id="ir_cron_birthday_notification_action" model="ir.cron">
+            <field name="name">Birthday Notification</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">model.birthday_notification()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <!-- <field name="numbercall">-1</field> -->
+        </record>
+    </data>
+
+        <record id="diet_customer_view_tree" model="ir.ui.view">
+            <field name="name">diet.customer.list</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <list default_order="customer_sequence_no desc">
+                    <field name="customer_sequence_no" string="#"/>
+                    <field name="name" string="Customer Name" column_invisible="True"/>
+                    <field name="last_name" string="Last Name" column_invisible="True"/>
+                    <field name="full_name" string="Customer Name"/>
+                    <field name="category_id" widget="many2many_tags"/>
+                    <field name="phone" string="Contact Number"/>
+                    <field name="email" column_invisible="True"/>
+                    <field name="age" column_invisible="True"/>
+                    <field name="height" column_invisible="True"/>
+                    <field name="weight" column_invisible="True"/>
+                    <field name="shift_id" column_invisible="True"/>
+                    <field name="comments" string="Notes" column_invisible="True"/>
+                    <field name="customer_address_district_id"/>
+                    <field name="customer_address_street"/>
+                    <field name="customer_address_house_number"/>
+                    <field name="customer_address_floor_number"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="diet_customer_kanban_view" model="ir.ui.view">
+            <field name="name">diet.customer.kanban.view</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_image me-1">
+                                    <img t-att-src="kanban_image('res.partner', 'image_128', record.id.raw_value)" alt="Partner" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top mb-0">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <t t-if="record.customer_sequence_no.value">[<field name="customer_sequence_no"/>]</t>
+                                    </div>
+                                    <div>
+                                        <field name="phone"/>
+                                    </div>
+                                    <div>
+                                        <field name="email"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!-- Action for diet customers -->
+        <record id="customised_diet_customers_action" model="ir.actions.act_window">
+            <field name="name">Customers</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,kanban,form</field>
+            <field name="domain">[('parent_id','=',False),('is_customer','=',True)]</field>
+            <field name="context">{'search_default_active_subscribers':1, 'default_is_customer':True}</field>
+        </record>
+        <!-- action view for customer list view -->
+        <record model="ir.actions.act_window.view" id="diet_customer_action_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="diet_customer_view_tree"/>
+            <field name="act_window_id" ref="customised_diet_customers_action"/>
+        </record>
+
+        <!-- action view for customer kanban view -->
+        <record model="ir.actions.act_window.view" id="diet_customer_action_kanban">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="diet_customer_kanban_view"/>
+            <field name="act_window_id" ref="customised_diet_customers_action"/>
+        </record>
+
+        <!-- action view for customer form view -->
+        <record model="ir.actions.act_window.view" id="diet_customer_action_form">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="diet_customer_form"/>
+            <field name="act_window_id" ref="customised_diet_customers_action"/>
+        </record>
+
+        <!-- form view for vendor -->
+        <record id="custom_vendor_form" model="ir.ui.view">
+            <field name="name">custom.vendor.form</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="image_1920" widget="image" class="oe_avatar" options='{"preview_image": "avatar_128"}'/>
+                        <div class="oe_title">
+                            <label for="customer_sequence_no" string="Vendor Code"/>
+                            <field name="customer_sequence_no" readonly="1" />
+                            <h1>
+                                <label for="name" string="Name"/>
+                                <div class="o_row">
+                                    <field name="name" default_focus="1" placeholder="First Name..."/>
+                                </div>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <span style="margin-top:20px;" class="o_form_label o_td_label" name="address_name">
+                                    <b>Address</b>
+                                </span>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}"
+                                        context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                    <div name="partner_address_country" class="d-flex justify-content-between">
+                                        <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                    </div>
+                                </div>
+                                <field name="vat" placeholder="e.g. BE0477472701"/>
+                                <field name="payment_type"/>
+                            </group>
+                            <group>
+                                <field name="phone" widget="phone" string="Phone"/>
+                                <field name="mobile" widget="phone" string="Mobile"/>
+                                <field name="user_ids" invisible="1"/>
+                                <field name="email" widget="email" context="{'gravatar_image': True}" required="not user_ids" />
+                                <field name="website" string="Website" widget="url" placeholder="e.g. https://www.odoo.com"/>
+                                <field name="is_supplier" invisible="1"/>
+                                <field name="is_customer" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Contacts &amp; Addresses" name="contact_addresses" autofocus="autofocus">
+                                <field name="child_ids" mode="kanban" context="{'default_parent_id': id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_type': 'other'}">
+                                    <kanban>
+                                        <field name="id"/>
+                                        <field name="color"/>
+                                        <field name="name"/>
+                                        <field name="title"/>
+                                        <field name="type"/>
+                                        <field name="email"/>
+                                        <field name="parent_id"/>
+                                        <field name="is_company"/>
+                                        <field name="function"/>
+                                        <field name="phone"/>
+                                        <field name="street"/>
+                                        <field name="street2"/>
+                                        <field name="zip"/>
+                                        <field name="city"/>
+                                        <field name="country_id"/>
+                                        <field name="mobile"/>
+                                        <field name="state_id"/>
+                                        <field name="image_128"/>
+                                        <field name="avatar_128"/>
+                                        <field name="lang"/>
+                                        <field name="comment"/>
+                                        <field name="display_name"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
+                                                <div t-att-class="color + (record.title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">
+                                                    <div class="o_kanban_image">
+                                                        <img alt="Contact image" t-att-src="kanban_image('res.partner', 'avatar_128', record.id.raw_value)"/>
+                                                    </div>
+                                                    <div class="oe_kanban_details">
+                                                        <field name="name"/>
+                                                        <div t-if="record.function.raw_value"><field name="function"/></div>
+                                                        <div t-if="record.email.raw_value"><field name="email" widget="email"/></div>
+                                                        <div t-if="record.type.raw_value != 'contact'">
+                                                            <div>
+                                                                <field name="zip"/><t t-if="record.city"> </t>
+                                                                <field name="city"/>
+                                                            </div>
+                                                            <field t-if="record.state_id.raw_value" name="state_id"/><t t-if="record.country_id"> </t>
+                                                            <field name="country_id"/>
+                                                        </div>
+                                                        <div t-if="record.phone.raw_value">Phone: <t t-esc="record.phone.value"/></div>
+                                                        <div t-if="record.mobile.raw_value">Mobile: <t t-esc="record.mobile.value"/></div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form string="Contact / Address">
+                                        <sheet>
+                                            <field name="parent_id" invisible="1"/>
+                                            <group>
+                                                <group>
+                                                    <field name="name" string="Contact Name"/>
+                                                    <field name="title" options="{'no_open': True}" placeholder="e.g. Mr."/>
+                                                    <field name="function" placeholder="e.g. Sales Director"/>
+                                                    <label for="street" string="Address"/>
+                                                    <div>
+                                                        <div class="o_address_format" name="div_address">
+                                                            <field name="street" placeholder="Street..." class="o_address_street"/>
+                                                            <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                                            <field name="city" placeholder="City" class="o_address_city"/>
+                                                            <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                                            <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                                            <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                                        </div>
+                                                    </div>
+                                                </group>
+                                                <group>
+                                                    <field name="email" widget="email"/>
+                                                    <field name="phone" widget="phone" string="Phone"/>
+                                                    <field name="mobile" widget="phone" string="Mobile"/>
+                                                    <field name="company_id" invisible="1"/>
+                                                </group>
+                                            </group>
+                                            <group>
+                                                <field name="comment" placeholder="Internal notes..." nolabel="1" colspan="2"/>
+                                            </group>
+                                            <field name="lang" invisible="True"/>
+                                            <field name="user_id" invisible="True"/>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- list view for vendor -->
+        <record id="custom_vendor_tree" model="ir.ui.view">
+            <field name="name">custom.vendor.list</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="customer_sequence_no" string="Vendor ID"/>
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="website"/>
+                    <field name="vat"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Kanban view for vendor -->
+        <record id="custom_vendor_kanban" model="ir.ui.view">
+            <field name="name">custom.vendor.kanban</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="customer_sequence_no"/>
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_image me-1">
+                                    <img t-att-src="kanban_image('res.partner', 'image_128', record.id.raw_value)" alt="Partner" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top mb-0">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title">
+                                                <field name="name"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <t t-if="record.customer_sequence_no.value">[<field name="customer_sequence_no"/>]</t>
+                                    </div>
+                                    <div>
+                                        <field name="phone"/>
+                                    </div>
+                                    <div>
+                                        <field name="email"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- customised action for vendors -->
+        <record id="customised_vendor_action" model="ir.actions.act_window">
+            <field name="name">Vendors</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="domain">[('is_supplier','=',True)]</field>
+            <field name="context">{'default_is_supplier':True}</field>
+        </record>
+
+        <!-- customised form action for vendors -->
+        <record id="vendor_form_action" model="ir.actions.act_window.view">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="custom_vendor_form"/>
+            <field name="act_window_id" ref="customised_vendor_action"/>
+        </record>
+
+        <!-- customised list action for vendors -->
+        <record id="vendor_tree_action" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="custom_vendor_tree"/>
+            <field name="act_window_id" ref="customised_vendor_action"/>
+        </record>
+
+        <!-- customised kanban action for vendors -->
+        <record id="vendor_kanban_action" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="custom_vendor_kanban"/>
+            <field name="act_window_id" ref="customised_vendor_action"/>
+        </record>
+    </data>
+</odoo>

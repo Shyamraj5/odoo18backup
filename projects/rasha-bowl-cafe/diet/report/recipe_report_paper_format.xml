@@ -1,0 +1,84 @@
+<odoo>
+    <record id="meal_recipe_paperformat" model="report.paperformat">
+        <field name="name">Meal Recipe Print</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">35</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">100</field>
+    </record>
+    <!-- Paper format of daily meals report -->
+    <record id="daily_meals_report_paperformat" model="report.paperformat">
+        <field name="name">Daily Meals Report Print</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">21</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">21</field>
+        <field name="dpi">100</field>
+    </record>
+
+    <!-- Paper format of customer daily meals report -->
+    <record id="customer_daily_meals_report_paperformat" model="report.paperformat">
+        <field name="name">Customer Daily Meals Report Print</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">21</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">21</field>
+        <field name="dpi">100</field>
+    </record>
+    
+    <!-- Paper format of Individual customer daily meals report -->
+    <record id="individual_customer_daily_meals_report_paperformat" model="report.paperformat">
+        <field name="name">Customer Daily Meals Report Print</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">21</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">21</field>
+        <field name="dpi">100</field>
+    </record>
+
+    <!-- Paper format of Meal calendar report -->
+    <record id="meal_calendar_report_paperformat" model="report.paperformat">
+        <field name="name">Customer Daily Meals Report Print</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">21</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">21</field>
+        <field name="dpi">100</field>
+    </record>
+</odoo>

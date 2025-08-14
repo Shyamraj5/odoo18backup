@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_salesman_ageing_report" model="ir.actions.report">
+        <field name="name">Salesman Ageing Report</field>
+        <field name="model">salesman.ageing.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">salesman_ageing_report.ageing_report</field>
+        <field name="report_file">salesman_ageing_report.ageing_report</field>
+        <field name="binding_model_id" ref="model_salesman_ageing_report_wizard"/> 
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

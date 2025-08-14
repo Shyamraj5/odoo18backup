@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-name="pos_self_order.ProductCard" t-inherit="pos_self_order.ProductCard" t-inherit-mode="extension">
+    <xpath expr="//div[hasclass('product-infos')]/span[@t-esc='props.product.name']" position="after">
+
+        <span class="mt-2"><t t-if="props.product.short_description" t-esc="props.product.short_description" /></span>
+        <t t-if="props.product.preparation_time">
+            <span class="mt-2">Preparation Time: <t t-esc="props.product.preparation_time" /></span>
+        </t>
+        <t t-if="props.product.calorie">
+            <span class="mt-2">Calorie: <t t-esc="props.product.calorie" /></span>
+        </t>
+        <t t-if="props.product.protein">
+            <span class="mt-2">Protein: <t t-esc="props.product.protein" /></span>
+        </t>
+        <t t-if="props.product.protein || props.product.calorie || props.product.preparation_time || props.product.short_description">
+            <div class="mb-3"/>
+        </t>
+    </xpath>
+    <xpath expr="//div[hasclass('product-infos')]/span[@t-esc='props.product.name']" position="replace">
+        <span t-esc="props.product.name" class="fs-4 fw-bold mb-1 mb-sm-2 w-100"/>
+    </xpath>
+</t>
+</templates>

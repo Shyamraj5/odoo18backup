@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+    
+        <record id="dietitian_available_day_sunday" model="dietitian.available.days">
+            <field name="name">Sunday</field>
+        </record>
+        <record id="dietitian_available_day_monday" model="dietitian.available.days">
+            <field name="name">Monday</field>
+        </record>
+        <record id="dietitian_available_day_tuesday" model="dietitian.available.days">
+            <field name="name">Tuesday</field>
+        </record>
+        <record id="dietitian_available_day_wednesday" model="dietitian.available.days">
+            <field name="name">Wednesday</field>
+        </record>
+        <record id="dietitian_available_day_thursday" model="dietitian.available.days">
+            <field name="name">Thursday</field>
+        </record>
+        <record id="dietitian_available_day_friday" model="dietitian.available.days">
+            <field name="name">Friday</field>
+        </record>
+        <record id="dietitian_available_day_saturday" model="dietitian.available.days">
+            <field name="name">Saturday</field>
+        </record>
+    
+    </data>
+    
+
+</odoo>

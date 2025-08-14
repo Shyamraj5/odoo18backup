@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="pos_self_order.OrderWidget" t-inherit-mode="extension">
+
+        <!-- Hide price monetary-->
+        <!-- <xpath expr="//span[@class='o-so-tabular-nums mx-2']" position="replace"/> -->
+
+        <!-- Hide order summary and Pay button from My Order view -->
+        <xpath expr="//button[hasclass('to-order')]" position="replace" />
+
+        <xpath expr="//button[hasclass('cart btn btn-primary')]" position="replace" />
+    </t>
+</templates>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="code_ox_lot_form_inherit" model="ir.ui.view">
+        <field name="name">stock.lot.form.inherit</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="is_branch_sale" force_save="1" readonly="1"/>
+                <field name="source_branch_id" string="Source Branch" force_save="1" readonly="1" invisible="not is_branch_sale"/>
+                <field name="margin" force_save="1" readonly="1" invisible="not is_branch_sale"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

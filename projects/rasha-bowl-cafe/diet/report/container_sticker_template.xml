@@ -1,0 +1,30 @@
+<odoo>
+    <template id="container_sticker_template">
+        <t t-call="web.html_container">
+            <div class="page">
+                <t t-foreach="sticker_dict" t-as="plan">
+                    <t t-foreach="sticker_dict[plan]" t-as="meal_category">
+                        <t t-foreach="sticker_dict[plan][meal_category]" t-as="meal_list">
+                            <div style="padding:20px; display: inline-block; width: 20%;">
+                                <div class="row" style="text-align:center;padding:5px;verical-align:middle;">
+                                        <t t-if="meal_list['dislike']">
+                                            <div class="col-12">
+                                                <t t-esc="meal_list['meal']"/><br/>
+                                                <span>No <t t-esc="meal_list['dislike']"/></span>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <div class="col-12">
+                                                <t t-esc="meal_list['meal']"/>
+                                            </div>
+                                        </t>
+                                </div>
+                                
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

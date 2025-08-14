@@ -1,0 +1,19 @@
+<odoo>
+    <record id="product_product_kanban_view_inherit_ribbon" model="ir.ui.view">
+        <field name="name">product.product.kanban.view.ribbon</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_kanban_view"/>
+        <field name="arch" type="xml">
+                <xpath expr="//templates/t[@t-name='card']//main" position="inside">
+                <t t-if="record.available_in_pos.raw_value">
+                    <div style="margin-top: 10px;">
+                        <div class="kanban-ribbon">Available In Pos</div>
+                    </div>
+                </t>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="available_in_pos" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

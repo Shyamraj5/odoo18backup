@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_weekly_sales_report" model="ir.actions.report">
+        <field name="name">Weekly Sales Report</field>
+        <field name="model">weekly.sales.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">weekly_sales_report.sales_report</field>
+        <field name="report_file">weekly_sales_report.sales_report</field>
+        <field name="binding_model_id" ref="model_weekly_sales_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

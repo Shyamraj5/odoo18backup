@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_offer_sales_report" model="ir.actions.report">
+        <field name="name">Offer Sales Report</field>
+        <field name="model">offer.sales.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">offer_sales_report.offer_sales</field>
+        <field name="report_file">offer_sales_report.offer_sales</field>
+        <field name="binding_model_id" ref="model_offer_sales_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

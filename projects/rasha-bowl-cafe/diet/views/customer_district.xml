@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="customer_district_view_tree" model="ir.ui.view">
+        <field name="name">customer.district.view.list</field>
+        <field name="model">customer.district</field>
+        <field name="arch" type="xml">
+            <list string="Zone">
+                <field name="name" required="1"/>
+                <field name="zone_id" string="District"/>
+                <field name="city_id"/>
+                <field name="driver_ids" widget="many2many_tags" invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="customer_district_view_form" model="ir.ui.view">
+        <field name="name">customer.district.view.form</field>
+        <field name="model">customer.district</field>
+        <field name="arch" type="xml">
+            <form string="Zone">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="zone_id" options="{'no_create':1, 'no_create_edit':1}" string="District"/>
+                            <field name="city_id" required="1"/>
+                            <field name="driver_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="is_default"/>
+                            <field name="delivery_time" invisible="1"/>
+                            <field name="shift_id"/>
+                        </group>
+
+                    </group>
+                       <group string="Delivery Times">
+                        <group string="Morning">
+                            <label for="morning_delivery_from" string="From"/>
+                            <div class="row">
+                                <field name="morning_delivery_from" widget="float_time" class="oe_inline"/><field name="morning_delivery_from_period" required="1" class="oe_inline"/>
+                            </div>
+                            <label for="morning_delivery_to" string="To"/>
+                            <div class="row">
+                                <field name="morning_delivery_to" widget="float_time" class="oe_inline"/><field name="morning_delivery_to_period" required="1" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group string="Evening">
+                            <label for="evening_delivery_from" string="From"/>
+                            <div class="row">
+                                <field name="evening_delivery_from" widget="float_time" class="oe_inline"/><field name="evening_delivery_from_period" required="1" class="oe_inline"/>
+                            </div>
+                            <label for="evening_delivery_to" string="To"/>
+                            <div class="row">
+                                <field name="evening_delivery_to" widget="float_time" class="oe_inline"/><field name="evening_delivery_to_period" required="1" class="oe_inline"/>
+                            </div>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="street" string="Routes">
+                            <field name="street_ids" widget="one2many_list">
+                                <list string="Streets" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="customer_district_view_search" model="ir.ui.view">
+        <field name="name">customer.district.view.search</field>
+        <field name="model">customer.district</field>
+        <field name="arch" type="xml">
+            <search string="Zone">
+                <field name="name" />
+                <field name="city_id" />
+                <field name="driver_ids" invisible="1"/>
+                <filter name="active" string="Active" domain="[('active', '=', True)]" />
+                <filter name="inactive" string="Inactive" domain="[('active', '=', False)]" />
+                <filter name="active_group" string="Active" context="{'group_by': 'active'}" />
+                <filter name="city" string="City" context="{'group_by': 'city_id'}" />
+                <filter name="zone" string="District" context="{'group_by': 'zone_id'}" />
+            </search>
+        </field>
+    </record>
+
+    <record id="customer_district_action" model="ir.actions.act_window">
+        <field name="name">Zones</field>
+        <field name="res_model">customer.district</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_zone':1}</field>
+    </record>
+
+</odoo>

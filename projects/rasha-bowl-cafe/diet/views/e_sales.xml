@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_sale_order_tree_and_kanban" model="ir.actions.act_window">
+        <field name="name">E Sales </field>
+        <field name="res_model">sale.order</field>
+        <field name="domain">[('e_sale_order', '=', True)]</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="view_id" ref="sale.view_sale_order_kanban"/> 
+        <field name="view_id" ref="sale.view_order_form"/> 
+        <field name="view_id" ref="sale.view_order_tree"/>
+        <field name="context">{'default_e_sale_order': True}</field>
+    </record>
+
+    <menuitem id="menu_e_sale" 
+    name="E Sales"
+    parent="sale.sale_order_menu"
+    action="action_sale_order_tree_and_kanban" 
+    sequence="12"/>
+
+</odoo>

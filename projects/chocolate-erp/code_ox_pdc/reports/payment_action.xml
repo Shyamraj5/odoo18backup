@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="paperformat_custom_po" model="report.paperformat">
+          <field name="name"> Payment Voucher Report</field>
+          <field name="default" eval="True"/>
+          <field name="format">A4</field>
+          <field name="orientation">Portrait</field>
+          <field name="page_height">0</field>
+          <field name="page_width">0</field>
+          <field name="margin_top">10</field>
+          <field name="margin_bottom">5</field>
+          <field name="margin_left">3</field>
+          <field name="margin_right">0</field>
+          <field name="header_line" eval="False"/>
+          <field name="header_spacing">38</field>
+          <field name="dpi">90</field>
+        </record>
+        <record id="action_payment_voucher_report_xlsx" model="ir.actions.report">
+            <field name="name">Payment Voucher XLSX Report</field>
+            <field name="model">post.dated.check</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">code_ox_pdc.report_payment_voucher_xlsx</field>
+            <field name="report_file">code_ox_pdc.report_payment_voucher_xlsx</field>
+            <field name="paperformat_id" ref="code_ox_pdc.custom_payment"/>
+              <field name="binding_model_id" ref="code_ox_pdc.model_post_dated_check"/>
+            <field name="binding_type">report</field>
+        </record>
+        
+        <record id="action_payment_voucher_report_pdf" model="ir.actions.report">
+            <field name="name">Payment Voucher PDF Report</field>
+            <field name="model">post.dated.check</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">code_ox_pdc.report_payment_voucher</field>
+            <field name="report_file">code_ox_pdc.report_payment_voucher</field>
+            <field name="print_report_name">'payment voucher report - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="code_ox_pdc.model_post_dated_check"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_custom_po"/>
+        </record>
+    </data>
+</odoo>

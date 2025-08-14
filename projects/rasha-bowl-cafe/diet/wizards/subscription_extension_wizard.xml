@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="subscription_extension_wizard_view_form" model="ir.ui.view">
+        <field name="name">subscription.extension.wizard.view.form</field>
+        <field name="model">subscription.extension.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Subscription Extension">
+                <sheet>
+                    <group>
+                        <group>
+                            <label for="days" string="Extend subscription for"/>
+                            <div class="o_row">
+                                <field name="days" nolabel="1" placeholder="Days" class="oe_inline" required="1"/>
+                                <span class="oe_inline">Days</span>
+                            </div>
+                            <field name="subscription_extension_reason_id" required="1"/>
+                            <field name="require_payment"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Confirm" name="button_confirm" type="object" class="oe_highlight" context="{'skip_base_price_calculation': True}"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

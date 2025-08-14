@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Import Purchase View Action -->
+    <record id="import_purchase_rfq" model="ir.actions.act_window">
+        <field name="name">Requests for Quotation</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">list,kanban,form,pivot,graph,calendar,activity</field>
+        <field name="view_id" ref="purchase.purchase_order_kpis_tree"/>
+        <field name="domain">[('import_purchase', '=', True)]</field>
+        <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="context">{'quotation_only': True, 'default_import_purchase': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No request for quotation found. Let's create one!
+            </p>
+            <p>
+                Requests for quotation are documents that will be sent to your suppliers to request prices for different products you consider buying.
+                Once an agreement has been found with the supplier, they will be confirmed and turned into purchase orders.
+            </p>
+        </field>
+    </record>
+
+    <record id="import_purchase_form_action" model="ir.actions.act_window">
+        <field name="name">Purchase Orders</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">list,kanban,form,pivot,graph,calendar,activity</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('purchase.purchase_order_view_tree')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('purchase.purchase_order_view_kanban_without_dashboard')}),
+        ]"/>
+        <field name="domain">[('state','in',('purchase', 'done')), ('import_purchase', '=', True)]</field>
+        <field name="search_view_id" ref="purchase.purchase_order_view_search"/>
+        <field name="context">{'default_import_purchase': True, 'default_confirm_purchase': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No purchase order found. Let's create one!
+            </p>
+            <p>
+                Once you ordered your products to your supplier, confirm your request for quotation and it will turn into a purchase order.
+            </p>
+        </field>
+    </record>
+
+    <!-- Local Purchase View Action -->
+    <record id="local_purchase_rfq" model="ir.actions.act_window">
+        <field name="name">Requests for Quotation</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">list,kanban,form,pivot,graph,calendar,activity</field>
+        <field name="view_id" ref="purchase.purchase_order_kpis_tree"/>
+        <field name="domain">[('import_purchase', '=', False)]</field>
+        <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="context">{'quotation_only': True, 'default_import_purchase': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No request for quotation found. Let's create one!
+            </p>
+            <p>
+                Requests for quotation are documents that will be sent to your suppliers to request prices for different products you consider buying.
+                Once an agreement has been found with the supplier, they will be confirmed and turned into purchase orders.
+            </p>
+        </field>
+    </record>
+
+    <record id="local_purchase_form_action" model="ir.actions.act_window">
+        <field name="name">Purchase Orders</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">list,kanban,form,pivot,graph,calendar,activity</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('purchase.purchase_order_view_tree')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('purchase.purchase_order_view_kanban_without_dashboard')}),
+        ]"/>
+        <field name="domain">[('state','in',('purchase', 'done')), ('import_purchase', '=', False)]</field>
+        <field name="search_view_id" ref="purchase.purchase_order_view_search"/>
+        <field name="context">{'default_import_purchase': False, 'default_confirm_purchase': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No purchase order found. Let's create one!
+            </p>
+            <p>
+                Once you ordered your products to your supplier, confirm your request for quotation and it will turn into a purchase order.
+            </p>
+        </field>
+    </record>
+
+    <record id="purchase_order_inherit_generic" model="ir.ui.view">
+        <field name="name">purchase.order.view.form.generic</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="Approvals" string="Approvals" invisible="import_purchase == False">
+                    <group>
+                        <field name="ministry_approval_ids" widget="many2many_binary"/>
+                        <field name="health_approval_ids" widget="many2many_binary"/>
+                        <field name="labeling_approval_ids" widget="many2many_binary"/>
+                    </group>
+                </page>
+            </xpath>
+            
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">[('vendor_type', '=', import_purchase and 'import_vendor' or 'local_vendor')]</attribute>
+                <attribute name="context">{'default_vendor_type': (import_purchase and 'import_vendor' or 'local_vendor')}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="vendor_code" />
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']" position="after">
+                <field name="expiration_date" optional="hide"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_id']" position="after">
+                <field name="internal_reference" string="Product Code"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_rfq_send']" position="after">
+                <button name="send_to_multiple_vendors" string="Send to Multiple Vendors" type="object" 
+                        class="oe_highlight" invisible="has_alternatives == False or (has_alternatives == True and state != 'draft')" 
+                        context="{'send_rfq':True}"/> 
+
+                <button name="send_to_multiple_vendors" string="Re-Send to Multiple Vendors" type="object" 
+                        class="oe_highlight" invisible="has_alternatives == False or (has_alternatives == True and state != 'sent')" context="{'send_rfq':True}"/>   
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_qty']" position="attributes">
+                <attribute name="sum"> Total Quantity</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='qty_received']" position="attributes">
+                <attribute name="sum"> Total Quantity Received</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="attributes">
+                <attribute name="sum"> Total Unit Price</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='qty_invoiced']" position="attributes">
+                <attribute name="sum"> Total Billed Quantity</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']" position="attributes">
+                <attribute name="string"> Gross Total</attribute>
+                <attribute name="sum">Total Gross</attribute>
+                <attribute name="groups">purchase.group_purchase_user</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_subtotal']" position="after">
+                <field name="price_tax" string="VAT Amount" sum="Total Vat Amount" groups="purchase.group_purchase_user"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_tax']" position="after">
+                <field name="price_total" string="Grand Total" sum="Total Grand Total" groups="purchase.group_purchase_user"/>
+            </xpath>
+             
+            <xpath expr="//field[@name='date_approve']" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </xpath>
+
+             <xpath expr="//field[@name='order_line']/list/field[@name='taxes_id']" position="attributes">
+               <attribute name="groups">purchase.group_purchase_user</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='discount']" position="attributes">
+               <attribute name="groups">purchase.group_purchase_user</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="rfq_list_inherit_generic" model="ir.ui.view">
+        <field name="name">purchase.order.rfq.view.list.generic</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_untaxed']" position="after">
+                <field name="amount_tax" string="VAT Taxes"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+                <attribute name="string">Taxable</attribute>
+                <attribute name="optional">show</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_list_inherit_generic" model="ir.ui.view">
+        <field name="name">purchase.order.view.list.generic</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_untaxed']" position="after">
+                <field name="amount_tax" string="VAT Taxes"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+                <attribute name="string">Taxable</attribute>
+                <attribute name="optional">show</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_purchase_order_search_generic" model="ir.ui.view">
+        <field name="name">purchase.order.search.generic</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="invoice_ids" string="Bills"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Import Purchase -->
+    <menuitem id="menu_import_purchase"
+            name="Import Purchase"
+            parent="purchase.menu_procurement_management"
+            groups="purchase_generic.group_import_purchase"
+            sequence="-1"/>
+
+
+    <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('group_rfq_user'))]"/>
+    </record>
+    <menuitem action="import_purchase_rfq" id="menu_import_purchase_rfq"
+            parent="menu_import_purchase"
+            groups="purchase_generic.group_rfq_user"
+            sequence="0"/>
+
+    <menuitem action="import_purchase_form_action" 
+            id="menu_import_purchase_form_action" 
+            parent="menu_import_purchase"
+            groups="purchase.group_purchase_user"
+            sequence="6"/>
+
+    <!-- Local Purchase -->
+    <menuitem id="menu_local_purchase"
+            name="Local Purchase"
+            parent="purchase.menu_procurement_management"
+            groups="purchase_generic.group_local_purchase,purchase_generic.group_rfq_user"
+            sequence="-1"/>
+
+    <menuitem action="local_purchase_rfq" id="menu_local_purchase_rfq"
+            parent="menu_local_purchase"
+            groups="purchase_generic.group_rfq_user"
+            sequence="0"/>
+
+    <menuitem action="local_purchase_form_action" 
+            id="menu_local_purchase_form_action" 
+            parent="menu_local_purchase" 
+            groups="purchase.group_purchase_user"
+            sequence="6"/>
+
+    <!-- Hide Menu -->
+
+    <menuitem action="purchase.purchase_form_action" 
+            id="purchase.menu_purchase_form_action" 
+            parent="purchase.menu_procurement_management" 
+            groups="base.group_no_one"
+            sequence="6"/>
+
+    <menuitem action="purchase.purchase_rfq" id="purchase.menu_purchase_rfq"
+            parent="purchase.menu_procurement_management"
+            groups="base.group_no_one"
+            sequence="0"/>
+    
+     <menuitem id="purchase.menu_purchase_vendor_bill"
+            parent="purchase.menu_purchase_root"
+            name="Bills"
+            action="account.action_move_in_invoice_type"
+            groups="account.group_account_readonly,account.group_account_invoice"
+            sequence="19"/>
+
+            
+
+</odoo>

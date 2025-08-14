@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_history_wizard_form_view" model="ir.ui.view">
+        <field name="name">product.history.wizard.form</field>
+        <field name="model">sale.purchase.history.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Product History">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="history_type" />
+                        </group>
+                        <group>
+                            <field name="partner_id" readonly="1" invisible="history_type == 'purchase'"/>
+                            <field name="product_id" readonly="1"/>
+                        </group>
+                    </group>    
+                    
+                    <notebook>
+                        <page string="History Lines">
+                            <field name="history_line_ids" readonly="1">
+                                <list edit="0" delete="0" create="0" >
+                                    <field name="order" />
+                                    <field name="partner_id"/>
+                                    <field name="date"/>
+                                    <field name="quantity"/>
+                                    <field name="received" column_invisible="parent.history_type in ('purchase','invoice')" string="Delivered"/>
+                                    <field name="received" column_invisible="parent.history_type in ('sale','invoice')" string="Received"/>
+                                    <field name="billed" column_invisible="parent.history_type in ('purchase','invoice')" string="Invoiced"/>
+                                    <field name="billed" column_invisible="parent.history_type in ('sale','invoice')" string="Billed" />
+                                    <field name="price_unit"/>
+                                    <field name="total_price"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="sale_purchase_history_action" model="ir.actions.act_window">
+        <field name="name">Sale Purchase History</field>
+        <field name="res_model">sale.purchase.history.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

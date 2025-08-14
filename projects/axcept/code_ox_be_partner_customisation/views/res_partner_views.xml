@@ -1,0 +1,39 @@
+<odoo>
+    <record id="view_partner_form_custom" model="ir.ui.view">
+        <field name="name">res.partner.form.business_exec.address</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='l10n_in_pan']" position="after">
+                <field name="is_be"/>
+                <field name="be_code" required="is_be" invisible="not is_be"/>
+                <field name="dob" invisible="not is_be"/>
+            </xpath>
+
+            <xpath expr="//field[@name='state_id']" position="attributes">
+                <attribute name="required">is_be</attribute>
+            </xpath>
+            <xpath expr="//div[@name='partner_address_country']/field[@name='country_id']" position="attributes">
+                <attribute name="required">is_be</attribute>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="father_name" invisible="not is_be"/>
+                <field name="mother_name" invisible="not is_be"/>
+                <field name="education_qualification" invisible="not is_be"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_filter_inherit" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit.business_roles</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter string="Business Executive" name="business_executive" domain="[('is_be', '=', True)]"/>
+                <field name="be_code"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

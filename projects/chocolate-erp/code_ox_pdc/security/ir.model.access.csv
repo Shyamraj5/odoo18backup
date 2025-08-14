@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_post_dated_check_user,code_ox_pdc.post.dated.check,model_post_dated_check,base.group_user,1,1,1,1
+access_post_dated_check_line_user,code_ox_pdc.post.dated.check.line,model_post_dated_check_line,base.group_user,1,1,1,1
+access_post_dated_wizard_user,post.dated.wizard.user,model_post_dated_wizard,base.group_user,1,1,1,1
+access_post_dated_check_approval,bi_payment_approval.post.dated.check.approval,model_post_dated_check_approval,base.group_user,1,1,1,1

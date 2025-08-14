@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="loan_menu"
+        name="Loan"
+        parent="hr.menu_hr_root"
+        sequence="10"/>
+
+    <menuitem
+        id="employee_loan_type_menu"
+        name="Loan Type"
+        parent="loan_menu"
+        groups="hr.group_hr_user"
+        action="employee_loan_type_action"
+        sequence="1"/>
+
+    <menuitem
+        id="employee_loan_menu"
+        name="Employee Loan"
+        parent="loan_menu"
+        action="employee_loan_action"
+        sequence="2"/>
+    <menuitem
+        id="employee_loan_to_approve_menu"
+        name="Loan To Approve"
+        parent="loan_menu"
+        action="employee_loan_to_apporove_action"
+        groups="hr.group_hr_user"
+        sequence="3"/>
+
+</odoo>

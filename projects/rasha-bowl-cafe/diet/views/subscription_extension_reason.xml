@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="subscription_extension_reason_view_form" model="ir.ui.view">
+        <field name="name">subscription.extension.reason.view.form</field>
+        <field name="model">subscription.extension.reason</field>
+        <field name="arch" type="xml">
+            <form string="Subscription Extension Reason">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="subscription_extension_reason_view_tree" model="ir.ui.view">
+        <field name="name">subscription.extension.reason.view.list</field>
+        <field name="model">subscription.extension.reason</field>
+        <field name="arch" type="xml">
+            <list string="Subscription Extension Reason">
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="subscription_extension_reason_action" model="ir.actions.act_window">
+        <field name="name">Subscription Extension Reason</field>
+        <field name="res_model">subscription.extension.reason</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

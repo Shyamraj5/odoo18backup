@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_meal_recipe_excel" model="ir.actions.report">
+            <field name="name">Recipe Excel</field>
+            <field name="model">subscription.plan.meals</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">recipe_excel</field>
+            <field name="report_file">recipe_excel</field>
+            <field name="binding_model_id" ref=""/>
+            <field name="binding_type">report</field>
+        </record>
+
+    <record id="action_report_product_meal_recipe_excel" model="ir.actions.report">
+            <field name="name">Recipe Excel</field>
+            <field name="model">product.template</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">product_recipe_excel</field>
+            <field name="report_file">product_recipe_excel</field>
+            <field name="binding_model_id" ref=""/>
+            <field name="binding_type">report</field>
+        </record>
+</odoo>

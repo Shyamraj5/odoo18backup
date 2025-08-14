@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- owl action -->
+    <record id="js_vat_report_action_view" model="ir.actions.client">
+        <field name="name">VAT Report</field>
+        <field name="tag">codeox_vat_report.custom_js_vat_report_view</field>
+    </record>
+
+    <menuitem
+        id="vat_report_menu_html"
+        name="VAT Report"
+        action="js_vat_report_action_view"
+        parent="account_dynamic_reports.account_reports_ins_wiz"
+        sequence="10"/>
+    <menuitem
+        id="codeox_vat_report_menu"
+        name="VAT Report"
+        action="js_vat_report_action_view"
+        web_icon="codeox_vat_report,static/description/tax_report.png"
+        sequence="10"/>
+
+</odoo>

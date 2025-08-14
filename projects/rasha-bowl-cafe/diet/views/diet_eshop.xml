@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="diet_eshop_view_form" model="ir.ui.view">
+        <field name="name">diet_eshop.view.form</field>
+        <field name="model">diet.eshop.sale</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_confirm"
+                        string="Confirm"
+                        type="object"
+                        invisible="state not in 'draft'"
+                        class="oe_highlight"
+                    />
+                    <button
+                        name="action_invoice"
+                        string="Create Invoice"
+                        type="object"
+                        invisible="state not in 'confirm'"
+                        class="oe_highlight"
+                    />
+                    <button
+                        name="action_reset"
+                        string="Reset to Draft"
+                        type="object"
+                        invisible="state not in 'confirm'"
+                        class="oe_highlight"
+                    />
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Paid" invisible="payment_status != 'paid' or state == 'draft'"/>
+                    <widget name="web_ribbon" title="In Payment" invisible="payment_status != 'in_payment' or state == 'draft'"/>
+                    <widget name="web_ribbon" title="Partial" invisible="payment_status != 'partial' or state == 'draft'"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="view_driver_order" type="object" class="oe_stat_button" icon="fa-truck" invisible="not driver_order_id">
+                            <span>Driver Order</span>
+                        </button>
+                        <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-file" invisible="invoice_count == 0">
+                            <field name="invoice_count" string="Invoice(s)" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer_id" domain="[('parent_id', '=', False)]" readonly="state != 'draft'"/>
+                            <field name="driver_order_id" invisible="1" force_save="1"/>   
+                            <field name="available_address_ids" invisible="1" force_save="1"/>
+                            <field name="address_id" domain="[('id', 'in', available_address_ids)]" readonly="state != 'draft'" required="1"  options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="shift_id" readonly="state != 'draft'" options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="driver_order_id" invisible="1" force_save="1"/>                   
+                        </group>
+                        <group>
+                            <field name="order_date" readonly="state != 'draft'"/>
+                            <field name="invoice_status" invisible="1"/>
+                            <field name="payment_status" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="meal_details" string="Meals">
+                            <field name="meal_line_ids" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="meal_id"/>
+                                    <field name="quantity"/>
+                                    <field name="price"/>
+                                    <field name="subtotal"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer" colspan="4" name="sale_total">
+                                <field name="sub_total"/>
+                                <field name="promo_applied" invisible="1"/>
+                                <label for="promo_code" string="Promo Code"/>
+                                <div class="row">
+                                    <field name="promo_code" class="oe_inline" readonly="promo_applied or state=='confirm'"/>
+                                    <button name="action_apply_promo_code" type="object" class="oe_inline" title="Apply" icon="fa-check" invisible="promo_applied or state=='confirm'"/>
+                                    <button name="action_remove_promo_code" type="object" class="oe_inline" title="Remove" icon="fa-times" invisible="not promo_applied or state=='confirm'"/>
+                                </div>
+                                <field name="promo_discount" readonly="1" force_save="1"/>
+                                <field name="total"/>
+                                <label for="available_points" string="Points Available"/>
+                                <div class="o_row">
+                                    <field name="available_points" readonly="1" force_save="1"/>
+                                    <button name="apply_reward_points" title="Apply" icon="fa-check" type="object" class="oe_inline" invisible="applied_points > 0"/>
+                                </div>
+                                <label for="applied_points" string="Points Used"/>
+                                <div class="o_row">
+                                    <field name="applied_points" readonly="1" force_save="1"/>
+                                    <button name="clear_reward_points" title="Clear" icon="fa-trash" type="object" class="oe_inline" invisible="applied_points == 0"/>
+                                </div>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+    
+    <record id="diet_eshop_view_tree" model="ir.ui.view">
+        <field name="name">diet_eshop.view.list</field>
+        <field name="model">diet.eshop.sale</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" string="Order No."/>
+                <field name="customer_id"/>
+                <field name="order_date"/>
+                <field name="state"/>
+                <field name="invoice_status"/>
+                <field name="payment_status"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="diet_eshop_action" model="ir.actions.act_window">
+        <field name="name">e-SHOP</field>
+        <field name="res_model">diet.eshop.sale</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

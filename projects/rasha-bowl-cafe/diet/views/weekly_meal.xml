@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="weekly_meal_view_form" model="ir.ui.view">
+        <field name="name">weekly.meal.view.form</field>
+        <field name="model">weekly.meal</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="plan_id" readonly="1"/>
+                            <field name="meal_category_id"/>
+                            <field name="default_count" invisible="1"/>
+                            <field name="plan_choices" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="sunday_meals" string="Sunday" invisible="plan_choices in 'no_weekend'">
+                            <field name="sunday_meal_ids" nolabel="1" class="oe_inline">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" nolabel="1"/>
+                                    <field name="meal_category_id" column_invisible="True"/>
+                                    <field name="meal_id" string="Sunday" domain="[('is_meal','=',True),('meal_category_id','=',meal_category_id)]" 
+                                                options="{'no_create': True, 'no_create_edit': True}" context="{'default_is_meal': True, 'default_meal_category_id': [(4,meal_category_id)]}"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="monday_meals" string="Monday">
+                            <field name="monday_meal_ids" nolabel="1" class="oe_inline">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" nolabel="1"/>
+                                    <field name="meal_category_id" column_invisible="True"/>
+                                    <field name="meal_id" string="Monday" domain="[('is_meal','=',True),('meal_category_id','=',meal_category_id)]" 
+                                        options="{'no_create': True, 'no_create_edit': True}" context="{'default_is_meal': True, 'default_meal_category_id': [(4,meal_category_id)]}"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="tuesday_meals" string="Tuesday">
+                            <field name="tuesday_meal_ids" nolabel="1" class="oe_inline">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" nolabel="1"/>
+                                    <field name="meal_category_id" column_invisible="True"/>
+                                    <field name="meal_id" string="Tuesday" domain="[('is_meal','=',True),('meal_category_id','=',meal_category_id)]" 
+                                            options="{'no_create': True, 'no_create_edit': True}" context="{'default_is_meal': True, 'default_meal_category_id': [(4,meal_category_id)]}"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="wednesday_meals" string="Wednesday">
+                            <field name="wednesday_meal_ids" nolabel="1" class="oe_inline">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" nolabel="1"/>
+                                    <field name="meal_category_id" column_invisible="True"/>
+                                    <field name="meal_id" string="Wednesday" domain="[('is_meal','=',True),('meal_category_id','=',meal_category_id)]" 
+                                        options="{'no_create': True, 'no_create_edit': True}" context="{'default_is_meal': True, 'default_meal_category_id': [(4,meal_category_id)]}"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="thursday_meals" string="Thursday">
+                            <field name="thursday_meal_ids" nolabel="1" class="oe_inline">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" nolabel="1"/>
+                                    <field name="meal_category_id" column_invisible="True"/>
+                                    <field name="meal_id" string="Thursday" domain="[('is_meal','=',True),('meal_category_id','=',meal_category_id)]" 
+                                        options="{'no_create': True, 'no_create_edit': True}" context="{'default_is_meal': True, 'default_meal_category_id': [(4,meal_category_id)]}"/>
+                                </list>
+                            </field>
+                        </page> 
+                        <page name="friday_meals" string="Friday" invisible="plan_choices in 'no_friday'">
+                            <field name="friday_meal_ids" nolabel="1" class="oe_inline">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" nolabel="1"/>
+                                    <field name="meal_category_id" column_invisible="True"/>
+                                    <field name="meal_id" string="Friday" domain="[('is_meal','=',True),('meal_category_id','=',meal_category_id)]" 
+                                        options="{'no_create': True, 'no_create_edit': True}" context="{'default_is_meal': True, 'default_meal_category_id': [(4,meal_category_id)]}"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="saturday_meals" string="Saturday" invisible="plan_choices in 'no_weekend'">
+                            <field name="saturday_meal_ids" nolabel="1" class="oe_inline">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" nolabel="1"/>
+                                    <field name="meal_category_id" column_invisible="True"/>
+                                    <field name="meal_id" string="Saturday" domain="[('is_meal','=',True),('meal_category_id','=',meal_category_id)]" 
+                                        options="{'no_create': True, 'no_create_edit': True}" context="{'default_is_meal': True, 'default_meal_category_id': [(4,meal_category_id)]}"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="weekly_meal_action" model="ir.actions.act_window">
+        <field name="name">Weekly Meal</field>
+        <field name="res_model">weekly.meal</field>
+        <field name="view_mode">form</field>
+    </record>
+
+</odoo>

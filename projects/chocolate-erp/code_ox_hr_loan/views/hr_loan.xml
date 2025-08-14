@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="employee_loan_view_form" model="ir.ui.view">
+        <field name="name">employee.loan.view.form</field>
+        <field name="model">employee.loan</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <header>
+                    <button string="View Installment" name="compute_installment" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button string="Submit Request" name="submit_request" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button string="Approve" name="hr_approval" type="object" class="oe_highlight" invisible="state != 'submit_request'" groups="hr.group_hr_user"/>
+                    <button string="Reject" name="reject_loan" type="object" class="oe_highlight" invisible="state != 'submit_request'" groups="hr.group_hr_user"/>
+                    <button string="Pay" name="pay_loan" type="object" class="oe_highlight" invisible="state != 'hr_approval'" groups="hr.group_hr_user"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_journal" string="Journal" type="object" icon="fa-book" invisible="state != 'done'"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" force_save="1" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" force_save="1" readonly="state != 'draft'"/>
+                            <field name="department_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/>
+                            <field name="loan_amount" force_save="1" readonly="state in ['done', 'rejected']" required="1"/>
+                            <field name="interest_amount"/>
+                            <field name="amount_total"/>
+                            <field name="paid_amount"/>
+                            <field name="remaining_amount"/>
+                        </group>
+                        <group>
+                            <field name="date" force_save="1" readonly="1"/>
+                            <field name="loan_type_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" force_save="1" readonly="state == 'done'" required="1"/>
+                            <field name="start_date" force_save="1" readonly="state in ['done', 'rejected']" required="1"/>
+                            <field name="term"/>
+                            <field name="end_date" force_save="1" readonly="1"/>
+                            <field name="interest_rate"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="intsallments" string="Installments">
+                            <field name="installment_line_ids" force_save="1" readonly="1">
+                                <list editable="bottom" delete="false" create="false">
+                                    <field name="date"/>
+                                    <field name="installment_amount"/>
+                                    <field name="interest_amount"/>
+                                    <field name="total_amount"/>
+                                    <field name="paid_amount"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="employee_loan_view_list" model="ir.ui.view">
+        <field name="name">employee.loan.view.list</field>
+        <field name="model">employee.loan</field>
+        <field name="arch" type="xml">
+            <list string="">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="loan_amount"/>
+                <field name="loan_type_id"/>
+                <field name="interest_rate"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="employee_loan_view_search" model="ir.ui.view">
+    <field name="name">employee.loan.view.search</field>
+    <field name="model">employee.loan</field>
+    <field name="arch" type="xml">
+        <search string="Employee Loans">
+            <field name="name"/>
+            <field name="employee_id"/>
+            <field name="department_id"/>
+            <field name="loan_type_id"/>
+            <filter name="submit_request" string="Pending Submission" domain="[('state', '=', 'submit_request')]"/>
+            <filter name="hr_approval" string="Pending HR Approval" domain="[('state', '=', 'hr_approval')]"/>
+            <group string="Group By">
+                <filter name="group_by_employee" string="Employee" domain="[]" context="{'group_by': 'employee_id'}"/>
+                <filter name="group_by_department" string="Department" domain="[]" context="{'group_by': 'department_id'}"/>
+                <filter name="group_by_loan_type" string="Loan Type" domain="[]" context="{'group_by': 'loan_type_id'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+
+
+    <record id="employee_loan_action" model="ir.actions.act_window">
+        <field name="name">Employee Loan</field>
+        <field name="res_model">employee.loan</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Employee Loan Type -->
+
+    <record id="employee_loan_type_view_form" model="ir.ui.view">
+        <field name="name">employee.loan.type.view.form</field>
+        <field name="model">employee.loan.type</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="amount_limit"/>
+                            <field name="loan_term"/>
+                            <field name="apply_interest"/>
+                            <field name="interest_rate" invisible="apply_interest == False"/>
+                        </group>
+                        <group>
+                            <field name="journal_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" required="1"/>
+                            <field name="loan_account_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" required="1"/>
+                            <field name="interest_account_id" options="{'no_create': True, 'no_open': True, 'no_edit': True}" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="employee_loan_type_view_list" model="ir.ui.view">
+        <field name="name">employee.loan.type.view.list</field>
+        <field name="model">employee.loan.type</field>
+        <field name="arch" type="xml">
+            <list string="">
+                <field name="name"/>
+                <field name="amount_limit"/>
+                <field name="loan_term"/>
+                <field name="apply_interest"/>
+                <field name="interest_rate"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="employee_loan_type_action" model="ir.actions.act_window">
+        <field name="name">Employee Loan Type</field>
+        <field name="res_model">employee.loan.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+     <record id="employee_loan_to_apporove_action" model="ir.actions.act_window">
+        <field name="name">Loan To Approve</field>
+        <field name="res_model">employee.loan</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', 'in', ['submit_request', 'hr_approval'])]</field>
+        <field name="context">{'search_default_submit_request': 1, 'search_default_hr_approval': 1}</field>
+    </record>
+
+</odoo>

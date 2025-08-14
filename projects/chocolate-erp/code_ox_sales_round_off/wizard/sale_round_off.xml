@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_sales_round_off_wizard" model="ir.actions.act_window">
+        <field name="name">Round-off Wizard</field>
+        <field name="res_model">sales.round.off.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field> 
+    </record>
+
+    <record id="view_sales_round_off_form" model="ir.ui.view">
+        <field name="name">sales.round.off.wizard.form</field>
+        <field name="model">sales.round.off.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Round-off Wizard">
+                <sheet>
+                    <group>
+                        <field name="round_off_value"/>
+                    </group>
+                    <footer>
+                        <button string="Confirm" type="object" name="apply_round_off" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

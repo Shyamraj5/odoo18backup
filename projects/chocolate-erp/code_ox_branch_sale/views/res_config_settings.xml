@@ -1,0 +1,27 @@
+
+<odoo>
+    <record id="view_res_config_settings_inherit_branch_sale" model="ir.ui.view">
+        <field name="name">res.config.settings.branch.sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <app name="sale_management" position="inside">
+                <block title="Branch Sale">
+                    <setting>
+                        <field name="unrealized_branch_profit_account_id" options="{'no_open': True, 'no_create_edit': True}"/>
+                    </setting>
+                    <setting>
+                        <field name="branch_suspense_account_id" options="{'no_open': True, 'no_create_edit': True}"/>
+                    </setting>
+                    <setting >
+                        <field name="branch_transfer_cost_account_id" options="{'no_open': True, 'no_create_edit': True}"/>
+                    </setting>
+                    <setting >
+                        <field name="inter_branch_profit_account_id" options="{'no_open': True, 'no_create_edit': True}"/>
+                    </setting>
+                </block>
+            </app>
+        </field>
+    </record>
+</odoo>
+

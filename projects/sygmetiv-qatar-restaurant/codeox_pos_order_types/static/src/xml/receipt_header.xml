@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="after">
+           <div t-if="props.data.pos_order_type_id">
+                Order Type:
+                <span class="cashier" t-esc="props.data.posOrderType" />
+            </div>
+        </xpath>
+    </t>
+</templates>

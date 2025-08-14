@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_order_form_inherit_branch_transfer" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.branch.transfer</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="company_partner_ids" invisible="1"/>
+                <field name="inter_company" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">inter_company and [('id', 'in', company_partner_ids)] or []</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="branch_trnasfer_out_action" model="ir.actions.act_window">
+        <field name="name">Branch Transfer Out</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="domain">[('inter_company', '=', True)]</field>
+        <field name="context">{'default_inter_company': True}</field>
+        <field name="search_view_id" ref="sales_generic_customisation.view_sale_order_search_generic"/>
+    </record>
+
+    <record id="branch_trnasfer_in_action" model="ir.actions.act_window">
+        <field name="name">Branch Transfer In</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">list,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="domain">[('inter_company', '=', True)]</field>
+        <field name="context">{'default_inter_company': True}</field>
+        <field name="search_view_id" ref="purchase_generic.view_purchase_order_search_generic"/>
+    </record>
+    
+    <menuitem id="branch_transfer_menu" name="Branch Transfer" parent="stock.menu_stock_root"/>
+    <menuitem id="branch_transfer_out_menu" name="Branch Transfer Out" parent="branch_transfer_menu" action="branch_trnasfer_out_action"/>
+    <menuitem id="branch_transfer_in_menu" name="Branch Transfer In" parent="branch_transfer_menu" action="branch_trnasfer_in_action"/>
+</odoo>

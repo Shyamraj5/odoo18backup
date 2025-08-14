@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_header_footer">
+        <div class="header">
+        </div>
+        <div class="article" t-att-data-oe-model="doc and doc._name" t-att-data-oe-id="doc and doc.id" t-att-data-oe-lang="doc and doc.env.context.get('lang')">
+            <t t-out="0"/>
+        </div>
+        <div class="footer">
+        </div>
+    </template>
+</odoo>

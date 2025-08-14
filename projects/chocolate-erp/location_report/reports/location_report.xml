@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_location_report" model="ir.actions.report">
+        <field name="name">Location Report</field>
+        <field name="model">location.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">location_report.location_report</field>
+        <field name="report_file">location_report.location_report</field>
+        <field name="binding_model_id" ref="model_location_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

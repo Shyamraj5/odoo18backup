@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sales_person_trip_user,sales.person.trip.user,model_sales_person_trip,base.group_user,1,1,1,1
+access_sales_person_trip_line_user,sales.person.trip.line.user,model_sales_person_trip_line,base.group_user,1,1,1,1
+access_route_user,route.route.user,model_route_route,base.group_user,1,1,1,1
+access_route_assignment,sales.route.assignment.user,model_sales_route_assignment,base.group_user,1,1,1,1
+access_van_detail,van.detail,model_van_detail,base.group_user,1,1,1,1
+access_order_reason,order.reason,model_order_reason,base.group_user,1,1,1,1
+access_van_allocation_request,van.allocation.request,model_van_allocation_request,base.group_user,1,1,1,1
+access_van_allocation_request_line,van.allocation.request.line,model_van_allocation_request_line,base.group_user,1,1,1,1
+access_res_country_state_city,res.country.state.city,model_res_country_state_city,base.group_user,1,1,1,1

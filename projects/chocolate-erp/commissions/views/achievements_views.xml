@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_commission_achievement_list" model="ir.ui.view">
+        <field name="name">commission.achievements.list</field>
+        <field name="model">commission.achievements</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="commission_plan"/>
+                <field name="sales_person"/>
+                <field name="achieved"/>
+                <field name="date"/>
+                <field name="source"/>
+                <field name="period"/>
+                <button name="action_view_source" type="object" icon="fa-bars" string="View Details" class="text-primary"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_achievements" model="ir.actions.act_window">
+        <field name="name">Achievements</field>
+        <field name="res_model">commission.achievements</field>  
+        <field name="view_mode">list</field>
+    </record>
+</odoo>

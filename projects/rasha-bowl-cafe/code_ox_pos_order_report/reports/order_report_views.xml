@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pdf_order_report_format" model="report.paperformat">
+        <field name="name">POS Order Report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="header_spacing">25</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_pdf_order_report" model="ir.actions.report">
+        <field name="name">POS Order Report</field>
+        <field name="model">pos.order.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">code_ox_pos_order_report.pos_order_report_template</field>
+        <field name="report_file">code_ox_pos_order_report.pos_order_report_template</field>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="pdf_order_report_format"/>
+    </record>
+
+    <record id="action_xml_order_report" model="ir.actions.report">
+        <field name="name">POS Order Report</field>
+        <field name="model">pos.order.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">code_ox_pos_order_report.pos_order_report_xlsx</field>
+        <field name="report_file">code_ox_pos_order_report.pos_order_report_xlsx</field>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

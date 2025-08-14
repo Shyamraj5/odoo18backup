@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_branch_transfer_out,branch.transfer.out,model_branch_transfer_out,account.group_account_user,1,1,1,1
+access_branch_transfer_out_line,branch.transfer.out.line,model_branch_transfer_out_line,account.group_account_user,1,1,1,1
+access_branch_transfer_in,branch.transfer.in,model_branch_transfer_in,account.group_account_user,1,1,1,1
+access_branch_transfer_in_line,branch.transfer.in.line,model_branch_transfer_in_line,account.group_account_user,1,1,1,1

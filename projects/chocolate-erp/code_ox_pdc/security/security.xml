@@ -1,0 +1,7 @@
+<odoo>
+    <record id="Customer_PDC_Payments_company_rule" model="ir.rule">
+        <field name="name">Customer PDC Payments multi-company</field>
+        <field name="model_id" ref="model_post_dated_check"></field>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

@@ -1,0 +1,112 @@
+<odoo>
+    <data>
+        <template id="meal_recipe_header">
+            <t t-foreach="docs" t-as="o">
+                <div class="header">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="col-6" style="float :left; padding:16px;">
+                                <img t-if="o.env.company.logo" t-att-src="image_data_uri(o.env.company.logo)" alt="Logo"/>
+                            </div>
+                            <div class="col-6" style="float :right; text-align:right; font-size:14px; padding:16px;" >
+                                <t t-esc="o.env.company.name"/><br/>
+                                <t t-esc="o.env.company.street"/>, <t t-esc="o.env.company.street2"/><br/>
+                                <t t-esc="o.env.company.city"/>, <t t-esc="o.env.company.state_id.name"/><br/>
+                                <t t-esc="o.env.company.zip"/><br/>
+                                <t t-esc="o.env.company.country_id.name"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                    <t t-call="web.address_layout"/>
+                    <t t-raw="0"/>
+                </div>
+                <div class="footer" style="border-top:4px solid #8bc388">
+                    <p style="text-align: center;padding-top:16px;"><span  class="page"/></p>
+                </div>
+            </t>
+        </template>
+
+        <template id="daily_meals_report_header">
+            <div class="header">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-6" style="float :left; padding:15px;">
+                            <img t-if="env.company.logo" t-att-src="image_data_uri(env.company.logo)" alt="Logo"/>
+                        </div>
+                        <div class="col-6" style="float :right; text-align:right; font-size:16px; padding:15px;" >
+                            <!-- <t t-esc="company"/><br/>
+                            <t t-esc="street"/>, <t t-esc="street2"/><br/>
+                            <t t-esc="city"/>, <t t-esc="state"/><br/>
+                            <t t-esc="zip_code"/><br/>
+                            <t t-esc="country"/><br/> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-call="web.address_layout"/>
+                <t t-raw="0"/>
+            </div>
+            <div class="footer" style="border-top:4px solid #8bc388">
+                <p style="text-align: center;padding-top:16px;"><span  class="page"/></p>
+            </div>
+        </template>
+
+        <template id="individual_driver_report_header">
+            <t t-foreach="docs" t-as="o">
+                <div class="header">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="col-6" style="float :left; padding:15px;">
+                                <img t-if="o.env.company.logo" t-att-src="image_data_uri(o.env.company.logo)" alt="Logo"/>
+                            </div>
+                            <div class="col-6" style="float :right; text-align:right; font-size:14px; padding:16px;" >
+                                <t t-esc="o.env.company.name"/><br/>
+                                <t t-esc="o.env.company.street"/>, <t t-esc="o.env.company.street2"/><br/>
+                                <t t-esc="o.env.company.city"/>, <t t-esc="o.env.company.state_id.name"/><br/>
+                                <t t-esc="o.env.company.zip"/><br/>
+                                <t t-esc="o.env.company.country_id.name"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                    <t t-call="web.address_layout"/>
+                    <t t-raw="0"/>
+                </div>
+                <div class="footer" style="border-top:4px solid #8bc388">
+                    <p style="text-align: center;padding-top:16px;"><span  class="page"/></p>
+                </div>
+            </t>
+        </template>
+    <!-- header for meal calendar -->
+        <template id="meal_calendar_report_header">
+            <div class="header">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-6" style="float :left; padding:15px;">
+                            <img t-if="env.company.logo" t-att-src="image_data_uri(env.company.logo)" alt="Logo" style="max-height:64px;"/>
+                        </div>
+                        <div class="col-6" style="float :right; text-align:right; font-size:16px; padding:15px;" >
+                            <t t-esc="company"/><br/>
+                            <t t-esc="street"/>, <t t-esc="street2"/><br/>
+                            <t t-esc="city"/>, <t t-esc="state"/><br/>
+                            <t t-esc="zip_code"/><br/>
+                            <t t-esc="country"/><br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-call="web.address_layout"/>
+                <t t-raw="0"/>
+            </div>
+            <div class="footer" style="border-top:4px solid #8bc388">
+                <p style="text-align: center;padding-top:16px;"><span  class="page"/></p>
+            </div>
+        </template>
+        
+    </data>
+</odoo>

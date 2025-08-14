@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="sale_customer_with_missing_data"
+    name="Customer with Missing Data "
+    parent="sale.sale_order_menu"
+    action="account.res_partner_action_customer"
+    sequence="5"/>
+</odoo>

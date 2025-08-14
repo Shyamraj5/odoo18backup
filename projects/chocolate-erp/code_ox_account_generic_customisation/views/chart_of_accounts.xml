@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+        <record id="action_asset_cash_chart_of_accounts" model="ir.actions.act_window">
+            <field name="name">Chart of Accounts</field>
+            <field name="res_model">account.account</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('account_type', '=', 'asset_cash')]</field>
+            <field name="context">{'default_account_type': 'asset_cash'}</field>
+        </record>
+
+        <menuitem id="menu_new_chart_of_accounts"
+                  name="Chart of Accounts"
+                  parent="om_account_accountant.menu_accounting_bank_and_cash"
+                  action="action_asset_cash_chart_of_accounts"
+                  sequence="20"
+                  groups="account.group_account_manager" />
+
+        <menuitem id="menu_new_journal_bank_and_cash"
+                  name="Journal Entries"
+                  parent="om_account_accountant.menu_accounting_bank_and_cash"
+                  action="account.action_account_moves_journal_bank_cash"
+                  sequence="21"
+                  groups="account.group_account_readonly" />
+    </data>
+</odoo>

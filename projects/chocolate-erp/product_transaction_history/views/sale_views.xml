@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.line.transaction.history.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="after">
+                <field name="order_partner_id" column_invisible="1" />
+                <widget name="sale_purchase_history_widget" context="{'active_id': id, 'active_ids': [id]}" string=""/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

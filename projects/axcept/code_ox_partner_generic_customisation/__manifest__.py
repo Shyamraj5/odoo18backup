@@ -1,0 +1,20 @@
+{
+    'name': 'Partner Generic Customisation',
+    'version': '1.0',
+    'category': 'ResPartner',
+    'summary': 'ResPartner Generic Customisation',
+    'description': """ResPartner Generic Customisation""",
+    'website': 'https://code-ox.com/',
+    "author": "Code-Ox Technologies",
+    'depends': ['contacts', 'l10n_in'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/res_partner.xml',
+        'views/res_country.xml',
+        'views/res_country_state.xml',
+        'data/res_district.xml',
+    ],
+    'installable': True,
+    'auto_install': True,
+    'license': 'LGPL-3',
+}

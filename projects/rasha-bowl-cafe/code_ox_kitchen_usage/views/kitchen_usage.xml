@@ -1,0 +1,70 @@
+<odoo>
+
+    <record id="view_kitchen_usage_list" model="ir.ui.view">
+        <field name="name">kitchen.usage.list</field>
+        <field name="model">kitchen.usage</field>
+        <field name="arch" type="xml">
+            <list string="Kitchen Usage">
+                <field name="name"/>
+                <field name="date_id"/>
+                <field name="location_id"/>
+                <field name="location_dest_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_kitchen_usage_form" model="ir.ui.view">
+        <field name="name">kitchen.usage.form</field>
+        <field name="model">kitchen.usage</field>
+        <field name="arch" type="xml">
+            <form string="Kitchen Usage">
+                <header>
+                    <field name="state" widget="statusbar" readonly="1"/>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary" invisible="state == 'done'"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_picking_list_all" type="object" icon="fa-external-link" string="Stock Picking" invisible="state != 'done'"/>
+                    </div>
+
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" class="oe_inline" style="font-size: 24px; font-weight: bold;"/>
+                        </h1>
+                    </div>
+
+
+                    <group>
+                        <field name="location_id" required="True" readonly="state in ['done']"/>
+                        <field name="location_dest_id" required="True" readonly="state in ['done']"/>
+                        <field name="date_id" readonly="state in ['done']"/>
+                        <field name="user_id" readonly="state in ['done']"/>
+
+                    </group>
+                    <notebook>
+                        <page string="Usage Lines" >
+                            <field name="line_ids" readonly=" state in ['done']" >
+                                <list editable="bottom">
+                                    <field name="product_id" required="True"/>
+                                    <field name="uom_id" required="True" forcesave="1"/>
+                                    <field name="quantity" required="True"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_kitchen_usage" model="ir.actions.act_window">
+        <field name="name">Kitchen Usage</field>
+        <field name="res_model">kitchen.usage</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_kitchen_usage_root" name="Kitchen" sequence="10"/>
+    <menuitem id="menu_kitchen_usage" name="Kitchen Usage" parent="stock.menu_stock_transfers" action="action_kitchen_usage"/>
+
+</odoo>

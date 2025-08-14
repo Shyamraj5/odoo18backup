@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_return_user,purchase_return.purchase.return,model_purchase_return,base.group_user,1,1,1,1
+access_purchase_return_line_user,purchase_return.purchase.return.line,model_purchase_return_line,base.group_user,1,1,1,1
+access_purchase_return_round_off_user,purchase_return.purchase.return.round.off,model_purchase_return_round_off,base.group_user,1,1,1,1

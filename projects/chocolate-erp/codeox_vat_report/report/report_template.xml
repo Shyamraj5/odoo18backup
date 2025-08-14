@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="html_report" name="vat report">
+        <t t-call="web.html_container">
+                <table style="width: 100%;">
+                    <tr style="vertical-align: middle; font-size: 12px; border-bottom: 2px solid;">
+                        <th>VAT on Sales and all other Outputs (Base)</th>
+                        <t t-foreach="vat_line" t-as="vat">
+                            <t t-if="vat['id'] == 'sale_untaxed'">
+                                <th style="text-align: right"><t t-esc="vat['amount']"/></th>
+                            </t>
+                        </t>
+                    </tr>
+                    <tr style="vertical-align: middle;">
+                        <td>&#160;&#160;&#160;&#160;1. Standard Rated 15% (Base)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'standard_rated_base'">
+                                   <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align: middle;">
+                        <td>&#160;&#160;&#160;&#160;2. Special Sales to Locals (Base)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'special_sales_to_local_base'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;3. Local Sales Subject to 0% (Base)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'local_sales_subject_to_zero_base'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;4. Export Sales (Base)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'export_sales_base'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;5. Exempt Sales (Base)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'exempt_sales_base'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>    
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;6. Net Sales (Base)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'net_sales_base'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle;font-size:12px;border-bottom: 2px solid">
+                        <th>VAT on Sales and all other Outputs (Tax)</th>
+                        <t t-foreach="vat_line" t-as="vat">
+                            <t t-if="vat['id'] == 'sale_tax'">
+                                <th style="text-align: right"><t t-esc="vat['amount']"/></th>
+                            </t>
+                        </t>
+                    </tr>        
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;1. Standard Rated 15% (Tax)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'standard_rated_tax'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>    
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;2. Special Sales to Locals (Tax)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'special_sales_to_locals_tax'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;3. Local Sales Subject to 0% (Tax)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'local_sales_subject_to_zero_percent_tax'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>    
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;4. Export Sales (Tax)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'export_sales_tax'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>   
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;5. Exempt Sales (Tax)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'exempt_sales_tax'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;6. Net Sales (Tax)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'net_sales_tax'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle;font-size:12px;border-bottom: 2px solid">
+                        <th>VAT on Expenses and all other Inputs (Base)</th>
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'purchase_untaxed'">
+                                    <th style="text-align: right"><t t-esc="vat['amount']"/></th>
+                                </t>
+                            </t>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;7. Standard rated 15% Purchases (Base)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'standard_rated_purchases_base'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;8. Taxable Imports 15% Paid to Customs (Base)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'taxable_imprts_paid_customs_base'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>    
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;9. Imports subject to reverse charge mechanism (Base)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'imports_subject_to_reverse_charge_mechanism_base'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;10. Zero Rated Purchases (Base)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'zero_rated_purchases_base'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>    
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;11. Exempt Purchases (Base)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'exempt_purchases_base'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>    
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;12. Net Purchases (Base)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'net_purchases_base'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>    
+                    </tr>
+                    <tr style="vertical-align:middle;font-size:12px;border-bottom: 2px solid">
+                        <th>VAT on Expenses and all other Inputs (Tax)</th>
+                         <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'purchase_tax'">
+                                    <th style="text-align: right;"><t t-esc="vat['amount']"/></th>
+                                </t>
+                            </t>  
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;7. Standard rated 15% Purchases (Tax)</td>
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'standard_rated_purchases_tax'">
+                                    <td style="text-align: right;"><t t-esc="vat['amount']"/></td>
+                                </t>
+                            </t>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;8. Taxable Imports 15% Paid to Customs (Tax)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'taxable_imprts_paid_customs_base_tax'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;9. Imports subject to reverse charge mechanism (Tax)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'imports_subject_to_reverse_charge_mechanism_tax'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;10. Zero Rated Purchases (Tax)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'zero_rated_purchases_tax'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;11. Exempt Purchases (Tax)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'exempt_purchases_tax'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;12. Net Purchases (Tax)</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'net_purchases_tax'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle;font-size:12px;border-bottom: 2px solid">
+                        <th>Net VAT Due</th>
+                        <tr style="vertical-align:middle">
+                            <td>&#160;&#160;&#160;&#160;Total value of due tax for the period</td>
+                            <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'total_value_of_due_tax_for_the_period'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                        </tr> 
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;Total value of recoverable tax for the period</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'total_value_of_recoverable_tax_for_the_period'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr style="vertical-align:middle">
+                        <td>&#160;&#160;&#160;&#160;Net VAT due (or reclaimed) for the period</td>
+                        <td style="text-align: right;">
+                            <t t-foreach="vat_line" t-as="vat">
+                                <t t-if="vat['id'] == 'net_vat_due_for_the_period'">
+                                    <t t-esc="vat['amount']"/>
+                                </t>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+        </t> 
+    </template>
+</odoo>
+        
+
+        
+

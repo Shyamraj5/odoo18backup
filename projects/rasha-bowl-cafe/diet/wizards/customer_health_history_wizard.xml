@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="customer_health_wizard_view_form" model="ir.ui.view">
+        <field name="name">customer.health.wizard.view</field>
+        <field name="model">customer.health.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <h2>
+                        Health Info
+                    </h2>
+                    <group>
+                        <field name="height" />
+                    </group> 
+                    <group string="Body Composition Analysis">
+                        <field name="body_water" /> 
+                        <field name="building_muscle" />
+                        <field name="strengthening_bone" />
+                        <field name="excess_energy" />
+                        <field name="sum" />
+                    </group>
+                    <group string="Muscle Fat Analysis">
+                        <field name="weight" />
+                        <field name="smm" />
+                        <field name="body_fat_mass" />
+                        <separator string="Obesity Analysis"/>
+                        <field name="bmi" />
+                        <field name="pbf" />
+                    </group>
+                    <separator string="Notes"/>
+                        <field name="notes" nolabel="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="action_customer_health_wizard" model="ir.actions.act_window">
+        <field name="name">Customer Health Wizard</field>
+        <field name="res_model">customer.health.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

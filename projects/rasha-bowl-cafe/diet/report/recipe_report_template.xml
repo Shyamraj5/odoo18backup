@@ -1,0 +1,110 @@
+<odoo>
+    <template id="report_meal_recipe">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="diet.meal_recipe_header">
+                <div class="page" style="font-size:16px;">
+                    <div class="row">
+                        <div class="col-12" STYLE="padding:5px;">
+                            <div class="col-6" style="float:left;">
+                                <span style="font-size:20px;"><b>
+                                    CATEGORY: 
+                                    <t t-set="category" t-value="[category.name for category in o.meal_id.meal_category_id]"/>
+                                    <t t-esc="', '.join(category)" />
+                                    </b>
+                                </span>
+                            </div>
+                            <div class="col-6" style="float:right; text-align:right;">
+                                <span style="font-size:20px;"><b>RECIPE CODE: <t t-esc="o.name"/></b></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12" style="text-align:center; color: white; font-weight: bold; background-color:#8bc388; border-top: 3px solid #8bc388; border-bottom: 3px solid #8bc388; padding:8px;">
+                            <span style="font-size:24px;">
+                                <b><t t-esc="o.meal_id.name.upper()"/></b>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-top:24px;">
+                        <div class="col-5" style="border-right: 3px solid #8bc388;padding:10px;">
+                            <span style="font-size:18px;"><b>INGREDIENTS :</b></span>
+                            <br/>
+                            <br/>
+                            <table class="table table-bordered" style="padding:10px;border-collapse:collapse;">
+                                <thead>
+                                    <tr style="border-bottom:2px solid #8bc388;border-right:2px solid #8bc388;border-left:2px solid #8bc388;border-collapse:collapse;border-bottom:3px solid #8bc388;">
+                                        <th style="padding:5px;border-left:2px solid #8bc388; border-top:2px solid #8bc388;border-bottom:2px solid #8bc388; border-collapse:collapse" width="20%">Name</th>
+                                        <th style="padding:5px;border-left:2px solid #8bc388; border-top:2px solid #8bc388;border-bottom:2px solid #8bc388; border-collapse:collapse" width="5%">Qty</th>
+                                        <th style="padding:5px;border-left:2px solid #8bc388; border-top:2px solid #8bc388;border-bottom:2px solid #8bc388; border-collapse:collapse" width="5%">Unit</th>
+                                    </tr>
+                                </thead>
+                                <t t-foreach="o.recipe_ingredient_line_ids" t-as="line">
+                                    <tr>
+                                        <td style="padding:5px;border-right:2px solid #8bc388; border-left:2px solid #8bc388;border-collapse:collapse;text-align:left;border-bottom:2px solid #8bc388;"><t t-esc="line.ingredient_id.name"/></td>
+                                        
+                                        <td style="padding:5px;border-right:2px solid #8bc388; border-left:2px solid #8bc388;border-collapse:collapse;text-align:right;border-bottom:2px solid #8bc388;"><t t-esc="line.qty"/></td>
+                                        
+                                        <td style="padding:5px;border-right:2px solid #8bc388; border-left:2px solid #8bc388;border-collapse:collapse;text-align:left;border-bottom:2px solid #8bc388;"><t t-esc="line.unit.name"/></td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <br/>
+                            <div name="nutrient_label" style="border:4px solid black;padding:20px;">
+                                <div class="row" style="border-bottom:4px solid black;">
+                                    <div class="col-6">
+                                        <span style="font-weight:bold;font-size:32px;">Calories</span>
+                                    </div>
+                                    <div class="col-6" style="text-align:right;">
+                                        <span style="font-weight:bold;font-size:32px;"><t t-esc="round(o.calorie,2)"/></span>
+                                    </div>
+                                </div>                                
+                                <div class="row" style="padding-top:20px;">
+                                    <div class="col-6">
+                                        <span><b>Protien </b><t t-esc="round(o.protein,2)"/>g</span>
+                                    </div>
+                                    <div class="col-6" style="text-align:right;">
+                                        <t t-set="protein_percent" t-value="round(((o.protein * 4)/o.calorie)*100,2)"/>
+                                        <span style="font-weight:bold;"><t t-esc="round(protein_percent,2)"/> %</span>
+                                    </div>
+                                </div>                               
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span><b>Carbohydrates </b><t t-esc="round(o.carbohydrates,2)"/>g</span>
+                                    </div>
+                                    <div class="col-6" style="text-align:right;">
+                                    <t t-set="carbs_percent" t-value="round(((o.carbohydrates * 4)/o.calorie)*100,2)"/>
+                                        <span style="font-weight:bold;"><t t-esc="round(carbs_percent,2)"/> %</span>
+                                    </div>
+                                </div>                               
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span><b>Fat </b><t t-esc="round(o.fats,2)"/>g</span>
+                                    </div>
+                                    <div class="col-6" style="text-align:right;">
+                                        <t t-set="fat_percent" t-value="round(((o.fats * 9)/o.calorie)*100,2)"/>
+                                        <span style="font-weight:bold;"><t t-esc="round(fat_percent,2)"/> %</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <span style="font-size:18px;"><b>NOTES :</b></span>
+                        </div>
+                        <div class="col-7" style="padding:20px;">
+                            <div style="text-align:center;">
+                            <t t-if="o.meal_id.image_1920">
+                                <img t-att-src="image_data_uri(o.meal_id.image_1920)" style="max-height:320px;"/>
+                            </t>
+                            </div>
+                            <br/>
+                            <span style="font-size:18px;"><b>DIRECTIONS :</b></span>
+                            <span t-field="o.recipe"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+</odoo>

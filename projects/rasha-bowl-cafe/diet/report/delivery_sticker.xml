@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="delivery_sticker_paperformat" model="report.paperformat">
+        <field name="name">Delivery Sticker</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">80</field>
+        <field name="page_width">100</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">1</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">1</field>
+        <field name="margin_right">1</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">1</field>
+        <field name="dpi">100</field>
+    </record>
+
+    <template id="delivery_sticker_template_sub">
+        <t t-call="web.html_container">
+            <div class="page">
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+128&amp;display=swap');
+                </style>
+                <table style="width:100%;height:100%;font-size:4px; border-bottom: 1px solid black; border-collapse: collapse;">
+                    <tr style="border-collapse: collapse;">
+                        <td style="border-right: 1px solid black; border-collapse: collapse;width:70%">
+                            <span style="font-size:10px;">
+                                <t t-esc="rd['name']"/>&#160;&#160;&#160;&#160;<b>ID#<t t-esc="rd['customer_no']"/></b>
+                            </span>
+                            <br/>
+                            <span style="font-size:9px;">
+                                <t t-esc="rd['phone']"/>
+                            </span>
+                        </td>
+                        <td style="color: white; background-color: black; font-size:14px; text-align: center; vertical-align: middle;width:30%">
+                            <b>Q#<t t-esc="slno"/></b>
+                        </td>
+                    </tr>
+                    <tr style="border-collapse: collapse;">
+                        <td style="border-right: 1px solid black; border-collapse: collapse;width:70%">
+                            <t t-foreach="rd['meals_data']" t-as="md">
+                                <div>
+                                    <span style="font-size:6px; font-weight: bold;"><t t-esc="md"/> </span><t t-if="rd['meals_data'][md]['dislikes']"><span style="color: white; background-color: black;font-size:6px; vertical-align: middle;"><t t-esc="rd['meals_data'][md]['dislikes']"/><br/></span></t>
+                                    <br/>
+                                    <t t-foreach="rd['meals_data'][md]['meals']" t-as="meal">
+                                        <img src="/home/atul/odoo_projects/odoo17/projects/diet_done/miscellaneous/diet/static/src/img/hand-o-pointer.png" width="10%"/>
+                                        <span style="font-size:8px;"><t t-esc="meal"/></span><br/>
+                                    </t>
+                                </div><br/>
+                            </t>
+                        </td>
+                        <td style="text-align: center; font-size: 6px;width:30%">
+                            <div style="width: 90%; border: 1px solid black; padding: 2px;">
+                                <b><t t-esc="rd['date']"/></b>
+                            </div><br/>
+                            <span style="font-weight: bold; font-size: 8px;"><t t-esc="rd['plan_code']"/><t t-if="rd['pc_combination']">/<t t-esc="rd['pc_combination']"/></t></span><br/><br/>
+                            <t t-esc="rd['area']"/><br/>
+                            <t t-if="rd['street']">
+                                S: <t t-esc="rd['street']"/>
+                            </t>
+                            <t t-if="rd['street']">
+                                , H: <t t-esc="rd['house_no']"/>
+                            </t>
+                            <t t-if="rd['street']">
+                                , F: <t t-esc="rd['floor']"/>
+                            </t>
+                            <t t-if="rd['apartment_no']">
+                                , Apt: <t t-esc="rd['apartment_no']"/>
+                            </t><br/>
+                            <t t-if="rd['shift']">
+                                <b><t t-esc="rd['shift']"/></b> delivery<br/>
+                            </t><br/>
+                            <!-- <img t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', rd['order_number'], 72, 24)"/><br/> -->
+                            <span style='font-family: "Libre Barcode 128", system-ui; font-weight: 400; font-size:24px; font-style: normal;'><t t-esc="rd['order_number']"/></span>
+                            <div style="height: 2px;"/>
+                            <div style="text-align: right;">
+                                <t t-if="rd['start_date']">
+                                    START: <b><t t-esc="rd['start_date']"/></b><br/>
+                                </t>
+                                <t t-if="rd['end_date']">
+                                    END: <b><t t-esc="rd['end_date']"/></b><br/>
+                                </t>
+                                <t t-if="rd['remaining_days']">
+                                    <b><t t-esc="rd['remaining_days']"/></b> Days Left<br/>
+                                </t>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div style="color: white; background-color: black; font-size:4px; font-weight: bold; height: 6px; vertical-align: middle; padding: 2px;width:93%;position: fixed; bottom: 5px;">
+                    <span>FEED</span>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="delivery_sticker_template">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-set="slno" t-value="1"/>
+                <t t-foreach="report_data" t-as="rd">
+                    <t t-call="diet.delivery_sticker_template_sub"/>
+                    <t t-set="slno" t-value="slno+1"/>
+                    <div style="page-break-after: always;"/>
+                </t>
+            </div>
+        </t>
+    </template>
+    
+    <record id="delivery_sticker_action" model="ir.actions.report">
+        <field name="name">Delivery Sticker</field>
+        <field name="model">delivery.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">diet.delivery_sticker_template</field>
+        <field name="report_file">diet.delivery_sticker_template</field>
+        <field name="paperformat_id" ref="diet.delivery_sticker_paperformat"/>
+    </record>
+
+</odoo>

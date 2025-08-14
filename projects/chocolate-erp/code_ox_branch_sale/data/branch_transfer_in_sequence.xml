@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_branch_transfer_in" model="ir.sequence">
+            <field name="name">Branch Transfer In</field>
+            <field name="code">branch.transfer.in.sequence</field>
+            <field name="prefix">BTI/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

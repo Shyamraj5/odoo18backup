@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="pos_self_order.OrderWidget" t-inherit-mode="extension">
+        <xpath expr="//button[@t-attf-class='btn btn-secondary btn-lg h-auto w-auto opacity-75 px-4 d-sm-none']" position="replace">
+            <button t-attf-class="btn btn-secondary btn-lg h-auto w-auto opacity-75 px-4 d-sm-none" 
+            t-if="this.selfOrder.currentOrder.unsentLines.length > 0 or this.router.activeSlot != 'product_list'"
+            t-att-class="leftButton.icon" t-on-click="onClickleftButton">
+                <span class="px-1"/><!-- Spacer -->
+            </button>
+            <button t-attf-class="btn btn-secondary btn-lg h-auto w-auto opacity-75 px-4 d-sm-none" 
+            t-if="this.selfOrder.currentOrder.unsentLines.length === 0 and this.router.activeSlot == 'product_list'"
+            t-att-class="leftButton.icon" t-on-click="showProductCategory">
+                <span class="px-1"/><!-- Spacer -->
+            </button>
+        </xpath>
+
+        <xpath expr="//button[@t-attf-class='btn btn-secondary btn-lg d-none d-sm-inline text-nowrap btn-back btn-cancel']" position="replace">
+            <button t-attf-class="btn btn-secondary btn-lg d-none d-sm-inline text-nowrap btn-back btn-cancel" t-on-click="onClickleftButton" t-esc="leftButton.name"
+            t-if="this.selfOrder.currentOrder.unsentLines.length > 0 or this.router.activeSlot != 'product_list'" />
+            <button t-attf-class="btn btn-secondary btn-lg d-none d-sm-inline text-nowrap btn-back btn-cancel" t-on-click="showProductCategory" t-esc="leftButton.name"
+            t-if="this.selfOrder.currentOrder.unsentLines.length === 0 and this.router.activeSlot == 'product_list'" />
+        </xpath>
+    </t>
+</templates>

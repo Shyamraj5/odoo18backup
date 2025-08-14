@@ -1,0 +1,28 @@
+<odoo>
+
+    <data noupdate="1">
+
+        <record id="sequence_sale_return_seq" model="ir.sequence">
+            <field name="name">Sale return sequence</field>
+            <field name="code">sale.return.seq</field>
+            <field name="prefix">RNS</field>
+            <field name="padding">5</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="company_id"/>
+        </record>
+
+        <record id="sequence_sale_return_draft_seq" model="ir.sequence">
+            <field name="name">Sale return draft sequence</field>
+            <field name="code">sale.return.draft.seq</field>
+            <field name="prefix">DRNS</field>
+            <field name="padding">5</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="company_id"/>
+        </record>
+
+    </data>
+
+
+</odoo>

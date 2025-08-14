@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="customer_notification_tree_view" model="ir.ui.view">
+        <field name="name">customer.notification.list</field>
+        <field name="model">customer.notification</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="customer_ids" widget="many2many_tags"/>
+                <field name="message"/>
+                <field name="state" />
+                <field name="message_send_datetime" />
+            </list>
+        </field>
+    </record>
+    <record id="customer_notification_view_form" model="ir.ui.view">
+        <field name="name">customer.notification.form</field>
+        <field name="model">customer.notification</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button string="Send" name="send" type="object" class="oe_highlight" invisible="state == 'sent'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <p>Placeholder: <b>EN_FIRSTNAME / AR_FIRSTNAME</b></p>
+                    <group>
+                        <group>
+                            <field name="title" readonly="state == 'sent'" required="1"/>
+                            <field name="customer_ids" string="Customers" widget="many2many_tags" placeholder="Search customers" readonly="state == 'sent'"/>
+                            <field name="customer_gender_filter" widget="radio" string=" " readonly="state == 'sent'" options="{'horizontal': true}"/>
+                            <field name="message" string="Description" placeholder="Description" readonly="state == 'sent'" required="1"/>
+                        </group>
+                        <group>
+                            <field name="photo" class="oe_inline" nolabel="1" placeholder="Choose an image" widget="image" readonly="state == 'sent'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="notifications" string="Notifications">
+                            <field name="notification_line_ids" context="{'default_notification_id': id}" options="{'no_create': True}" readonly="state == 'sent'">
+                                <list>
+                                    <field name="customer_id" column_invisible="1"/>
+                                    <field name="title" string="Title"/>
+                                    <field name="send_by_id" string="Send By"/>
+                                    <field name="message" string="Description"/>
+                                    <field name="image" widget="image" column_invisible="1"/>
+                                    <field name="message_send_datetime" string="Date &amp; Time"/>
+                                    <field name="response" groups="base.group_no_one"/>
+                                    <field name="sms_response" groups="base.group_no_one"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_customer_notification">
+            <field name="name">Notification</field>
+            <field name="res_model">customer.notification</field>
+            <field name="view_mode">list,form</field>
+    </record>
+</odoo>

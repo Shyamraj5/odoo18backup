@@ -1,0 +1,36 @@
+<odoo>
+    <record id="pos_order_report_wizard_form" model="ir.ui.view">
+        <field name="name">pos.order.report.wizard.form</field>
+        <field name="model">pos.order.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Order Report">
+                <group>
+                    <field name="date_from" required="1" />
+                    <field name="date_to" required="1" />
+                    <field name="customer_type" />
+                    <field name="order_type_ids" widget="many2many_tags" />
+                    <field name="partner_ids" widget="many2many_tags" options="{'no_create_edit': True}" />
+                </group>
+                <footer>
+                    <button string="Generate PDF Report" type="object" name="generate_pdf_report" class="btn-primary" />
+                    <button string="Generate Excel Report" type="object" name="generate_excel_report" class="btn-primary" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="pos_order_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">Order Report</field>
+        <field name="res_model">pos.order.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="pos_order_report_wizard_menu"
+        name="Order Report"
+        parent="point_of_sale.menu_point_rep"
+        action="pos_order_report_wizard_action"
+        sequence="3"/>
+
+</odoo>

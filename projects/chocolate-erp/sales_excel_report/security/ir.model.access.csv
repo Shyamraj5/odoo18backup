@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sales_excel_report,sales.excel.wizard,model_sales_excel_wizard,base.group_user,1,1,1,1
+access_sales_target_report,sales.target.wizard,model_sales_target_wizard,base.group_user,1,1,1,1
+access_offer_sales_report,offer.sales.wizard,model_offer_sales_wizard,base.group_user,1,1,1,1

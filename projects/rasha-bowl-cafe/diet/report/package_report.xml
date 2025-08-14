@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <template id="package_report_template">
+        <t t-call="web.html_container">
+            <div class="page">
+                
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th>SI.NO</th>
+                            <th style="text-align: center;">Plan Name</th>
+                            <th style="text-align: center;">Total Subscribers</th>
+                            <th style="text-align: center;">Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="serial" t-value="0"/>
+                        <t t-foreach="docs" t-as="data">
+                            <tr>
+                                <td>
+                                    <t t-set="serial" t-value="serial + 1"/>
+                                    <t t-esc="serial"/>
+                                </td>
+                                <td style="text-align: center;"><t t-esc="data['plan']"/></td>
+                                <td style="text-align: center;"><t t-esc="data['subscribers']"/></td>
+                                <td style="text-align: center;"><t t-esc="round(data['amount'], 2)"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+    
+
+    <record id="action_package_report" model="ir.actions.report">
+            <field name="name">Package Report</field>
+            <field name="model">subscription.package.plan</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">diet.package_report_template</field>
+            <field name="report_file">diet.package_report_template</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+    </record>
+
+</odoo>

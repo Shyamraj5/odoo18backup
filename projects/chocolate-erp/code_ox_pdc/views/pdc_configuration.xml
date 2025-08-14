@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+        <record id="res_config_settings_pdc_config_inherit" model="ir.ui.view">
+            <field name="name">res.config.settings.view.pdc.config.form.inherit</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <div id="invoicing_settings" position="after">
+                    <h2>PDC</h2>
+                    <div class="row mt16 o_settings_container" name="main_pdc_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box" id="default_pdc_payable">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">PDC Payable Account</span>
+                                <div class="text-muted">
+                                    PDC Payable Account
+                                </div>
+                                <div class="text-muted">
+                                    <field name="pdc_account_payable_id"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="default_pdc_receivable">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">PDC Account Receivable</span>
+                                <div class="text-muted">
+                                    PDC Account Receivable
+                                </div>
+                                <div class="text-muted">
+                                    <field name="pdc_account_receivable_id"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="default_pdc_received_journal">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Received Journal</span>
+                                <div class="text-muted">
+                                    Received Journal
+                                </div>
+                                <div class="text-muted">
+                                    <field name="received_journal_id"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="default_pdc_issued_journal">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Issued Journal</span>
+                                <div class="text-muted">
+                                    Issued Journal
+                                </div>
+                                <div class="text-muted">
+                                    <field name="issued_journal_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

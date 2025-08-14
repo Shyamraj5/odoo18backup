@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="subscription_upgrade_wizard_view_form" model="ir.ui.view">
+        <field name="name">subscription.upgrade.wizard.view.form</field>
+        <field name="model">subscription.upgrade.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Subscription Upgrade">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="subscription_id" invisible="1"/>
+                            <field name="plan_category_id" readonly="1" force_save="1"/>
+                            <field name="plan_id" force_save="1"/>
+                            <field name="date" force_save="1"/>
+                            <field name="actual_start_date" force_save="1" readonly="1"/>
+                            <field name="end_date" force_save="1" readonly="1"/>
+                            <field name="balance_amount" force_save="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Upgrade" name="button_upgrade" type="object" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <data>
+        <template id="upgraded_subscription_link">
+            <p>
+                <t>This <t t-esc="self.env['ir.model']._get(self._name).name.lower()"/> is upgraded to:</t>
+                <t t-foreach="origin" t-as="o">
+                    <a href="#" t-att-data-oe-model="o._name" t-att-data-oe-id="o.id"> <t t-esc="o.order_number"/></a><span t-if="origin.ids[-1:] != o.ids">, </span>
+                </t>
+            </p>
+        </template>
+    </data>
+</odoo>

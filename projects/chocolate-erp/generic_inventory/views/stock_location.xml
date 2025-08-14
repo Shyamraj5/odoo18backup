@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_stock_location_form" model="ir.ui.view">
+        <field name="name">stock.location.form</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location_id']" position='after'>
+                <br/>
+                <label for="supervisor_id"/>
+                <h2><field name="supervisor_id" placeholder="Supervisor" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/></h2>
+                <label for="picker_id"/>
+                <h2><field name="picker_id" placeholder="Picker" options="{'no_create': True, 'no_open': True, 'no_edit': True}"/></h2>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

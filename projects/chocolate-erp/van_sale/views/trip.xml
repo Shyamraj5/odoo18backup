@@ -1,0 +1,86 @@
+<odoo>
+    <record id="view_sales_person_form" model="ir.ui.view">
+        <field name="name">sales.person.form</field>
+        <field name="model">sales.person.trip</field>
+        <field name="arch" type="xml">
+            <form string="Sales Person">
+                <header>
+                    <button name="action_start" type="object" string="Start" 
+                            class="btn btn-outline-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_stop" type="object" string="End" 
+                            class="btn btn-outline-danger"
+                            invisible="state != 'running'"/>
+                    <field name="validation_status" invisible="1"/>
+                    <button name="validate" type="object" string="Validate" invisible="state != 'ended' or validated == True "/>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Validated"
+                                invisible="state != 'ended' or validation_status != 'approved'"/>
+                    <widget name="web_ribbon" title="Waiting For Validation"
+                               invisible="state != 'ended' or validation_status != 'waiting'" />
+                <group>
+                    <group string="Sales Details">
+                        <field name="salesperson_id"/>
+                        <field name="date"/>
+                        <field name="sales_amount"/>
+                        <field name="collected_amount"/>
+                        <field name="validated" invisible="1"/>
+                    </group>
+                    <group string="Odo Meter Details">
+                        <field name="start_kilometer" required="True"/>
+                        <field name="end_kilometer"/>
+                        <field name="start_location_id"/>
+                        <field name="end_location_id"/>
+                        <field name="start_km_image"/>
+                        <field name="end_km_image"/>
+                    </group>
+                </group>
+                    
+
+                    <notebook>
+                        <page string="Route Details">
+                            <field name="route_ids">
+                                <list editable="bottom">
+                                    <!-- <field name="salesperson_id"/> -->
+                                    <field name="shop_id"/>
+                                    <field name="route_id"/>
+                                    <field name="order_taken"/>
+                                    <field name="invoice_ids"/>
+                                    <field name="no_order_reason_id"/>
+                                    <field name="reason"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sales_person_list" model="ir.ui.view">
+        <field name="name">sales.person.list</field>
+        <field name="model">sales.person.trip</field>
+        <field name="arch" type="xml">
+            <list string="Sales Person">
+                <field name="salesperson_id"/>
+                <field name="date"/>
+                <field name="state"/>
+                <field name="start_kilometer"/>
+                <field name="end_kilometer"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_sales_person" model="ir.actions.act_window">
+        <field name="name">Sales Person Trip</field>
+        <field name="res_model">sales.person.trip</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p>
+                Manage sales persons and track their journeys.
+            </p>
+        </field>
+    </record>
+</odoo>

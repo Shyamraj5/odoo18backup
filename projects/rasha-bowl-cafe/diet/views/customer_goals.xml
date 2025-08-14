@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="customer_goals_view_tree" model="ir.ui.view">
+        <field name="name">customer.goals.view.list</field>
+        <field name="model">customer.goals</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_customer_goals" model="ir.actions.act_window">
+        <field name="name">Customer Goals</field>
+        <field name="res_model">customer.goals</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

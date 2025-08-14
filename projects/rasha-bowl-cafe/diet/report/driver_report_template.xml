@@ -1,0 +1,108 @@
+<odoo>
+    <template id="driver_report_template_sub">
+        <t t-call="web.html_container">
+            <t t-call="diet.daily_meals_report_header">
+                <div class="page" style="font-size:16px;">
+                    <div class="row" style="font-size:21px;background-color:#8bc388;padding:7px;">
+                        <div class="col-6" style="text-align:left;">
+                            <font color="white">
+                                <strong>DRIVER DELIVERY DAILY REPORT</strong>
+                            </font>
+                        </div>
+                        <div class="col-6" style="text-align:right;">
+                            <font color="white">
+                                <strong>Date : <t t-esc="date"/></strong>
+                            </font>
+                        </div>
+                    </div>
+                    <div class="row" style="text-align:left;font-size:20px;background-color:#8bc388;padding:7px;">
+                        <div class="col-4" >
+                            <font color="white">
+                                <strong>Driver : <t t-esc="driver_dict[drivers]['driver']"/></strong>
+                            </font>
+                        </div>
+                        <div class="col-4" style="text-align:center;">
+                            <font color="white">
+                                <strong>Driver Code : <t t-esc="drivers"/></strong>
+                            </font>
+                        </div>
+                        <t t-set="boxes" t-value="0"/>
+                        <t t-if="drivers">
+                            <t t-foreach="driver_dict[drivers]" t-as="area">
+                                <t t-if="area != 'driver'">
+                                    <t t-set="boxes" t-value="boxes + (len(driver_dict[drivers][area])-1)"/>
+                                </t>
+                            </t>
+                        </t>
+                        <div class="col-4" style="text-align:right;">
+                            <font color="white">
+                                <strong>Boxes : <t t-esc="boxes"/></strong>
+                            </font>
+                        </div>
+                    </div>
+                    <br/>
+                    <t t-set="no" t-value="0"/>
+                    <t t-foreach="driver_dict[drivers]" t-as="driver_area">
+                        <t t-if="driver_area != 'driver'">
+                          <div class="row" style="border:3px solid #8bc388 ;padding:10px;vertical-align:middle;">
+                                <div class="col-1" style="text-align:center;">
+                                    <span style="font-weight:bold;">Area </span>
+                                </div>
+                                <div class="col-4" style="text-align:left;vertical-align:middle;">
+                                    <span><t t-esc="driver_area"/></span>
+                                </div>
+                                <div class="col-1" style="text-align:right;">
+                                        <span style="font-weight:bold;">Count</span>
+                                </div>
+                                <div class="col-1" style="text-align:center;vertical-align:middle;">
+                                    <span><t t-esc="len(driver_dict[drivers][driver_area]) - 1"/></span>
+                                </div>
+                            </div>
+                            <t t-foreach="driver_dict[drivers][driver_area]" t-as="partner">
+                                <t t-if="partner != 'arabic'">
+                                    <t t-set="no" t-value="no + 1"/>
+                                    <div class="row" style="padding:10px;">
+                                        <div class="col-1" style="text-align:center;">
+                                                <t t-esc="no"/>
+                                        </div>
+                                        <div class="col-1" style="text-align:left;">
+                                                <t t-esc="partner"/>
+                                        </div>
+                                        <div class="col-5" style="text-align:left;">
+                                            <t t-esc="driver_dict[drivers][driver_area][partner]['name'].upper()"/>
+                                        </div>
+                                        <div class="col-4" style="text-align:left;">
+                                            <t t-esc="driver_dict[drivers][driver_area][partner]['address']"/>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="text-align:left;padding:10px;">
+                                        <div class="col-1"/>
+                                        <div class="col-6">
+                                            <t t-esc="driver_dict[drivers][driver_area][partner]['shift']"/>
+                                        </div>
+                                        <div class="col-4" style="text-align:left;">
+                                            <t t-esc="driver_dict[drivers][driver_area][partner]['phone']"/>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="border-bottom:1px solid #8bc388;"/>
+                                </t>
+                            </t>
+                        </t>
+                        <br/>
+                    </t>
+                    
+                </div>
+            
+            </t>
+        </t>
+    </template>
+
+    <template id="driver_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="driver_dict" t-as="drivers">
+                    <t t-call="diet.driver_report_template_sub" />
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="delivery_preview_template">
+        <t t-call="web.html_container">
+            <div class="page">
+                <h2>Delivery Report Preview</h2>
+                <table class="table table-sm table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;">Q#</th>
+                            <th>Name</th>
+                            <th>ID</th>
+                            <th>Tag</th>
+                            <th>Mobile</th>
+                            <th>Shift</th>
+                            <th>City</th>
+                            <th>Zone</th>
+                            <th>Street</th>
+                            <th>House No</th>
+                            <th>Floor</th>
+                            <th>Delivery Date</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc" t-as="customer">
+                            <td><t t-esc="customer['sl_no']"/></td>
+                            <td><t t-esc="customer['name']"/></td>
+                            <td><t t-esc="customer['id']"/></td>
+                            <td><t t-esc="customer['tag']"/></td>
+                            <td><t t-esc="customer['mobile']"/></td>
+                            <td><t t-esc="customer['shift']"/></td>
+                            <td><t t-esc="customer['city']"/></td>
+                            <td><t t-esc="customer['district']"/></td>
+                            <td><t t-esc="customer['street']"/></td>
+                            <td><t t-esc="customer['house_no']"/></td>
+                            <td><t t-esc="customer['floor']"/></td>
+                            <td><t t-esc="datetime.datetime.strptime(customer['delivery_date'], '%Y-%m-%d').strftime('%b %d %Y')"/></td>
+                            <td><t t-esc="datetime.datetime.strptime(customer['start_date'], '%Y-%m-%d').strftime('%b %d %Y')"/></td>
+                            <td><t t-esc="datetime.datetime.strptime(customer['end_date'], '%Y-%m-%d').strftime('%b %d %Y')"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+</odoo>

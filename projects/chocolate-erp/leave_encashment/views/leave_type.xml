@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_hr_leave_type_inherit" model="ir.ui.view">
+        <field name="name">hr.leave.type.form.inherit</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group[2]/group[@name='negative_cap']" position="after">
+            <group name="leave_enchashment" string="Leave Encashment">
+                 <field name="allow_leave_encashment"/>
+            </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

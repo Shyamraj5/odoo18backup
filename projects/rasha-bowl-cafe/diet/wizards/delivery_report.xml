@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="delivery_report_wizard_view" model="ir.ui.view">
+        <field name="name">delivery.report.wizard.view</field>
+        <field name="model">delivery.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Delivery Report Wizard">
+                <group>
+                    <group>
+                        <field name="date" invisible="error_check_detail"/>
+                        <field name="report_type" required="1" invisible="error_check_detail"/>
+                        <field name="report_attachment_id" invisible="1" force_save="1"/>
+                        <field name="is_driver_order_generated" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="shift_id" invisible="error_check_detail"/>
+                        <field name="customer_tag_ids" widget="many2many_tags" options="{'no_create': true, 'no_create_edit': true}" invisible="error_check_detail"/>
+                        <field name="status" invisible="error_check_detail" required="1"/>
+                    </group>
+                    <field name="error_check_detail" readonly="1" force_save="1" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="check_validity" string="Generate" type="object" class="btn-primary" invisible="error_check_detail or is_driver_order_generated"/>
+                    <button name="check_validity" string="Re-Generate" type="object" class="btn-primary" invisible="error_check_detail or not is_driver_order_generated"/>
+                    <button name="preview" string="View" type="object" class="btn-primary" invisible="report_type!='export'"/>
+                    <button name="export" string="Download" type="object" class="btn-primary" invisible="error_check_detail or not is_driver_order_generated"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_delivery_report_wizard" model="ir.actions.act_window">
+        <field name="name">Delivery Report</field>
+        <field name="res_model">delivery.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

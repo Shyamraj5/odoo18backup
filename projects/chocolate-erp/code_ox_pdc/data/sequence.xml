@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_post_dated_check_customer" model="ir.sequence">
+            <field name="name">Customer PDC Sequence</field>
+            <field name="code">post.dated.check.customer.sequence</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_post_dated_check_vendor" model="ir.sequence">
+            <field name="name">Vendor PDC Sequence</field>
+            <field name="code">post.dated.check.vendor.sequence</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_inventory_stock_report,inventory.stock.wizard,model_inventory_stock_wizard,base.group_user,1,1,1,1
+access_inventory_stock_expiry_wizard,inventory.stock.expiry.wizard,model_inventory_stock_expiry_wizard,base.group_user,1,1,1,1
+access_stock_in_out_wizard,stock.in.out.wizard,model_stock_in_out_wizard,base.group_user,1,1,1,1
