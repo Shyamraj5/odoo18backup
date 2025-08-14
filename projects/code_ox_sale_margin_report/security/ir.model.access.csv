@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_margin_view,sale.order.margin.view,model_sale_order_margin_view,base.group_user,1,1,1,1
+access_margin_analysis_wizard,margin.analysis.wizard,model_margin_analysis_wizard,base.group_user,1,1,1,1

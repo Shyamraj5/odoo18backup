@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <template xml:space="preserve">
+        <t t-name="sym_sales_dashboard.ChartRenderer">
+            <canvas t-ref="chart" class="w-100 h-100" style="max-height: 300px;"/>
+        </t>
+    </template>

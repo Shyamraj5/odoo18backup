@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="todo_list.TodoCategoryTemplate">
+        <div class="o_todo_categories">
+            <h3>To-Do Categories</h3>
+            <ul>
+                <t t-foreach="categories.list" t-as="category" t-key="category.id">
+                    <li t-key="category.id">
+                        <t t-esc="category.name"/>
+                    </li>
+                </t>
+            </ul>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_margin_analysis_wizard_form" model="ir.ui.view">
+        <field name="name">margin.analysis.wizard.form</field>
+        <field name="model">margin.analysis.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Margin Analysis Filter">
+                <group>
+                    <field name="product_id" options="{'no_create': True}"/>
+                    <field name="comparison_operator"/>
+                    <field name="margin_percentage" suffix="%"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_margin_analysis_wizard" model="ir.actions.act_window">
+        <field name="name">Margin Analysis</field>
+        <field name="res_model">margin.analysis.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="custom_widget.IntegerStepperWidget" owl="1">
+        <div class="d-flex align-items-center">
+            <button type="button" class="btn btn-sm btn-outline-secondary" t-on-click="decrement">-</button>
+            <span class="mx-2"><t t-esc="state.value"/></span>
+            <button type="button" class="btn btn-sm btn-outline-secondary" t-on-click="increment">+</button>
+        </div>
+    </t>
+</templates>

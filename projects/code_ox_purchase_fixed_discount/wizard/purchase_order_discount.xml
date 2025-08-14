@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_order_discount_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.discount.view.form.inherit</field>
+            <field name="model">purchase.order.discount</field>
+            <field name="inherit_id" ref="wm_purchase_global_discount.purchase_order_line_wizard_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='discount_amount']" position="attributes">
+                    <attribute name="invisible">discount_type not in ['pol_fixed_discount', 'amount']</attribute>
+                </xpath>
+                <xpath expr="//label[@for='discount_amount']" position="attributes">
+                    <attribute name="invisible">discount_type not in ['pol_fixed_discount', 'amount']</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

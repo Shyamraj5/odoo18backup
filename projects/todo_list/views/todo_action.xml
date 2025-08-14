@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    
+    <record id="action_owl_todo_list_js" model="ir.actions.client">
+        <field name="name">Todo List OWL</field>
+        <field name="tag">owl.action_todo_list_js</field>
+    </record>
+    <record id="action_owl_categ_js" model="ir.actions.client">
+        <field name="name">categories</field>
+        <field name="tag">owl.action_categ_js</field>
+    </record>
+
+
+    <menuitem
+    id="owl_todo_list_root_menu"
+    name="Todo List" />
+
+
+    <menuitem
+        id="todo_list_menu_owl"
+        name="Todo Owl"
+        action="action_owl_todo_list_js"
+        parent="owl_todo_list_root_menu"
+        sequence="11"/>
+
+     <menuitem
+        id="todo_list_categories_owl"
+        name="Categories"
+        action="action_owl_categ_js"
+        parent="owl_todo_list_root_menu"
+        sequence="12"/>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <data>
+    <record model="ir.actions.client" id="action_ad_dashboard">
+      <field name="name">SYM Dashboard</field>
+      <field name="tag">owl.action_ad_dashboard</field>
+    </record>
+
+
+    <menuitem name="Dashboard" id="dashboard_menu_sym" action="action_ad_dashboard" sequence="1"/>
+   
+  </data>
+
+</odoo>
+
+  

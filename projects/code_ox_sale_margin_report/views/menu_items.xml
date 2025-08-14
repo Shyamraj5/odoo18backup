@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_margin_analysis_root" 
+              name="Margin Analysis" 
+              sequence="100"
+              action="action_margin_analysis_wizard"
+              parent="sale.menu_sale_report"/>
+              
+</odoo>

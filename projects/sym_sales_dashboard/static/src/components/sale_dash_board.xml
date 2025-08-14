@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <template xml:space="preserve">
+        <t t-name="sym_sales_dashboard.OwlDash">
+            <div class="vh-100 overflow-auto bg-muted">
+                <div class="row m-3">
+                    <div class="col-lg-7">
+                        <div class="row">
+                            <div class="col m-0 p-0">
+                                <div class="shadow-sm border m-2 p-4 bg-white">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h1 class="text-primary">dashboard</h1>
+                                        <div>
+                                            <select class="form-select" t-model="state.period" t-on-change="OnchangePeriod">
+                                                <option value="0">select Period</option>
+                                                <option value="7">7 days</option>
+                                                <option value="10">10 days</option>
+                                                <option value="30">30 days</option>
+                                                <option value="30">90 days</option>
+                                                <option value="30">365 days</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <KpiCard name="'Total Sale Price'" value="state.quotations.value" percentage="state.quotations.percentage"/>
+                            <KpiCard name="'Total Profit'" value="8000" percentage="36"/>
+                            <KpiCard name="'Total Orders'" value="104" percentage="60"/>
+                            <KpiCard name="'Pending Orders'" value="3" percentage="3"/>
+    
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 m-0 p-0">
+                                <div class="shadow-sm border m-2 p-4 bg-white">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h3 class="text-primary fw-bold">Sales Overview</h3>
+                                        <div class="px-3 py-1 bg-primary cursor-pointer">
+                                            <span class="fa fa-arrow-right text-white"/>
+                                        </div>
+                                    </div>
+                                    <ChartRenderer type="'bar'" title="'Sales Overview'"/>                                </div>
+                            </div>
+                            <div class="col-lg-6 m-0 p-0">
+                                <div class="shadow-sm border m-2 p-4 bg-white">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h3 class="text-primary">Sales Overview</h3>
+                                        <div class="px-3 py-1 cursor-pointer">
+                                            <span class="fa fa-arrow-right text-white"/>
+                                        </div>
+                                    </div>
+                                    <ChartRenderer type="'pie'"  title="'Sales Overview'"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 m-0 p-0">
+                        <div class="shadow-sm border m-2 p-4 bg-white">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h3 class="text-primary">Top Selling Products</h3>
+                                <div class="px-3 py-1 cursor-pointer">
+                                    <span class="fa fa-arrow-right text-white"/>
+                
+                                </div>
+                            </div>
+                            <ChartRenderer type="'line'"  title="'Top Selling Products'"/>
+                        </div>
+
+                        <div class="shadow-sm border m-2 p-4 bg-white">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h3 class="text-primary">Sales Order State Distributions</h3>
+                                <div class="px-3 py-1 cursor-pointer">
+                                    <span class="fa fa-arrow-right text-white"/>
+                                </div>
+                            </div>
+                        </div>
+                        <ChartRenderer type="'bar'" title="'Sales Order State Distributions'"/>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </t>
+   </template>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Report Action -->
+        <record id="action_report_proforma_delivery" model="ir.actions.report">
+            <field name="name">Pro-Forma Delivery</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">proforma_delivery_slip.report_proforma_delivery_slip</field>
+            <field name="report_file">proforma_delivery_slip.report_proforma_delivery_slip</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>
+        
+        <!-- Menu item to access the report -->
+        <record id="menu_proforma_delivery_report" model="ir.ui.menu">
+            <field name="name">Pro-Forma Delivery Reports</field>
+            <field name="parent_id" ref="sale.sale_menu_root"/>
+            <field name="sequence" eval="99"/>
+        </record>
+    </data>
+</odoo>

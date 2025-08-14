@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="list_view_sale_order_margin" model="ir.ui.view">
+        <field name="name">sale.order.margin.view.list</field>
+        <field name="model">sale.order.margin.view</field>
+        <field name="arch" type="xml">
+            <list string="Sale Order Margin Analysis">
+                <field name="order_name" string="Order Reference"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="sales_person"/>
+                <field name="order_date"/>
+                <field name="product_id" string="Product"/>
+                <field name="product_uom_qty"/>
+                <field name="price_unit"/>
+                <field name="margin"/>
+                <field name="margin_percent"/>
+                <field name="cost"/>
+
+            </list>
+        </field>
+    </record>
+
+    <record id="action_sale_order_margin_view" model="ir.actions.act_window">
+        <field name="name">Sale Order Margin Analysis</field>
+        <field name="res_model">sale.order.margin.view</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>
